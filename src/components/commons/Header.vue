@@ -14,12 +14,16 @@
                         <Icon type="fireball"></Icon>
                         热门
                     </MenuItem>
+                    <MenuItem name="5">
+                        <Icon type="android-hangout"></Icon>
+                        话题
+                    </MenuItem>
                     <MenuItem name="3" class="header-search">
                         <i-input placeholder="搜索" icon="ios-search"/>
                     </MenuItem>
                     <MenuItem name="4" class="header-register">
                         <router-link to="/login">
-                            <Button>登陆</Button>
+                            <Button shape="circle">登陆</Button>
                         </router-link>
                     </MenuItem>
                 </div>
@@ -89,7 +93,6 @@
                 line-height: 20px;
                 margin: 0px;
                 border: 1px solid rgba(236, 97, 73, 0.7);
-                border-radius: 20px;
                 font-size: 13px;
                 color: #ea6f5a;
                 background-color: transparent;

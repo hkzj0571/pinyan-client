@@ -7,7 +7,6 @@ import './assets/sass/app.scss'
 
 Vue.use(iView)
 
-//
 Vue.config.productionTip = true
 
 
