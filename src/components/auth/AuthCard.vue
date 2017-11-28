@@ -23,13 +23,14 @@
                         <i-input v-model="register_form.name" placeholder="请设置您的昵称" icon="android-person"/>
                     </FormItem>
                     <FormItem prop="email">
-                        <i-input v-model="register_form.email" type="email" placeholder="请输入您的邮箱" icon="android-mail"/>
+                        <i-input v-model="register_form.email" placeholder="请输入您的邮箱" icon="android-mail"/>
                     </FormItem>
                     <FormItem prop="password">
                         <i-input v-model="register_form.password" type="password" placeholder="请设置您的密码" icon="locked"/>
                     </FormItem>
                     <FormItem>
-                        <Button type="success" shape="circle" size="large" long @click="register('register_form')">注册</Button>
+                        <Button type="success" shape="circle" size="large" long @click="register('register_form')">注册
+                        </Button>
                     </FormItem>
                     <FormItem>
                         <p class="tips">
@@ -41,7 +42,6 @@
                 </Form>
             </TabPane>
         </Tabs>
-
     </div>
 </template>
 <script>
@@ -79,15 +79,31 @@
             login (name) {
                 this.$refs[name].validate((valid) => {
                     if (!valid) return
-
-                    console.log(11)
+                    this.$axios.post('login', this.login_form).then(resource => {
+                        let respond = resource.data
+                        return respond.status ? this.$store.dispatch('authenticated', respond.data).then((data) => {
+                            return this.$Message.success({
+                                content: '登陆成功',
+                                duration: 1,
+                                onClose: () => {this.$router.push('/')}
+                            })
+                        }):this.$Message.error(respond.message)
+                    })
                 })
             },
             register (name) {
                 this.$refs[name].validate((valid) => {
                     if (!valid) return
-
-                    console.log(11)
+                    this.$axios.post('register', this.register_form).then(resource => {
+                        let respond = resource.data
+                        return respond.status ? this.$store.dispatch('authenticated', respond.data).then((data) => {
+                            return this.$Message.success({
+                                content: '注册成功',
+                                duration: 1,
+                                onClose: () => {this.$router.push('/')}
+                            })
+                        }):this.$Message.error(respond.message)
+                    })
                 })
             },
         }
@@ -97,8 +113,8 @@
 <style lang="scss">
     .auth-card {
         width: 400px;
-        margin: 60px auto 0;
-        padding: 50px 50px 10px;
+        margin: 100px auto 0;
+        padding: 50px 50px 0px;
         background-color: #fff;
         border-radius: 4px;
         box-shadow: 0 0 8px rgba(0, 0, 0, .1);

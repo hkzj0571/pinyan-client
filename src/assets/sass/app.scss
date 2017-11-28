@@ -12,4 +12,34 @@ html,body {
     margin: 15px auto;
     width: 90%;
   }
+
+  .ivu-message-notice {
+    transition: height 1s ease-in-out,padding 1s ease-in-out;
+    .ivu-message-notice-content {
+      padding: 0;
+      font-size: 14px;
+      .ivu-message-custom-content {
+        color: #fff;
+        padding: 16px 32px;
+        border-radius: 3px;
+        .ivu-icon {
+          color: #fff;
+          font-size: 20px;
+          vertical-align: -2px;
+        }
+      }
+      .ivu-message-error {
+        background: #FF4040;
+      }
+      .ivu-message-success {
+        background: #19be6b;
+      }
+      .ivu-message-warning {
+        background: #f90;
+      }
+      .ivu-message-info {
+        background: #57a3f3;
+      }
+    }
+  }
 }

@@ -15,5 +15,9 @@ export default new Router({
             path: '/login',
             component: (resolve) => require(['../views/auth/Login.vue'], resolve)
         },
+        {
+            path: '/active/:token',
+            component: (resolve) => require(['../views/auth/Active.vue'], resolve)
+        },
     ]
 })

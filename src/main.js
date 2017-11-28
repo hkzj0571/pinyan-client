@@ -1,11 +1,14 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import store from './store/index'
 import iView from 'iview'
+import Util from './libs/util'
 import 'iview/dist/styles/iview.css'
 import './assets/sass/app.scss'
 
 Vue.use(iView)
+Vue.use(Util)
 
 Vue.config.productionTip = true
 
@@ -24,6 +27,27 @@ router.afterEach(() => {
 new Vue({
     el: '#app',
     router,
+    store,
     template: '<App/>',
-    components: {App}
+    components: {App},
+    mounted: function () {
+        if (localStorage.auth) {
+            let data = JSON.parse(localStorage.auth)
+            this.$store.dispatch('authenticated', data)
+        }
+
+        this.$axios.interceptors.response.use(respond => {
+            return respond.data.code == '401' ? this.$router.push('/login') : respond
+        }, error => {
+            if (error.response.status == '401') {
+                return this.$Message.error({
+                    content: '请登录后再进行此操作',
+                    onClose: () => {
+                        this.$store.dispatch('unthenticated')
+                        this.$router.push('/login')
+                    }
+                })
+            }
+        })
+    }
 })
