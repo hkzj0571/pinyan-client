@@ -7,5 +7,7 @@ export default{
         Vue.prototype.$axios = axios
         Vue.prototype.$axios.defaults.baseURL = env.base_domain
         Vue.prototype.$axios.defaults.timeout = env.timeout
+
+        Vue.prototype.$env = env
     }
 }

@@ -13,6 +13,11 @@ export default {
     },
     mutations: {
 
+        /**
+         * 登陆成功
+         * @param state
+         * @param data
+         */
         [types.AUTHENTICATED](state, data){
 
             let user = data.user
@@ -30,6 +35,11 @@ export default {
 
             axios.defaults.headers.common['Authorization'] = state.token
         },
+
+        /**
+         * 退出成功
+         * @param state
+         */
         [types.UNTHENTICATED](state){
             state.id = null
             state.avatar = null
@@ -41,15 +51,50 @@ export default {
 
             localStorage.removeItem('auth')
         },
+
+        /**
+         * 激活成功
+         * @param state
+         */
         [types.ACTIVED](state){
             state.is_active = true
             let data = JSON.parse(localStorage.auth)
             data.user.is_active = true
             localStorage.auth = JSON.stringify(data)
+        },
+
+        /**
+         * 头像更新
+         * @param state
+         * @param avatar
+         */
+        [types.AVATAR_UPDATED](state,avatar){
+            state.avatar = avatar
+            let data = JSON.parse(localStorage.auth)
+            data.user.avatar = avatar
+            localStorage.auth = JSON.stringify(data)
+        },
+
+        /**
+         * 基本资料更新
+         * @param state
+         * @param data
+         */
+        [types.BASIC_UPDATED](state,basic){
+            state.name = basic.name
+            let data = JSON.parse(localStorage.auth)
+            data.user.name = basic.name
+            localStorage.auth = JSON.stringify(data)
         }
     },
     actions: {
 
+        /**
+         * 登陆成功
+         * @param commit
+         * @param data
+         * @returns {Promise}
+         */
         authenticated ({commit}, data) {
             return new Promise(function (resolve, reject) {
                 commit(types.AUTHENTICATED, data)
@@ -57,6 +102,11 @@ export default {
             })
         },
 
+        /**
+         * 退出登录成功
+         * @param commit
+         * @returns {Promise}
+         */
         unthenticated({commit}){
             return new Promise(function (resolve, reject) {
                 commit(types.UNTHENTICATED)
@@ -64,6 +114,13 @@ export default {
             })
         },
 
+        /**
+         * 激活成功
+         * @param commit
+         * @param rootState
+         * @param token
+         * @returns {Promise}
+         */
         actived({commit,rootState}, token){
             return new Promise(function (resolve, reject) {
                 axios.post('active', token).then(resource => {
@@ -78,6 +135,27 @@ export default {
                         reject(respond.message)
                     }
                 })
+            })
+        },
+
+
+        /**
+         * 头像更新成功
+         * @param commit
+         * @param avatar
+         * @returns {Promise}
+         */
+        avatar_updated({commit},avatar){
+            return new Promise(function (resolve, reject) {
+                commit(types.AVATAR_UPDATED,avatar)
+                resolve()
+            })
+        },
+
+        basic_updated({commit},data){
+            return new Promise(function (resolve, reject) {
+                commit(types.BASIC_UPDATED,data)
+                resolve()
             })
         },
 

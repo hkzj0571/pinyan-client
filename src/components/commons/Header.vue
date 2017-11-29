@@ -38,10 +38,12 @@
                                         主页
                                     </DropdownItem>
                                 </router-link>
-                                <DropdownItem name="setting">
-                                    <Icon type="android-settings"></Icon>
-                                    设置
-                                </DropdownItem>
+                                <router-link to="/settings">
+                                    <DropdownItem name="setting">
+                                        <Icon type="android-settings"></Icon>
+                                        设置
+                                    </DropdownItem>
+                                </router-link>
                                 <a href="javascript:void(0);" @click="logout">
                                     <DropdownItem name="logout">
                                         <Icon type="power"></Icon>
@@ -62,21 +64,26 @@
                             </DropdownMenu>
                         </Dropdown>
                     </MenuItem>
+                    <MenuItem name="4" class="header-article" v-if="authenticated">
+                        <router-link to="/article">
+                            <Button shape="circle" icon="android-list">写文章</Button>
+                        </router-link>
+                    </MenuItem>
                 </div>
             </div>
         </Menu>
-        <div class="container no-active" v-if="authenticated && !is_active">
-            <Alert show-icon>
-                <template slot="desc">我们已经向您的邮箱地址 {{ email }} 发送了一封账号验证邮件， 为了你的账号安全，请尽快验证。</template>
-            </Alert>
-        </div>
+        <ResetMail v-if="authenticated && !is_active"></ResetMail>
     </div>
 </template>
 <script>
-    import {mapState} from 'vuex';
+    import ResetMail from '../auth/ResetMail.vue'
+    import {mapState} from 'vuex'
     export default {
         data() {
             return {}
+        },
+        components: {
+            ResetMail
         },
         computed: mapState({
             name: state => state.user.name,
@@ -91,7 +98,11 @@
                     this.$axios.get('logout').then(resource => {
                         let respond = resource.data
                         return respond.status ? this.$store.dispatch('unthenticated').then(() => {
-                            return this.$Message.success(respond.message)
+                            return this.$Message.success({
+                                content: respond.message,
+                                duration: 1,
+                                onClose: () => {this.$router.push('/')}
+                            })
                         }) : this.$Message.error(respond.message)
                     })
                 }
@@ -172,6 +183,27 @@
                 }
             }
         }
+        .header-article {
+            float: right;
+            .ivu-btn {
+                height: 32px;
+                line-height: 20px;
+                margin: 0px;
+                border: 1px solid rgba(236, 97, 73, 0.7);
+                font-size: 13px;
+                color: #fff;
+                background-color: #ea6f5a;
+                .ivu-icon {
+                    vertical-align: -3px;
+                    font-size: 20px;
+                }
+                &:hover {
+                    color: #fff;
+                    border-color: #ec6149;
+                    background-color: #ec6149;
+                }
+            }
+        }
         .header-user, .header-notification {
             float: right;
             .ivu-dropdown {
@@ -206,14 +238,6 @@
                     }
                 }
             }
-        }
-    }
-
-    .no-active {
-        margin-top: 25px !important;
-        .ivu-alert-desc {
-            font-size: 14px;
-            line-height: 20px;
         }
     }
 </style>
