@@ -38,7 +38,7 @@
                                         主页
                                     </DropdownItem>
                                 </router-link>
-                                <router-link to="/settings">
+                                <router-link to="/settings/basic">
                                     <DropdownItem name="setting">
                                         <Icon type="android-settings"></Icon>
                                         设置

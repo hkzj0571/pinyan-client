@@ -1,7 +1,7 @@
 <template>
-    <Form :model="profile_form"  :label-width="120" class="settings-basic-form">
+    <Form :model="profile_form" :label-width="120" class="settings-basic-form">
         <FormItem label="性别" prop="gender">
-            <Select size="large">
+            <Select size="large" v-model="profile_form.gender">
                 <Option value="female" label="女">
                     <Icon type="female"></Icon>
                     <span>女</span>
@@ -21,57 +21,78 @@
             </Select>
         </FormItem>
         <FormItem label="个人简介" prop="describe">
-            <Input type="textarea" :rows="4" placeholder="Enter something..."/>
-            <p class="help">请用文字描绘出你精彩的人生，会在个人主页右侧展示</p>
+            <Input type="textarea" :rows="4" v-model="profile_form.describe" placeholder="Enter something..."/>
+            <p class="help">请填写您的个人描述，会在个人主页右侧展示</p>
         </FormItem>
-        <FormItem label="个人站点">
-            <i-input placeholder="请输入你的个人站点" size="large"/>
+        <FormItem label="个人站点" prop="website">
+            <i-input placeholder="请输入你的个人站点" v-model="profile_form.website" size="large"/>
             <p class="help">填写后会在个人主页显示图标</p>
         </FormItem>
-        <FormItem label="微信二维码" class="avatar-item" prop="avatar">
-            <Avatar shape="square" :src="profile_form.avatar" size="large" />
-            <span class="deatroy">删除</span>
-            <p class="help">填写后会在个人主页显示图标</p>
+        <FormItem label="微信二维码" class="wechat-item">
+            <CropWechatQrCode></CropWechatQrCode>
         </FormItem>
         <FormItem>
-            <Button type="success" shape="circle">保存</Button>
+            <Button type="success" shape="circle" @click="onSubmit('basic_form')">保存</Button>
         </FormItem>
     </Form>
 </template>
 
 <script>
+    import CropWechatQrCode from '../../components/users/CropWechatQrCode.vue'
     import {mapState} from 'vuex'
     export default {
         data () {
             return {
-                profile_form:{
-                    name:null,
-                    avatar:null,
-                    email:null,
+                rules: {
+                    gender: [
+                        {required: true, message: '请选择您的性别', trigger: 'change'},
+                    ],
+                    describe: [
+                        {max: 1000, message: '个人描述最多只能填写 1000 字', trigger: 'blur'}
+                    ],
+                    website: [
+                        {max: 100, message: '网址最长为 100 位', trigger: 'blur'}
+                    ],
+                },
+                profile_form: {
+                    gender: null,
+                    describe: null,
+                    website: null,
                 }
             }
         },
-        created:function () {
-            this.profile_form.name = this.name
-            this.profile_form.avatar = this.avatar
-            this.profile_form.email = this.email
+        components: {
+            CropWechatQrCode
+        },
+        created: function () {
+            this.profile_form.gender = this.gender
+            this.profile_form.describe = this.describe
+            this.profile_form.website = this.website
         },
         computed: mapState({
-            name: state => state.user.name,
-            avatar: state => state.user.avatar,
-            email: state => state.user.email,
-            is_active: state => state.user.is_active,
-            authenticated: state => state.user.authenticated,
+            gender: state => state.user.gender,
+            describe: state => state.user.describe,
+            website: state => state.user.website,
         }),
+        methods: {
+            onSubmit(name){
+                this.$refs[name].validate((valid) => {
+
+                })
+            },
+        }
     }
 </script>
 
 <style lang="scss">
     .settings-basic-form {
         margin-top: 25px;
-        .avatar-item {
+        .avatar-item,.wechat-item {
             .ivu-form-item-label {
                 line-height: 80px;
+            }
+            .ivu-form-item-content {
+                line-height: 100px;
             }
         }
         .ivu-form-item {
@@ -90,7 +111,6 @@
                 .ivu-avatar {
                     width: 100px;
                     height: 100px;
-                    border: 1px solid #ddd;
                     cursor: pointer;
                 }
                 .deatroy {
@@ -102,8 +122,23 @@
                         color: #000;
                     }
                 }
+                .ivu-spin {
+                    width: 100px;
+                    height: 105px;
+                    cursor: pointer;
+                    line-height: 40px;
+                    display: inline-block;
+                }
+                .wechat_upload {
+                    color: #19be6b;
+                    border: 1px solid #19be6b;
+                    .ivu-icon {
+                        font-size: 20px;
+                        vertical-align: -3px;
+                    }
+                }
                 .ivu-input {
-                    background: hsla(0,0%,71%,.1);
+                    background: hsla(0, 0%, 71%, .1);
                     max-width: 350px;
                     resize: none;
                 }
@@ -111,7 +146,7 @@
                     font-size: 15px;
                 }
                 .ivu-select {
-                    width:250px;
+                    width: 250px;
                     .ivu-select-item {
                         padding: 12px 24px;
                         font-size: 14px !important;
@@ -125,10 +160,10 @@
                             margin-right: 5px;
                         }
                         .ivu-icon-female {
-                            color: 	#FF6EB4;
+                            color: #FF6EB4;
                         }
                         .ivu-icon-male {
-                            color: 	#6495ED;
+                            color: #6495ED;
                         }
                         .ivu-icon-transgender {
                             color: #43CD80;

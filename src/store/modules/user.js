@@ -9,6 +9,10 @@ export default {
         email: null,
         token: null,
         is_active: null,
+        website: null,
+        gender: null,
+        describe: null,
+        wechat_qrcode: null,
         authenticated: false,
     },
     mutations: {
@@ -18,7 +22,7 @@ export default {
          * @param state
          * @param data
          */
-        [types.AUTHENTICATED](state, data){
+            [types.AUTHENTICATED](state, data){
 
             let user = data.user
             let token = data.token
@@ -28,6 +32,10 @@ export default {
             state.name = user.name
             state.email = user.email
             state.is_active = user.is_active
+            state.website = user.website
+            state.gender = user.gender
+            state.describe = user.describe
+            state.wechat_qrcode = user.wechat_qrcode
             state.token = token.token_type + ' ' + token.access_token
             state.authenticated = true
 
@@ -40,7 +48,7 @@ export default {
          * 退出成功
          * @param state
          */
-        [types.UNTHENTICATED](state){
+            [types.UNTHENTICATED](state){
             state.id = null
             state.avatar = null
             state.name = null
@@ -56,7 +64,7 @@ export default {
          * 激活成功
          * @param state
          */
-        [types.ACTIVED](state){
+            [types.ACTIVED](state){
             state.is_active = true
             let data = JSON.parse(localStorage.auth)
             data.user.is_active = true
@@ -68,10 +76,34 @@ export default {
          * @param state
          * @param avatar
          */
-        [types.AVATAR_UPDATED](state,avatar){
+            [types.AVATAR_UPDATED](state, avatar){
             state.avatar = avatar
             let data = JSON.parse(localStorage.auth)
             data.user.avatar = avatar
+            localStorage.auth = JSON.stringify(data)
+        },
+
+        /**
+         * 微信二维码更新
+         * @param state
+         * @param wechat_qrcode
+         */
+        [types.WECHAT_QRCODE_UPDATED](state, wechat_qrcode){
+            state.wechat_qrcode = wechat_qrcode
+            let data = JSON.parse(localStorage.auth)
+            data.user.wechat_qrcode = wechat_qrcode
+            localStorage.auth = JSON.stringify(data)
+        },
+
+        /**
+         * 微信二维码删除
+         * @param state
+         * @param wechat_qrcode
+         */
+        [types.WECHAT_QRCODE_REMOVE](state){
+            state.wechat_qrcode = null
+            let data = JSON.parse(localStorage.auth)
+            data.user.wechat_qrcode = null
             localStorage.auth = JSON.stringify(data)
         },
 
@@ -80,7 +112,7 @@ export default {
          * @param state
          * @param data
          */
-        [types.BASIC_UPDATED](state,basic){
+            [types.BASIC_UPDATED](state, basic){
             state.name = basic.name
             let data = JSON.parse(localStorage.auth)
             data.user.name = basic.name
@@ -121,7 +153,7 @@ export default {
          * @param token
          * @returns {Promise}
          */
-        actived({commit,rootState}, token){
+        actived({commit, rootState}, token){
             return new Promise(function (resolve, reject) {
                 axios.post('active', token).then(resource => {
                     let respond = resource.data
@@ -145,16 +177,29 @@ export default {
          * @param avatar
          * @returns {Promise}
          */
-        avatar_updated({commit},avatar){
+        avatar_updated({commit}, avatar){
             return new Promise(function (resolve, reject) {
-                commit(types.AVATAR_UPDATED,avatar)
+                commit(types.AVATAR_UPDATED, avatar)
                 resolve()
             })
         },
 
-        basic_updated({commit},data){
+        /**
+         * 微信二维码更新
+         * @param commit
+         * @param wechat_qrcode
+         * @returns {Promise}
+         */
+        wechat_qrcode_updated({commit}, wechat_qrcode){
             return new Promise(function (resolve, reject) {
-                commit(types.BASIC_UPDATED,data)
+                commit(types.WECHAT_QRCODE_UPDATED, wechat_qrcode)
+                resolve()
+            })
+        },
+
+        basic_updated({commit}, data){
+            return new Promise(function (resolve, reject) {
+                commit(types.BASIC_UPDATED, data)
                 resolve()
             })
         },
