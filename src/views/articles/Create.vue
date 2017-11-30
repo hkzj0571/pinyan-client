@@ -1,172 +1,93 @@
 <template>
     <div class="layout">
         <div class="container">
-            <i-col :span="24">
+            <i-col :span="16" offset="4">
                 <div class="header">
                     <div class="header-logo">
                         <router-link to="/"></router-link>
                     </div>
-                    <Button shape="circle" icon="android-share">发布文章</Button>
+                    <Dropdown trigger="click">
+                        <a href="javascript:void(0)">
+                            <Button shape="circle" icon="arrow-down-b">发布文章</Button>
+                        </a>
+                        <div class="topic-select" slot="list">
+                            <p>请选择专题</p>
+                            <Select v-model="article_form.topic_id"
+                                    filterable
+                                    placeholder="请输入专题关键词"
+                                    :remote-method="getTopics"
+                                    :loading="topic_loading"
+                                    remote>
+                                <Option :value="topic.id" :label="topic.name" v-for="topic in topics" >
+                                    <img :src="topic.cover">
+                                    <span>{{ topic.name }}</span>
+                                </Option>
+                            </Select>
+                            <Button type="ghost" @click="store">确定发布</Button>
+                        </div>
+                    </Dropdown>
                 </div>
                 <div class="line"></div>
-                <Input type="textarea" :rows="1" class="article-input" placeholder="请输入文章标题"></Input>
-                <quill-editor class="article-quill" ref="newEditor" v-model="content" :options="editorOption"></quill-editor>
+                <div class="article-fored">
+                    <Input type="textarea" v-model="article_form.title" :rows="1" class="article-input"
+                           placeholder="请输入文章标题"></Input>
+                    <ArticleQuill v-model="article_form.content"></ArticleQuill>
+                </div>
             </i-col>
         </div>
     </div>
 </template>
 <script>
+    import ArticleQuill from '../../components/articles/Quill.vue'
     export default {
         data () {
             return {
-                content: '',
-                uniqueId:'sdasdasd',
-                editorOption: {
-                    placeholder: '请输入正文',
-                    modules: {
-                        toolbar: [
-                            [{'header': 1}, {'header': 2}],
-                            ['bold', 'italic', 'underline', 'strike'],
-                            ['blockquote', 'code-block', 'image'],
-                            [{'list': 'ordered'}, {'list': 'bullet'}],
-                            [{'indent': '-1'}, {'indent': '+1'}],
-                            ['clean']
-                        ]
-                    },
-                    theme: 'snow'
+                topics: [],
+                topic_loading: false,
+                article_form: {
+                    content: null,
+                    title: null,
+                    topic_id: null,
                 }
             }
         },
+        components: {
+            ArticleQuill
+        },
         methods: {
-        },
-        computed: {
-            editor() {
-            }
-        },
-        mounted() {
+            getTopics (query) {
+                if (query !== '') {
+                    this.topic_loading = true
+                    this.$axios.post('article/select_topic', {query: query}).then(resource => {
+                        let respond = resource.data
+                        this.topic_loading = false
+                        return respond.status
+                            ? this.topics = respond.data.topics
+                            : this.$Message.error(respond.message)
+                    })
+                } else {
+                    this.topics = []
+                }
+            },
+            store(){
 
+            },
         }
     }
 </script>
 
 <style lang="scss">
-    .article-quill {
-        padding: 0 0 200px;
-        .ql-toolbar {
-            padding: 0;
-            border: none;
-            border-top: 1px solid #e7eaf1;
-            margin-bottom: 30px;
-            .ql-formats {
-                margin-right: 10px;
-                padding-right: 10px;
-                border-right: 1px solid #e7eaf1;
-                button {
-                    width: 36px;
-                    height: 36px;
-                    padding: 6px;
-                    margin: 6px 3px 0px;
-                    .ql-stroke {
-                        stroke: #8590a6;
-                    }
-                    .ql-fill {
-                        fill: #8590a6;
-                    }
-                    &:hover {
-                        background: #f6f7f8;
-                    }
-                }
-                &:last-child {
-                    border-right: none;
-                }
-                .ql-active {
-                    .ql-stroke {
-                        stroke: #0f88eb;
-                    }
-                    .ql-fill {
-                        fill: #0f88eb;
-                    }
-                }
-            }
-        }
-        .ql-container {
-            border: none;
-            .ql-editor {
-                color: #495060;
-                font-size: 16px;
-                p {
-                    line-height: 24px;
-                    margin: 0 0 1em;
-                    img {
-                        display: block;
-                        margin: 25px auto;
-                    }
-
-                    code {
-                        line-height: 28px;
-                        background: #f6f6f6;
-                        color: #495060;
-                        padding: 6px 8px;
-                        border-radius: 3px;
-                        font-family: Monaco, Menlo, Ubuntu Mono, Consolas, source-code-pro, monospace;
-                    }
-                }
-                .ql-syntax {
-                    line-height: 28px;
-                    background: #f6f6f6;
-                    color: #495060;
-                    margin: 1em 0;
-                    padding: 16px;
-                    border-radius: 6px;
-                    font-family: Monaco, Menlo, Ubuntu Mono, Consolas, source-code-pro, monospace;
-                }
-            }
-            .ql-blank::before {
-                color: rgb(179, 179, 179);
-                font-style: inherit;
-                font-size: 16px;
-            }
-        }
-    }
-
-    .article-input {
-        height: inherit;
-        width: 100%;
-        position: relative;
-        margin: 35px 0px;
-        border-width: 0px;
-        border-style: initial;
-        border-color: initial;
-        border-image: initial;
-        padding: 0px;
-        .ivu-input {
-            resize: none;
-            min-height: 44px;
-            display: block;
-            width: 100%;
-            font-size: 32px;
-            line-height: 1.4;
-            font-weight: 600;
-            box-shadow: none;
-            border-width: 0px;
-            border-style: initial;
-            border-color: initial;
-            border-image: initial;
-            outline: none;
-        }
-    }
-
     .container {
         .header {
             text-align: right;
             display: block;
-            padding: 20px 0px 5px;
+            padding: 30px 0px 5px;
             .header-logo {
                 width: 55px;
                 height: 26px;
                 border-radius: 3px;
                 float: left;
-                top: 15px;
+                top: 0px;
                 left: 20px;
                 background: url(../../assets/images/min-logo.png) no-repeat;
                 background-size: 100% 100%;
@@ -177,17 +98,68 @@
                 }
             }
             .ivu-btn {
-                background: #ea6f5a;
-                color: #fff;
-                border:1px solid transparent;
+                background: none;
+                color: #ea6f5a;
+                border: none;
+                font-size: 14px;
                 .ivu-icon {
                     font-size: 18px;
                     vertical-align: -2px;
+                    float: right;
+                    margin-left: 5px;
                 }
-                &:hover {
-                    background: #d66552;
+            }
+            .topic-select {
+                width: 250px;
+                padding: 15px 25px;
+                text-align: center;
+                p {
+                    color: #495060;
+                    font-size: 15px;
+                    font-weight: 400;
+                    margin-bottom: 25px;
+                }
+                .ivu-select-dropdown {
+                    .ivu-select-dropdown-list {
+                        .ivu-select-item {
+                            text-align: left;
+                            padding: 6px 12px;
+                            img {
+                                width: 36px;
+                                height: 36px;
+                                margin-right: 5px;
+                                line-height: 36px;
+                                display: inline-block;
+                                vertical-align: -10px;
+                                border-radius: 3px;
+                            }
+                            span {
+                                color: #495060;
+                                font-size: 15px;
+                                line-height: 36px;
+                                display: inline-block;
+                            }
+                            &:hover {
+                                background: #f7f8f9;
+                            }
+                        }
+                        .ivu-select-item-selected {
+                            background: #f7f8f9 !important;
+                        }
+                    }
+                }
+                .ivu-btn-ghost {
+                    color: #ea6f5a;
+                    background-color: transparenta;
+                    border: 1px solid #ea6f5a;
+                    font-size: 13px;
+                    margin-top: 25px;
                 }
             }
         }
+    }
+
+    .article-fored {
+        margin-top: 25px;
     }
 </style>

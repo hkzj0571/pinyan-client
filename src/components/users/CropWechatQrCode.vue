@@ -1,24 +1,26 @@
 <template>
-    <Upload action="http://up-z2.qiniu.com"
-            :max-size="3072"
-            :data="token"
-            :show-upload-list="false"
-            :format="['jpg','jpeg','png','gif']"
-            :before-upload="getUploadToken"
-            :on-format-error="FormatError"
-            :on-success="uploadSucceed"
-            :on-error="uploadFail"
-            :on-exceeded-size="exceededSize"
-    >
-        <Spin v-show="crop_vistal" fix>
-            <Icon type="load-c" size=18 class="spin-icon-load"></Icon>
-            <div>上传中...</div>
-        </Spin>
-        <Avatar shape="square" v-show="wechat_qrcode" :src="wechat_qrcode" size="large"/>
-        <Button type="ghost" icon="android-upload" shape="circle" size="large" v-show="!wechat_qrcode" class="wechat_upload">上传图片</Button>
+    <div>
+        <Upload action="http://up-z2.qiniu.com"
+                :max-size="3072"
+                :data="token"
+                :show-upload-list="false"
+                :format="['jpg','jpeg','png','gif']"
+                :before-upload="getUploadToken"
+                :on-format-error="FormatError"
+                :on-success="uploadSucceed"
+                :on-error="uploadFail"
+                :on-exceeded-size="exceededSize"
+        >
+            <Spin v-show="crop_vistal" fix>
+                <Icon type="load-c" size=18 class="spin-icon-load"></Icon>
+                <div>上传中...</div>
+            </Spin>
+            <Avatar shape="square" v-show="wechat_qrcode" :src="wechat_qrcode" size="large"/>
+            <Button type="ghost" icon="android-upload" shape="circle" size="large" v-show="!wechat_qrcode" class="wechat_upload">上传图片</Button>
+        </Upload>
         <span class="deatroy" v-show="wechat_qrcode" @click="removeQrCode">删除</span>
         <p class="help">上传后会在个人主页显示图标</p>
-    </Upload>
+    </div>
 </template>
 
 <script>
@@ -69,11 +71,11 @@
                 })
             },
             removeQrCode(){
-                return this.$axios.get('user/wechat_qrcode', {}).then(resource => {
+                return this.$axios.delete('user/wechat_qrcode', {}).then(resource => {
                     let respond = resource.data
 
                     return respond.status
-                        ? this.$store.dispatch('wechat_qrcode_remove', wechat_qrcode).then(() => {
+                        ? this.$store.dispatch('wechat_qrcode_remove').then(() => {
                             this.$Message.success(respond.message)
                         })
                         : this.$Message.error(respond.message)

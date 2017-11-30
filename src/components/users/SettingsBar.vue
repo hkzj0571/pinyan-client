@@ -1,6 +1,5 @@
 <template>
-    <Menu class="settings-bar" active-name="basic">
-
+    <Menu class="settings-bar" :active-name="$route.meta.menu_active">
         <MenuItem name="basic">
             <router-link to="/settings/basic">
                 <div class="icon">

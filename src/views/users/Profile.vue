@@ -1,6 +1,6 @@
 <template>
-    <Form :model="profile_form" :label-width="120" class="settings-basic-form">
-        <FormItem label="性别" prop="gender">
+    <Form :model="profile_form" ref="profile_form" :rules="rules" :label-width="120" class="settings-basic-form">
+        <FormItem label="性别">
             <Select size="large" v-model="profile_form.gender">
                 <Option value="female" label="女">
                     <Icon type="female"></Icon>
@@ -32,7 +32,7 @@
             <CropWechatQrCode></CropWechatQrCode>
         </FormItem>
         <FormItem>
-            <Button type="success" shape="circle" @click="onSubmit('basic_form')">保存</Button>
+            <Button type="success" shape="circle" @click="onSubmit('profile_form')">保存</Button>
         </FormItem>
     </Form>
 </template>
@@ -44,9 +44,6 @@
         data () {
             return {
                 rules: {
-                    gender: [
-                        {required: true, message: '请选择您的性别', trigger: 'change'},
-                    ],
                     describe: [
                         {max: 1000, message: '个人描述最多只能填写 1000 字', trigger: 'blur'}
                     ],
@@ -77,7 +74,16 @@
         methods: {
             onSubmit(name){
                 this.$refs[name].validate((valid) => {
+                    if (!valid) return
 
+                    this.$axios.put('user/profile', this.profile_form).then(resource => {
+                        let respond = resource.data
+                        return respond.status
+                            ? this.$store.dispatch('profile_updated',this.profile_form).then(() => {
+                                return this.$Message.success(respond.message)
+                            })
+                            : this.$Message.error(respond.message)
+                    })
                 })
             },
         }
@@ -93,6 +99,17 @@
             }
             .ivu-form-item-content {
                 line-height: 100px;
+            }
+        }
+        .wechat-item {
+            .ivu-avatar {
+                img {
+                    padding: 4px;
+                    line-height: 1.42857143;
+                    background-color: #fff;
+                    border: 1px solid #ddd;
+                    border-radius: 4px;
+                }
             }
         }
         .ivu-form-item {
@@ -137,6 +154,9 @@
                         vertical-align: -3px;
                     }
                 }
+                .ivu-upload {
+                    display: inline-block;
+                }
                 .ivu-input {
                     background: hsla(0, 0%, 71%, .1);
                     max-width: 350px;
@@ -171,9 +191,12 @@
                         .ivu-icon-locked {
                             color: #000;
                         }
+                        &:hover {
+                            background: #f7f8f9;
+                        }
                     }
                     .ivu-select-item-selected {
-                        background: #eee !important;
+                        background: #f7f8f9 !important;
                     }
                 }
                 &:hover {

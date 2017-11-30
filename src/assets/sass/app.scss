@@ -58,4 +58,112 @@ html,body {
     position: relative;
     border: 1px solid #eee;
   }
+  .article-quill {
+    padding: 0 0 200px;
+    .ql-toolbar {
+      padding: 0;
+      border: none;
+      border-top: 1px solid #e7eaf1;
+      margin-bottom: 30px;
+      .ql-formats {
+        margin-right: 10px;
+        padding-right: 10px;
+        border-right: 1px solid #e7eaf1;
+        button {
+          width: 30px;
+          height: 30px;
+          padding: 5px;
+          margin: 6px 3px 0px;
+          .ql-stroke {
+            stroke: #8590a6;
+          }
+          .ql-fill {
+            fill: #8590a6;
+          }
+          &:hover {
+            background: #f6f7f8;
+          }
+        }
+        &:last-child {
+          border-right: none;
+        }
+        .ql-active {
+          .ql-stroke {
+            stroke: #0f88eb;
+          }
+          .ql-fill {
+            fill: #0f88eb;
+          }
+        }
+      }
+    }
+    .ql-container {
+      border: none;
+      .ql-editor {
+        color: #495060;
+        font-size: 16px;
+        p {
+          line-height: 26px;
+          margin: 0 0 .75em;
+          img {
+            display: block;
+            margin: 25px auto;
+          }
+
+          code {
+            line-height: 28px;
+            background: #f6f6f6;
+            color: #495060;
+            padding: 6px 8px;
+            border-radius: 3px;
+            font-family: Monaco, Menlo, Ubuntu Mono, Consolas, source-code-pro, monospace;
+          }
+        }
+        .ql-syntax {
+          line-height: 28px;
+          background: #f6f6f6;
+          color: #495060;
+          margin: 1em 0;
+          padding: 16px;
+          border-radius: 6px;
+          font-family: Monaco, Menlo, Ubuntu Mono, Consolas, source-code-pro, monospace;
+        }
+        h1,h2,h3,h4,h5,h7 {
+          margin-bottom: 25px;
+        }
+      }
+      .ql-blank::before {
+        color: #BFBEC9;
+        font-style: inherit;
+        font-size: 16px;
+      }
+    }
+  }
+
+  .article-input {
+    height: inherit;
+    width: 100%;
+    position: relative;
+    margin: 25px 0px 35px;
+    border-width: 0px;
+    border-style: initial;
+    border-color: initial;
+    border-image: initial;
+    padding: 0px;
+    .ivu-input {
+      resize: none;
+      min-height: 44px;
+      display: block;
+      width: 100%;
+      font-size: 32px;
+      line-height: 1.4;
+      font-weight: 600;
+      box-shadow: none;
+      border-width: 0px;
+      border-style: initial;
+      border-color: initial;
+      border-image: initial;
+      outline: none;
+    }
+  }
 }

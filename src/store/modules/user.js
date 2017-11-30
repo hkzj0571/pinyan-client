@@ -117,6 +117,22 @@ export default {
             let data = JSON.parse(localStorage.auth)
             data.user.name = basic.name
             localStorage.auth = JSON.stringify(data)
+        },
+
+        /**
+         * 个人资料更新
+         * @param state
+         * @param profile
+         */
+        [types.PROFILE_UPDATED](state, profile){
+            state.website = profile.website
+            state.gender = profile.gender
+            state.describe = profile.describe
+            let data = JSON.parse(localStorage.auth)
+            data.user.website = profile.website
+            data.user.gender = profile.gender
+            data.user.describe = profile.describe
+            localStorage.auth = JSON.stringify(data)
         }
     },
     actions: {
@@ -197,9 +213,29 @@ export default {
             })
         },
 
+        wechat_qrcode_remove({commit}){
+            return new Promise(function (resolve, reject) {
+                commit(types.WECHAT_QRCODE_REMOVE)
+                resolve()
+            })
+        },
+
+        /**
+         * 基本资料更新
+         * @param commit
+         * @param data
+         * @returns {Promise}
+         */
         basic_updated({commit}, data){
             return new Promise(function (resolve, reject) {
                 commit(types.BASIC_UPDATED, data)
+                resolve()
+            })
+        },
+
+        profile_updated({commit}, data){
+            return new Promise(function (resolve, reject) {
+                commit(types.PROFILE_UPDATED, data)
                 resolve()
             })
         },

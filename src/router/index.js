@@ -29,14 +29,23 @@ export default new Router({
             children: [
                 {
                     path: 'basic',
+                    meta:{
+                        menu_active:'basic'
+                    },
                     component: (resolve) => require(['../views/users/Basic.vue'], resolve)
                 },
                 {
                     path: 'profile',
+                    meta:{
+                        menu_active:'profile'
+                    },
                     component: (resolve) => require(['../views/users/Profile.vue'], resolve)
                 },
                 {
                     path: 'badge',
+                    meta:{
+                        menu_active:'badge'
+                    },
                     component: (resolve) => require(['../views/users/Badge.vue'], resolve)
                 },
             ]
