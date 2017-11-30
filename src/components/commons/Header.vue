@@ -16,7 +16,7 @@
                     </MenuItem>
                     <MenuItem name="5">
                         <Icon type="android-hangout"></Icon>
-                        话题
+                        专题
                     </MenuItem>
                     <MenuItem name="3" class="header-search">
                         <i-input placeholder="搜索" icon="ios-search"/>

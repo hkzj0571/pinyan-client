@@ -49,7 +49,7 @@
                 <Card class="index-topad" dis-hover>
                     <p slot="title">
                         <Icon type="flame"></Icon>
-                        热门话题
+                        热门专题
                     </p>
                     <router-link to="/" slot="extra">
                         查看更多

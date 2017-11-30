@@ -29,8 +29,7 @@
                 </div>
                 <div class="line"></div>
                 <div class="article-fored">
-                    <Input type="textarea" v-model="article_form.title" :rows="1" class="article-input"
-                           placeholder="请输入文章标题"></Input>
+                    <Input type="textarea" v-model="article_form.title" :rows="1" class="article-input" placeholder="请输入文章标题"></Input>
                     <ArticleQuill v-model="article_form.content"></ArticleQuill>
                 </div>
             </i-col>

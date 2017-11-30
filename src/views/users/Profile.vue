@@ -168,6 +168,7 @@
                 .ivu-select {
                     width: 250px;
                     .ivu-select-item {
+                        color: #495060;
                         padding: 12px 24px;
                         font-size: 14px !important;
                         .ivu-icon {
@@ -192,6 +193,7 @@
                             color: #000;
                         }
                         &:hover {
+                            color: #495060;
                             background: #f7f8f9;
                         }
                     }
