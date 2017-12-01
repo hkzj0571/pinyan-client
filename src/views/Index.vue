@@ -38,7 +38,7 @@
                                 <Icon type="eye"></Icon>
                                 2702
                             </a> <a target="_blank" href="/p/17e0d08ed8ec#comments">
-                            <Icon type="android-textsms"></Icon>
+                            <Icon type="chatbox-working"></Icon>
                             79
                         </a> <span><Icon type="android-favorite"></Icon> 94</span>
                         </div>

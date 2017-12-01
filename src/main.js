@@ -6,6 +6,9 @@ import iView from 'iview'
 import Util from './libs/util'
 import 'iview/dist/styles/iview.css'
 import './assets/sass/app.scss'
+import Share from 'vue-social-share'
+
+Vue.use(Share)
 
 import VueQuillEditor from 'vue-quill-editor'
 import 'quill/dist/quill.core.css'

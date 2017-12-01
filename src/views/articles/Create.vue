@@ -1,7 +1,7 @@
 <template>
     <div class="layout">
         <div class="container">
-            <i-col :span="16" offset="4">
+            <i-col :span="18" offset="3">
                 <div class="header">
                     <div class="header-logo">
                         <router-link to="/"></router-link>

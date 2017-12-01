@@ -7,15 +7,12 @@
             <div class="container">
                 <div class="header-nav">
                     <MenuItem name="1">
-                        <Icon type="android-compass"></Icon>
                         首页
                     </MenuItem>
                     <MenuItem name="2">
-                        <Icon type="fireball"></Icon>
                         热门
                     </MenuItem>
                     <MenuItem name="5">
-                        <Icon type="android-hangout"></Icon>
                         专题
                     </MenuItem>
                     <MenuItem name="3" class="header-search">
@@ -27,10 +24,10 @@
                         </router-link>
                     </MenuItem>
                     <MenuItem name="4" class="header-user" v-if="authenticated">
-                        <Dropdown trigger="hover">
-                            <router-link to="/">
+                        <Dropdown trigger="click">
+                            <a href="javascript:void(0);">
                                 <Avatar :src="avatar" shape="square" size="large"/>
-                            </router-link>
+                            </a>
                             <DropdownMenu slot="list">
                                 <router-link to="/">
                                     <DropdownItem name="profile">
@@ -66,7 +63,7 @@
                     </MenuItem>
                     <MenuItem name="4" class="header-article" v-if="authenticated">
                         <router-link to="/article">
-                            <Button shape="circle" icon="android-list">写文章</Button>
+                            <Button shape="circle" icon="android-list" >写文章</Button>
                         </router-link>
                     </MenuItem>
                 </div>

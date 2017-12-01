@@ -71,10 +71,10 @@ html,body {
         padding-right: 10px;
         border-right: 1px solid #e7eaf1;
         button {
-          width: 30px;
-          height: 30px;
+          width: 32px;
+          height: 32px;
           padding: 5px;
-          margin: 6px 3px 0px;
+          margin: 7px 3px 0px;
           .ql-stroke {
             stroke: #8590a6;
           }
@@ -103,39 +103,56 @@ html,body {
       .ql-editor {
         color: #262626;
         font-size: 16px;
+        blockquote {
+          margin: 20px 0;
+          background-color: #f5f8fc;
+          padding: 1rem;
+          color: #8796A8;
+          border-left: none;
+          overflow-y: auto;
+          font-size: 14px;
+          line-height: 26px;
+          font-family: Monaco, Menlo, Ubuntu Mono, Consolas, source-code-pro, monospace;
+        }
         p {
           line-height: 26px;
           margin: 0 0 .75em;
-          img {
-            display: block;
-            margin: 25px auto;
-          }
-
-          code {
-            line-height: 28px;
-            background: #f6f6f6;
-            color: #262626;
-            padding: 6px 8px;
-            border-radius: 3px;
-            font-family: Monaco, Menlo, Ubuntu Mono, Consolas, source-code-pro, monospace;
-          }
         }
         .ql-syntax {
           display: block;
-          white-space: normal;
+          white-space: pre;
           line-height: 28px;
           background: #f6f6f6;
           color: #262626;
           margin: 1em 0;
           padding: 16px;
+          font-size: 14px;
           border-radius: 6px;
+          overflow-y: auto;
           font-family: Monaco, Menlo, Ubuntu Mono, Consolas, source-code-pro, monospace;
         }
-        pre {
-          white-space: pre !important;
-        }
         h1,h2,h3,h4,h5,h7 {
-          margin-bottom: 25px;
+          margin: 25px auto;
+        }
+        code {
+          line-height: 28px;
+          background: #f6f6f6;
+          color: #262626 !important;
+          padding: 6px 8px;
+          white-space: pre;
+          overflow-y: auto;
+          border-radius: 3px;
+          font-size: 14px;
+          font-family: Monaco, Menlo, Ubuntu Mono, Consolas, source-code-pro, monospace;
+        }
+        img {
+          display: block;
+          margin: 25px auto;
+        }
+        ul {
+          li {
+            margin: 10px auto;
+          }
         }
       }
       .ql-blank::before {
@@ -172,5 +189,9 @@ html,body {
       border-image: initial;
       outline: none;
     }
+  }
+
+  .ivu-form-item-required .ivu-form-item-label:before {
+    display: none !important;
   }
 }

@@ -29,7 +29,7 @@
                         toolbar: [
                             [{'header': 1}, {'header': 2}],
                             ['bold', 'italic', 'underline', 'strike'],
-                            ['blockquote', 'code-block', 'image'],
+                            ['blockquote', 'code-block', 'image','link'],
                             [{'list': 'ordered'}, {'list': 'bullet'}],
                             [{'indent': '-1'}, {'indent': '+1'}],
                             ['clean']
