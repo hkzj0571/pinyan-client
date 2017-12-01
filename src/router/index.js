@@ -24,29 +24,33 @@ export default new Router({
             component: (resolve) => require(['../views/articles/Create.vue'], resolve)
         },
         {
+            path: '/article/:id',
+            component: (resolve) => require(['../views/articles/Show.vue'], resolve)
+        },
+        {
             path: '/settings',
-            component: (resolve) => require(['../views/users/Settings.vue'], resolve),
+            component: (resolve) => require(['../views/users/settings/Settings.vue'], resolve),
             children: [
                 {
                     path: 'basic',
                     meta:{
                         menu_active:'basic'
                     },
-                    component: (resolve) => require(['../views/users/Basic.vue'], resolve)
+                    component: (resolve) => require(['../views/users/settings/Basic.vue'], resolve)
                 },
                 {
                     path: 'profile',
                     meta:{
                         menu_active:'profile'
                     },
-                    component: (resolve) => require(['../views/users/Profile.vue'], resolve)
+                    component: (resolve) => require(['../views/users/settings/Profile.vue'], resolve)
                 },
                 {
                     path: 'badge',
                     meta:{
                         menu_active:'badge'
                     },
-                    component: (resolve) => require(['../views/users/Badge.vue'], resolve)
+                    component: (resolve) => require(['../views/users/settings/Badge.vue'], resolve)
                 },
             ]
         },

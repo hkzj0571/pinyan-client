@@ -18,18 +18,18 @@
                                     :remote-method="getTopics"
                                     :loading="topic_loading"
                                     remote>
-                                <Option :value="topic.id" :label="topic.name" v-for="topic in topics" >
+                                <Option :value="topic.id" :label="topic.name" v-for="topic in topics">
                                     <img :src="topic.cover">
                                     <span>{{ topic.name }}</span>
                                 </Option>
                             </Select>
-                            <Button type="ghost" @click="store">确定发布</Button>
+                            <Button type="ghost" @click="store" :disabled="!create_validate">确定发布</Button>
                         </div>
                     </Dropdown>
                 </div>
                 <div class="line"></div>
                 <div class="article-fored">
-                    <Input type="textarea" v-model="article_form.title" :rows="1" class="article-input" placeholder="请输入文章标题"></Input>
+                    <Input type="textarea" v-model="article_form.title" :rows="1" class="article-input" placeholder="请输入文章标题"/>
                     <ArticleQuill v-model="article_form.content"></ArticleQuill>
                 </div>
             </i-col>
@@ -38,8 +38,9 @@
 </template>
 <script>
     import ArticleQuill from '../../components/articles/Quill.vue'
+
     export default {
-        data () {
+        data() {
             return {
                 topics: [],
                 topic_loading: false,
@@ -54,7 +55,7 @@
             ArticleQuill
         },
         methods: {
-            getTopics (query) {
+            getTopics(query) {
                 if (query !== '') {
                     this.topic_loading = true
                     this.$axios.post('article/select_topic', {query: query}).then(resource => {
@@ -68,10 +69,24 @@
                     this.topics = []
                 }
             },
-            store(){
-
+            store() {
+                this.$axios.post('article/store', this.article_form).then(resource => {
+                    let respond = resource.data
+                    return respond.status ? this.$Message.success({
+                        content: '文章发布成功',
+                        duration: 1,
+                        onClose: () => {
+                            this.$router.push('/')
+                        }
+                    }) : this.$Message.error(respond.message)
+                })
             },
-        }
+        },
+        computed: {
+            create_validate: function () {
+                return this.article_form.title && this.article_form.topic_id && this.article_form.content
+            }
+        },
     }
 </script>
 
@@ -153,6 +168,11 @@
                     border: 1px solid #ea6f5a;
                     font-size: 13px;
                     margin-top: 25px;
+                }
+                .ivu-btn-ghost[disabled] {
+                    color: #bbbec4 !important;
+                    background-color: #f7f7f7 !important;
+                    border-color: #dddee1 !important;
                 }
             }
         }

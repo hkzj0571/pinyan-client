@@ -38,7 +38,7 @@
 </template>
 
 <script>
-    import CropWechatQrCode from '../../components/users/CropWechatQrCode.vue'
+    import CropWechatQrCode from '../../../components/users/CropWechatQrCode.vue'
     import {mapState} from 'vuex'
     export default {
         data () {

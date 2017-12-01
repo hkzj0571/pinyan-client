@@ -1,4 +1,5 @@
 html,body {
+  color: #262626;
   -webkit-font-smoothing: auto;
   .container {
     width: 960px;
@@ -100,7 +101,7 @@ html,body {
     .ql-container {
       border: none;
       .ql-editor {
-        color: #495060;
+        color: #262626;
         font-size: 16px;
         p {
           line-height: 26px;
@@ -113,20 +114,25 @@ html,body {
           code {
             line-height: 28px;
             background: #f6f6f6;
-            color: #495060;
+            color: #262626;
             padding: 6px 8px;
             border-radius: 3px;
             font-family: Monaco, Menlo, Ubuntu Mono, Consolas, source-code-pro, monospace;
           }
         }
         .ql-syntax {
+          display: block;
+          white-space: normal;
           line-height: 28px;
           background: #f6f6f6;
-          color: #495060;
+          color: #262626;
           margin: 1em 0;
           padding: 16px;
           border-radius: 6px;
           font-family: Monaco, Menlo, Ubuntu Mono, Consolas, source-code-pro, monospace;
+        }
+        pre {
+          white-space: pre !important;
         }
         h1,h2,h3,h4,h5,h7 {
           margin-bottom: 25px;
@@ -151,12 +157,13 @@ html,body {
     border-image: initial;
     padding: 0px;
     .ivu-input {
+      color: #262626;
       resize: none;
-      min-height: 44px;
+      min-height: 72px;
       display: block;
       width: 100%;
       font-size: 32px;
-      line-height: 1.4;
+      line-height: 32px;
       font-weight: 600;
       box-shadow: none;
       border-width: 0px;

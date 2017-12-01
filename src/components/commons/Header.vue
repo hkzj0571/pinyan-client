@@ -27,12 +27,12 @@
                         </router-link>
                     </MenuItem>
                     <MenuItem name="4" class="header-user" v-if="authenticated">
-                        <Dropdown trigger="click">
-                            <a href="javascript:void(0)">
+                        <Dropdown trigger="hover">
+                            <router-link to="/">
                                 <Avatar :src="avatar" shape="square" size="large"/>
-                            </a>
+                            </router-link>
                             <DropdownMenu slot="list">
-                                <router-link to="login">
+                                <router-link to="/">
                                     <DropdownItem name="profile">
                                         <Icon type="person"></Icon>
                                         主页

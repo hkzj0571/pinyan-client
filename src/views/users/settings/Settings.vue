@@ -13,8 +13,8 @@
 </template>
 
 <script>
-    import IndexHeader from '../../components/commons/Header.vue'
-    import SettingsBar from '../../components/users/SettingsBar.vue'
+    import IndexHeader from '../../../components/commons/Header.vue'
+    import SettingsBar from '../../../components/users/SettingsBar.vue'
     export default {
         components: {
             IndexHeader,
