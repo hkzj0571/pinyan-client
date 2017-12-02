@@ -4,11 +4,6 @@
         <div class="container">
             <i-col :span="18" offset="3">
                 <div class="article">
-
-                    <Spin size="large" fix v-if="spin">
-                        <Icon type="load-c" size=18 class="spin-icon-load"></Icon>
-                        <div>文章加载中...</div>
-                    </Spin>
                     <h1 class="title" v-text="article.title"></h1>
                     <div class="author">
                         <a class="avatar" href="/u/36b4d22b6e4d">
@@ -17,7 +12,7 @@
                         <div class="info">
                             <span class="name"><a href="/u/36b4d22b6e4d" v-text="article.user.name"></a></span>
                             <!--<img class="badge-icon" data-toggle="tooltip" title="" src="http://upload.jianshu.io/user_badge/48d31e61-a03c-4506-81a2-d224ac0a2d8b" alt="48d31e61 a03c 4506 81a2 d224ac0a2d8b" data-original-title="简书版权">-->
-                            <p class="describe">山無陵，江水為竭。冬雷震震，夏雨雪。天地合，乃敢與君絕。</p>
+                            <p class="describe" v-text="article.user.describe"></p>
                             <div class="meta">
                                 <span><Icon type="android-time"></Icon>{{ article.created_at }}</span>
                                 <span>阅读 3027</span>
@@ -26,7 +21,9 @@
                             </div>
                         </div>
 
-                        <Button class="btn-edit" type="success" v-if="is_author" icon="android-create" shape="circle">编辑文章</Button>
+                        <Button class="btn-edit" type="success" v-if="is_author" icon="android-create" shape="circle">
+                            编辑文章
+                        </Button>
                         <Button class="btn-focus" type="success" icon="plus-round" shape="circle">关注</Button>
                     </div>
                     <div class="content" v-html="article.content">
@@ -34,15 +31,119 @@
                     <div class="footer">
                         <a class="topic" href="/nb/18630507">
                             <Icon type="android-bookmark"></Icon>
-                            <span>短篇小说</span>
+                            <span v-text="article.topic.name"></span>
                         </a>
                         <div class="copyright">© 著作权归作者所有</div>
                         <div class="options">
-                            <a href=""><Icon type="flag"></Icon>举报文章</a>
+                            <a href="">
+                                <Icon type="flag"></Icon>
+                                举报文章</a>
                         </div>
                     </div>
-
-                    <share></share>
+                    <div class="author-detail">
+                        <div class="info">
+                            <a class="avatar" href="/u/203d799b2d7b">
+                                <img :src="article.user.avatar">
+                            </a>
+                            <Button class="btn-focus" type="success" icon="plus-round" shape="circle">关注</Button>
+                            <a class="title" href="/u/203d799b2d7b" v-text="article.user.name"></a>
+                            <Icon :type="article.user.gender" v-show="article.user.gender"></Icon>
+                            <p class="describe" v-text="article.user.describe"></p>
+                            <p>写了 160748 字，被 29902 人关注，获得了 9191 个喜欢</p></div>
+                        <div class="signature">【文学】专题主编
+                            1/2文化策划人，1/2职业写手
+                            此生无长，唯写字谋生
+                            写文章是要打磨的手艺活
+                            所有文章，谢绝转载
+                            我已委托“维权骑士”（rightknights.com）为我的文章进行维权行动。
+                        </div>
+                    </div>
+                    <div class="appreciates">
+                        <p>向来很慢。幸好写文章是件慢的事。</p>
+                        <Button type="warning" icon="coffee" size="large" shape="circle">赞赏支持</Button>
+                        <div class="supporter">
+                            <ul class="support-list">
+                                <li>
+                                    <a target="_blank" href="/u/eee6e7dea98c" class="avatar"><img
+                                            src="//upload.jianshu.io/users/upload_avatars/3354589/c5a5c2aa-eeb3-4e50-8ac5-a0798375e016.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/120/h/120"></a>
+                                </li>
+                                <li>
+                                    <a target="_blank" href="javascript:void(0)" class="avatar"><img
+                                            src="http://wx.qlogo.cn/mmopen/EcOKiaZLsUY9FuML88x9hy6yAoRn5shyc28p2ibzb7x6XXdNOKYZBhZcbwk3nx4wHm1qDuZ4c6lfulRUmRFBWZ77R3jJXvCg6q/0"></a>
+                                </li>
+                                <li>
+                                    <a target="_blank" href="javascript:void(0)" class="avatar"><img
+                                            src="http://cdn2.jianshu.io/assets/default_avatar/wechat-771371d5741b0c32cd805caeb48ad6c0.png"></a>
+                                </li>
+                                <li>
+                                    <a target="_blank" href="javascript:void(0)" class="avatar"><img
+                                            src="http://cdn2.jianshu.io/assets/default_avatar/wechat-771371d5741b0c32cd805caeb48ad6c0.png"></a>
+                                </li>
+                                <li>
+                                    <a target="_blank" href="javascript:void(0)" class="avatar"><img
+                                            src="http://cdn2.jianshu.io/assets/default_avatar/wechat-771371d5741b0c32cd805caeb48ad6c0.png"></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="meta-bottom">
+                        <div class="like">
+                            <div class="btn like-group">
+                                <div class="btn-like"><a>
+                                    <Icon type="android-favorite-outline"></Icon>
+                                    喜欢</a></div>
+                                <div class="modal-wrap"><a>58</a></div>
+                            </div> <!----></div>
+                        <share></share>
+                    </div>
+                    <div class="comment-list">
+                        <div class="new_commet">
+                            <Avatar icon="person" size="large"/>
+                            <!--<Input type="textarea" :rows="3" placeholder="请输入你的评论" ></Input>-->
+                            <textarea name="" rows="4" class="ivu-input" @click="show_comment_option = true"></textarea>
+                            <transition name="fade">
+                                <div class="function-block" v-show="show_comment_option">
+                                    <Icon type="android-happy"></Icon>
+                                    <Button type="text" shape="circle" size="large"
+                                            @click="show_comment_option = false">取消
+                                    </Button>
+                                    <Button type="success" shape="circle" size="large">发送</Button>
+                                </div>
+                            </transition>
+                        </div>
+                        <div class="normal-comment-list">
+                            <div class="top-title">
+                                <span>39条评论</span>
+                                <a class="author-only">只看作者</a>
+                                <a class="close-btn" style="display: none;">关闭评论</a>
+                                <div class="pull-right">
+                                    <a class="active">按喜欢排序</a>
+                                    <a>按时间正序</a>
+                                    <a>按时间倒序</a>
+                                </div>
+                            </div>
+                            <div class="comment" v-for="i in 15">
+                                <div class="author">
+                                    <Avatar icon="person" size="large" />
+                                    <div class="info">
+                                        <a href="/u/4f5335659dc7" class="name">郑熙澈</a>
+                                        <div class="meta"><span>14楼 · 2017.12.02 11:26</span></div>
+                                    </div>
+                                </div>
+                                <div class="comment-wrap">
+                                    <p>《三行情书》
+                                        <br>反正你又不看
+                                        <br>少一行又何妨
+                                    </p>
+                                    <div class="tool-group">
+                                        <a><i class="iconfont ic-zan"></i> <span>9人赞</span></a>
+                                        <a><i class="iconfont ic-comment"></i> <span>回复</span></a>
+                                        <a><span>举报</span></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </i-col>
         </div>
@@ -56,7 +157,7 @@
     export default {
         data() {
             return {
-                spin: true,
+                show_comment_option: false,
                 article: {
                     id: null,
                     title: null,
@@ -71,8 +172,8 @@
             IndexHeader
         },
         computed: {
-            is_author:function () {
-              return this.id == this.article.user.id
+            is_author: function () {
+                return this.id == this.article.user.id
             },
             ...mapState({
                 id: state => state.user.id,
@@ -80,7 +181,6 @@
         },
         created: function () {
             return this.$axios.get('article/' + this.$route.params.id, {}).then(resource => {
-                this.spin = false
                 let respond = resource.data
                 this.article = respond.data.article
             })
@@ -153,7 +253,7 @@
                     margin-top: 5px;
                 }
             }
-            .btn-edit,.btn-focus {
+            .btn-edit, .btn-focus {
                 float: right;
                 background: #fff;
                 color: #19be6b;
@@ -261,6 +361,278 @@
                     }
                     &:hover {
                         text-decoration: underline;
+                    }
+                }
+            }
+        }
+        .author-detail {
+            padding: 15px;
+            background-color: hsla(0, 0%, 71%, .1);
+            border: 1px solid #e1e1e1;
+            border-radius: 4px;
+            font-size: 12px;
+            .info {
+                min-height: 75px;
+                .avatar {
+                    float: left;
+                    margin-right: 10px;
+                    width: 75px;
+                    height: 75px;
+                    display: block;
+                    cursor: pointer;
+                    img {
+                        width: 100%;
+                        height: 100%;
+                        border: 1px solid #ddd;
+                        border-radius: 50%;
+                        vertical-align: middle;
+                    }
+                }
+                .btn-focus {
+                    float: right;
+                    margin-top: 16.5px;
+                    padding: 8px 0;
+                    width: 100px;
+                    font-size: 16px;
+                }
+                .title {
+                    color: #262626;
+                    margin-right: 3px;
+                    font-size: 18px;
+                    line-height: 1.8;
+                    vertical-align: middle;
+                }
+                p {
+                    margin-bottom: 0;
+                    color: #969696;
+                }
+                .ivu-icon {
+                    font-size: 15px;
+                    vertical-align: middle;
+                    margin-left: 5px;
+                }
+                .describe {
+                    margin-bottom: 5px;
+                    color: #262626;
+                }
+                .ivu-icon-male {
+                    color: #6495ED;
+                }
+                .ivu-icon-female {
+                    color: #FF6EB4;
+                }
+                .ivu-icon-transgender {
+                    color: #43CD80;
+                }
+                .ivu-icon-locked {
+                    color: #000;
+                }
+            }
+            .signature {
+                margin-top: 20px;
+                padding-top: 20px;
+                border-top: 1px solid #e1e1e1;
+                color: #969696;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+        }
+        .appreciates {
+            border-bottom: 1px solid #f0f0f0;
+            padding: 30px 0 20px;
+            text-align: center;
+            clear: both;
+            p {
+                padding: 0 30px;
+                margin-bottom: 20px;
+                min-height: 24px;
+                font-size: 17px;
+            }
+            .ivu-btn {
+                background: #ea6f5a;
+                color: #fff;
+                border: 1px solid #ea6f5a;
+                margin: 20px auto 35px;
+                .ivu-icon {
+                    font-size: 20px;
+                    vertical-align: -2px;
+                }
+            }
+            .supporter {
+                height: 50px;
+                .support-list {
+                    list-style: none;
+                    display: inline-block;
+                    li {
+                        margin: 0 -5px;
+                        display: inline-block;
+                        a {
+                            width: 40px;
+                            height: 40px;
+                            display: block;
+                            cursor: pointer;
+                            img {
+                                width: 100%;
+                                height: 100%;
+                                border: 1px solid #ddd;
+                                border-radius: 50%;
+                                border: 3px solid #fff;
+                                vertical-align: middle;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .meta-bottom {
+            margin-top: 30px;
+            margin-bottom: 80px;
+            .like {
+                display: inline-block;
+                .btn {
+                    padding: 13px 0 15px;
+                    font-size: 0;
+                    border: 1px solid #ea6f5a;
+                    border-radius: 40px;
+                    .btn-like {
+                        font-size: 19px;
+                        display: inline-block;
+                        a {
+                            color: #ea6f5a;
+                            padding: 18px 15px 18px 30px;
+                            .ivu-icon {
+                                font-size: 25px;
+                                vertical-align: -3px;
+                                margin-right: 10px;
+                            }
+                        }
+                    }
+                    .modal-wrap {
+                        font-size: 18px;
+                        border-left: 1px solid rgba(236, 97, 73, .4);
+                        display: inline-block;
+                        a {
+                            color: #ea6f5a;
+                            padding: 18px 30px 18px 17px;
+                        }
+                    }
+                    &:hover {
+                        background-color: rgba(236, 97, 73, .05);
+                    }
+                }
+            }
+            .social-share {
+                float: right;
+                height: 58px;
+                line-height: 58px;
+                a {
+                    line-height: 30px;
+                }
+            }
+        }
+        .comment-list {
+            .new_commet {
+                position: relative;
+                margin-left: 48px;
+                .ivu-avatar {
+                    position: absolute;
+                    left: -48px;
+                }
+                .ivu-input {
+                    border: 1px solid #f0f0f0;
+                    resize: none;
+                    background-color: hsla(0, 0%, 71%, .1);
+                }
+                .function-block {
+                    text-align: right;
+                    margin-top: 15px;
+                    .ivu-btn {
+                        margin-left: 15px;
+                    }
+                    .ivu-btn-text {
+                        color: #969696;
+                    }
+                    .ivu-icon {
+                        float: left;
+                        font-size: 27px;
+                        color: #969696;
+                    }
+                }
+            }
+            .normal-comment-list {
+                margin-top: 30px;
+                .top-title {
+                    padding-bottom: 20px;
+                    font-size: 17px;
+                    font-weight: 700;
+                    border-bottom: 1px solid #f0f0f0;
+                    span {
+                        vertical-align: middle;
+                    }
+                    .author-only {
+                        margin-left: 10px;
+                        padding: 4px 8px;
+                        font-size: 12px;
+                        color: #969696;
+                        border: 1px solid #e1e1e1;
+                        border-radius: 12px;
+                    }
+                    .pull-right {
+                        float: right;
+                        a {
+                            margin-left: 10px;
+                            font-size: 12px;
+                            font-weight: 400;
+                            color: #969696;
+                            display: inline-block;
+                        }
+                        .active {
+                            color: #262626;
+                        }
+                    }
+                }
+                .comment {
+                    padding: 20px 0 30px;
+                    border-bottom: 1px solid #f0f0f0;
+                    .author {
+                        margin-bottom: 15px;
+                        .info {
+                            display: inline-block;
+                            vertical-align: middle;
+                            .name {
+                                font-size: 15px;
+                                color: #333;
+                            }
+                            .meta {
+                                margin-top: 0px;
+                                font-size: 12px;
+                                color: #969696;
+                                span {
+                                    margin-right: 6px;
+                                }
+                            }
+                        }
+                    }
+                    .comment-wrap {
+                        p {
+                            font-size: 16px;
+                            margin: 10px 0;
+                            line-height: 1.5;
+                            font-size: 16px;
+                            word-break: break-word;
+                        }
+                        .tool-group {
+                            a {
+                                margin-right: 10px;
+                                color: #969696;
+                                display: inline-block;
+                                span {
+                                    vertical-align: middle;
+                                    font-size: 14px;
+                                }
+                            }
+                        }
                     }
                 }
             }
