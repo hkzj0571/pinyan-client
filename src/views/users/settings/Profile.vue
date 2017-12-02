@@ -20,9 +20,13 @@
                 </Option>
             </Select>
         </FormItem>
+        <FormItem label="个性签名" prop="describe">
+            <Input v-model="profile_form.describe"/>
+            <p class="help">请填写您的个性签名</p>
+        </FormItem>
         <FormItem label="个人简介" prop="describe">
-            <Input type="textarea" :rows="4" v-model="profile_form.describe" placeholder="Enter something..."/>
-            <p class="help">请填写您的个人描述，会在个人主页右侧展示</p>
+            <Input type="textarea" :rows="4" v-model="profile_form.resume"/>
+            <p class="help">请填写您的个人简介</p>
         </FormItem>
         <FormItem label="个人站点" prop="website">
             <i-input placeholder="请输入你的个人站点" v-model="profile_form.website" size="large"/>
@@ -40,12 +44,13 @@
 <script>
     import CropWechatQrCode from '../../../components/users/CropWechatQrCode.vue'
     import {mapState} from 'vuex'
+
     export default {
-        data () {
+        data() {
             return {
                 rules: {
                     describe: [
-                        {max: 1000, message: '个人描述最多只能填写 1000 字', trigger: 'blur'}
+                        {max: 100, message: '个性签名最多只能填写 100 字', trigger: 'blur'}
                     ],
                     website: [
                         {max: 100, message: '网址最长为 100 位', trigger: 'blur'}
@@ -55,6 +60,7 @@
                     gender: null,
                     describe: null,
                     website: null,
+                    resume: null,
                 }
             }
         },
@@ -62,27 +68,27 @@
             CropWechatQrCode
         },
         created: function () {
-            this.profile_form.gender = this.gender
-            this.profile_form.describe = this.describe
-            this.profile_form.website = this.website
+            this.profile_form.gender = this.user.gender
+            this.profile_form.describe = this.user.describe
+            this.profile_form.website = this.user.website
+            this.profile_form.resume = this.user.resume
         },
         computed: mapState({
-            gender: state => state.user.gender,
-            describe: state => state.user.describe,
-            website: state => state.user.website,
+            user: state => state.user,
         }),
         methods: {
-            onSubmit(name){
+            onSubmit(name) {
                 this.$refs[name].validate((valid) => {
                     if (!valid) return
 
                     this.$axios.put('user/profile', this.profile_form).then(resource => {
                         let respond = resource.data
-                        return respond.status
-                            ? this.$store.dispatch('profile_updated',this.profile_form).then(() => {
-                                return this.$Message.success(respond.message)
-                            })
-                            : this.$Message.error(respond.message)
+                        if (respond.status) {
+                            this.$Message.success(respond.message)
+                            this.$store.dispatch('refresh')
+                        } else {
+                            this.$Message.error(respond.message)
+                        }
                     })
                 })
             },
@@ -93,7 +99,7 @@
 <style lang="scss">
     .settings-basic-form {
         margin-top: 25px;
-        .avatar-item,.wechat-item {
+        .avatar-item, .wechat-item {
             .ivu-form-item-label {
                 line-height: 80px;
             }
@@ -166,7 +172,7 @@
                     font-size: 15px;
                 }
                 .ivu-select {
-                    width: 250px;
+                    width: 150px;
                     .ivu-select-item {
                         color: #495060;
                         padding: 12px 24px;

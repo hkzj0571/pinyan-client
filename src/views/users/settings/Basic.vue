@@ -52,11 +52,12 @@
                     if (!valid) return
                     this.$axios.put('user/basic', this.basic_form).then(resource => {
                         let respond = resource.data
-                        return respond.status
-                            ? this.$store.dispatch('basic_updated', this.basic_form).then(() => {
-                                return this.$Message.success(respond.message)
-                            })
-                            : this.$Message.error(respond.message)
+                        if (respond.status) {
+                            this.$Message.success(respond.message)
+                            this.$store.dispatch('refresh')
+                        } else {
+                            this.$Message.error(respond.message)
+                        }
                     })
                 })
             },

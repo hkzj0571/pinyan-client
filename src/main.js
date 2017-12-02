@@ -14,6 +14,7 @@ import VueQuillEditor from 'vue-quill-editor'
 import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
+
 Vue.use(VueQuillEditor)
 
 Vue.use(iView)
@@ -40,9 +41,12 @@ new Vue({
     template: '<App/>',
     components: {App},
     mounted: function () {
-        if (localStorage.auth) {
-            let data = JSON.parse(localStorage.auth)
-            this.$store.dispatch('authenticated', data)
+        if (localStorage.user && localStorage.token) {
+            let data = {
+                user:JSON.parse(localStorage.user),
+                token:JSON.parse(localStorage.token)
+            }
+            this.$store.dispatch('authenticated',data)
         }
 
         this.$axios.interceptors.response.use(respond => {

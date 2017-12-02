@@ -13,6 +13,7 @@
 <script>
     import {mapState} from 'vuex';
     import AuthCard from '../../components/auth/AuthCard.vue'
+
     export default {
         data() {
             return {}
@@ -44,6 +45,7 @@
     .center {
         text-align: center;
     }
+
     .layout-auth {
         position: absolute;
         width: 100%;

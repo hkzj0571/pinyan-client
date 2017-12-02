@@ -12,7 +12,9 @@ export default {
         website: null,
         gender: null,
         describe: null,
+        resume: null,
         wechat_qrcode: null,
+        created_at: null,
         authenticated: false,
     },
     mutations: {
@@ -22,8 +24,7 @@ export default {
          * @param state
          * @param data
          */
-            [types.AUTHENTICATED](state, data){
-
+        [types.AUTHENTICATED](state,data) {
             let user = data.user
             let token = data.token
 
@@ -35,11 +36,14 @@ export default {
             state.website = user.website
             state.gender = user.gender
             state.describe = user.describe
+            state.resume = user.resume
             state.wechat_qrcode = user.wechat_qrcode
+            state.created_at = user.created_at
             state.token = token.token_type + ' ' + token.access_token
             state.authenticated = true
 
-            localStorage.auth = JSON.stringify(data)
+            localStorage.user = JSON.stringify(user)
+            localStorage.token = JSON.stringify(token)
 
             axios.defaults.headers.common['Authorization'] = state.token
         },
@@ -48,91 +52,44 @@ export default {
          * 退出成功
          * @param state
          */
-            [types.UNTHENTICATED](state){
+        [types.UNTHENTICATED](state) {
             state.id = null
             state.avatar = null
             state.name = null
             state.email = null
             state.token = null
             state.is_active = null
+            state.website = null
+            state.gender = null
+            state.describe = null
+            state.resume = null
+            state.wechat_qrcode = null
+            state.created_at = null
             state.authenticated = false
 
-            localStorage.removeItem('auth')
+            localStorage.removeItem('user')
+            localStorage.removeItem('token')
         },
 
         /**
-         * 激活成功
+         * 刷新个人资料
          * @param state
+         * @param user
          */
-            [types.ACTIVED](state){
-            state.is_active = true
-            let data = JSON.parse(localStorage.auth)
-            data.user.is_active = true
-            localStorage.auth = JSON.stringify(data)
-        },
+        [types.REFRESH](state, user) {
+            state.id = user.id
+            state.avatar = user.avatar
+            state.name = user.name
+            state.email = user.email
+            state.is_active = user.is_active
+            state.website = user.website
+            state.gender = user.website
+            state.describe = user.describe
+            state.resume = user.resume
+            state.wechat_qrcode = user.wechat_qrcode
+            state.created_at = user.created_at
 
-        /**
-         * 头像更新
-         * @param state
-         * @param avatar
-         */
-            [types.AVATAR_UPDATED](state, avatar){
-            state.avatar = avatar
-            let data = JSON.parse(localStorage.auth)
-            data.user.avatar = avatar
-            localStorage.auth = JSON.stringify(data)
-        },
-
-        /**
-         * 微信二维码更新
-         * @param state
-         * @param wechat_qrcode
-         */
-        [types.WECHAT_QRCODE_UPDATED](state, wechat_qrcode){
-            state.wechat_qrcode = wechat_qrcode
-            let data = JSON.parse(localStorage.auth)
-            data.user.wechat_qrcode = wechat_qrcode
-            localStorage.auth = JSON.stringify(data)
-        },
-
-        /**
-         * 微信二维码删除
-         * @param state
-         * @param wechat_qrcode
-         */
-        [types.WECHAT_QRCODE_REMOVE](state){
-            state.wechat_qrcode = null
-            let data = JSON.parse(localStorage.auth)
-            data.user.wechat_qrcode = null
-            localStorage.auth = JSON.stringify(data)
-        },
-
-        /**
-         * 基本资料更新
-         * @param state
-         * @param data
-         */
-            [types.BASIC_UPDATED](state, basic){
-            state.name = basic.name
-            let data = JSON.parse(localStorage.auth)
-            data.user.name = basic.name
-            localStorage.auth = JSON.stringify(data)
-        },
-
-        /**
-         * 个人资料更新
-         * @param state
-         * @param profile
-         */
-        [types.PROFILE_UPDATED](state, profile){
-            state.website = profile.website
-            state.gender = profile.gender
-            state.describe = profile.describe
-            let data = JSON.parse(localStorage.auth)
-            data.user.website = profile.website
-            data.user.gender = profile.gender
-            data.user.describe = profile.describe
-            localStorage.auth = JSON.stringify(data)
+            localStorage.user = JSON.stringify(user)
         }
     },
     actions: {
@@ -143,7 +100,7 @@ export default {
          * @param data
          * @returns {Promise}
          */
-        authenticated ({commit}, data) {
+        authenticated({commit}, data) {
             return new Promise(function (resolve, reject) {
                 commit(types.AUTHENTICATED, data)
                 resolve(data)
@@ -155,7 +112,7 @@ export default {
          * @param commit
          * @returns {Promise}
          */
-        unthenticated({commit}){
+        unthenticated({commit}) {
             return new Promise(function (resolve, reject) {
                 commit(types.UNTHENTICATED)
                 resolve()
@@ -163,19 +120,19 @@ export default {
         },
 
         /**
-         * 激活成功
+         * 账号激活
          * @param commit
          * @param rootState
          * @param token
          * @returns {Promise}
          */
-        actived({commit, rootState}, token){
+        actived({dispatch,commit, rootState}, token) {
             return new Promise(function (resolve, reject) {
                 axios.post('active', token).then(resource => {
                     let respond = resource.data
                     if (respond.status) {
                         if (rootState.user.authenticated) {
-                            commit(types.ACTIVED)
+                            dispatch('refresh')
                         }
 
                         resolve(respond.message)
@@ -187,58 +144,26 @@ export default {
         },
 
 
-        /**
-         * 头像更新成功
-         * @param commit
-         * @param avatar
-         * @returns {Promise}
-         */
-        avatar_updated({commit}, avatar){
-            return new Promise(function (resolve, reject) {
-                commit(types.AVATAR_UPDATED, avatar)
-                resolve()
-            })
-        },
 
         /**
-         * 微信二维码更新
-         * @param commit
-         * @param wechat_qrcode
-         * @returns {Promise}
-         */
-        wechat_qrcode_updated({commit}, wechat_qrcode){
-            return new Promise(function (resolve, reject) {
-                commit(types.WECHAT_QRCODE_UPDATED, wechat_qrcode)
-                resolve()
-            })
-        },
-
-        wechat_qrcode_remove({commit}){
-            return new Promise(function (resolve, reject) {
-                commit(types.WECHAT_QRCODE_REMOVE)
-                resolve()
-            })
-        },
-
-        /**
-         * 基本资料更新
+         * 刷新用户资料
          * @param commit
          * @param data
-         * @returns {Promise}
          */
-        basic_updated({commit}, data){
+        refresh({commit}) {
             return new Promise(function (resolve, reject) {
-                commit(types.BASIC_UPDATED, data)
-                resolve()
-            })
-        },
+                axios.post('user/refresh', {}).then(resource => {
+                    let respond = resource.data
+                    if (respond.status) {
+                        commit(types.REFRESH, respond.data.user)
+                        resolve()
+                    } else {
 
-        profile_updated({commit}, data){
-            return new Promise(function (resolve, reject) {
-                commit(types.PROFILE_UPDATED, data)
-                resolve()
+                    }
+                })
             })
-        },
+
+        }
 
     },
 }

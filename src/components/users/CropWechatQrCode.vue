@@ -54,12 +54,12 @@
                 this.crop_vistal = false
                 this.$axios.put('user/wechat_qrcode', {wechat_qrcode: wechat_qrcode}).then(resource => {
                     let respond = resource.data
-
-                    return respond.status
-                        ? this.$store.dispatch('wechat_qrcode_updated', wechat_qrcode).then(() => {
-                            this.$Message.success(respond.message)
-                        })
-                        : this.$Message.error(respond.message)
+                    if (respond.status) {
+                        this.$Message.success(respond.message)
+                        this.$store.dispatch('refresh')
+                    } else {
+                        this.$Message.error(respond.message)
+                    }
                 })
             },
             getUploadToken(file){
@@ -73,12 +73,12 @@
             removeQrCode(){
                 return this.$axios.delete('user/wechat_qrcode', {}).then(resource => {
                     let respond = resource.data
-
-                    return respond.status
-                        ? this.$store.dispatch('wechat_qrcode_remove').then(() => {
-                            this.$Message.success(respond.message)
-                        })
-                        : this.$Message.error(respond.message)
+                    if (respond.status) {
+                        this.$Message.success(respond.message)
+                        this.$store.dispatch('refresh')
+                    } else {
+                        this.$Message.error(respond.message)
+                    }
                 })
             },
         }

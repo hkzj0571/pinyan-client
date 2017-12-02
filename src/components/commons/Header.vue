@@ -95,11 +95,8 @@
                     this.$axios.get('logout').then(resource => {
                         let respond = resource.data
                         return respond.status ? this.$store.dispatch('unthenticated').then(() => {
-                            return this.$Message.success({
-                                content: respond.message,
-                                duration: 1,
-                                onClose: () => {this.$router.push('/')}
-                            })
+                            this.$router.push('/')
+                            return this.$Message.success(respond.message)
                         }) : this.$Message.error(respond.message)
                     })
                 }

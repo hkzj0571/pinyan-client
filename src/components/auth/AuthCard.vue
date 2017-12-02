@@ -46,7 +46,7 @@
 </template>
 <script>
     export default {
-        data () {
+        data() {
             return {
                 rules: {
                     name: [
@@ -76,33 +76,27 @@
             }
         },
         methods: {
-            login (name) {
+            login(name) {
                 this.$refs[name].validate((valid) => {
                     if (!valid) return
                     this.$axios.post('login', this.login_form).then(resource => {
                         let respond = resource.data
-                        return respond.status ? this.$store.dispatch('authenticated', respond.data).then((data) => {
-                            return this.$Message.success({
-                                content: '登陆成功',
-                                duration: 1,
-                                onClose: () => {this.$router.push('/')}
-                            })
-                        }):this.$Message.error(respond.message)
+                        return respond.status ? this.$store.dispatch('authenticated', respond.data).then(() => {
+                            this.$router.push('/')
+                            return this.$Message.success('登陆成功')
+                        }) : this.$Message.error(respond.message)
                     })
                 })
             },
-            register (name) {
+            register(name) {
                 this.$refs[name].validate((valid) => {
                     if (!valid) return
                     this.$axios.post('register', this.register_form).then(resource => {
                         let respond = resource.data
                         return respond.status ? this.$store.dispatch('authenticated', respond.data).then((data) => {
-                            return this.$Message.success({
-                                content: '注册成功',
-                                duration: 1,
-                                onClose: () => {this.$router.push('/')}
-                            })
-                        }):this.$Message.error(respond.message)
+                            this.$router.push('/')
+                            return this.$Message.success('注册成功')
+                        }) : this.$Message.error(respond.message)
                     })
                 })
             },

@@ -49,12 +49,12 @@
                 this.crop_avatar_vistal = false
                 this.$axios.put('user/avatar', {avatar: avatar}).then(resource => {
                     let respond = resource.data
-
-                    return respond.status
-                        ? this.$store.dispatch('avatar_updated', avatar).then(() => {
-                            this.$Message.success(respond.message)
-                        })
-                        : this.$Message.error(respond.message)
+                    if (respond.status) {
+                        this.$Message.success(respond.message)
+                        this.$store.dispatch('refresh')
+                    } else {
+                        this.$Message.error(respond.message)
+                    }
                 })
             },
             getUploadToken(file){
