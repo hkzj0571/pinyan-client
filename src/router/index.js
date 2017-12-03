@@ -33,24 +33,38 @@ export default new Router({
             children: [
                 {
                     path: 'basic',
-                    meta:{
-                        menu_active:'basic'
+                    meta: {
+                        menu_active: 'basic'
                     },
                     component: (resolve) => require(['../views/users/settings/Basic.vue'], resolve)
                 },
                 {
                     path: 'profile',
-                    meta:{
-                        menu_active:'profile'
+                    meta: {
+                        menu_active: 'profile'
                     },
                     component: (resolve) => require(['../views/users/settings/Profile.vue'], resolve)
                 },
                 {
                     path: 'badge',
-                    meta:{
-                        menu_active:'badge'
+                    meta: {
+                        menu_active: 'badge'
                     },
                     component: (resolve) => require(['../views/users/settings/Badge.vue'], resolve)
+                },
+            ]
+        },
+        {
+            path: '/user/:user',
+            component: (resolve) => require(['../views/users/show/Basic.vue'], resolve),
+            children:[
+                {
+                    path: 'profile',
+                    component: (resolve) => require(['../views/users/show/Profile.vue'], resolve)
+                },
+                {
+                    path: 'focus',
+                    component: (resolve) => require(['../views/users/show/Focus.vue'], resolve)
                 },
             ]
         },

@@ -72,13 +72,12 @@
             store() {
                 this.$axios.post('article/store', this.article_form).then(resource => {
                     let respond = resource.data
-                    return respond.status ? this.$Message.success({
-                        content: '文章发布成功',
-                        duration: 1,
-                        onClose: () => {
-                            this.$router.push('/')
-                        }
-                    }) : this.$Message.error(respond.message)
+                    if (respond.status){
+                        this.$router.push('/')
+                        this.$Message.success('文章发布成功')
+                    } else {
+                        this.$Message.error(respond.message)
+                    }
                 })
             },
         },

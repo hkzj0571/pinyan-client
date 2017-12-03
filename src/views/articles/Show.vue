@@ -15,16 +15,15 @@
                             <p class="describe" v-text="article.user.describe"></p>
                             <div class="meta">
                                 <span><Icon type="android-time"></Icon>{{ article.created_at }}</span>
-                                <span>阅读 3027</span>
-                                <span>评论 241</span>
-                                <span>喜欢 94</span>
+                                <span>阅读 {{ article.read_count }}</span>
+                                <span>评论 {{ article.comments_count }}</span>
+                                <span>喜欢 {{ article.like_count }}</span>
                             </div>
                         </div>
 
                         <Button class="btn-edit" type="success" v-if="is_author" icon="android-create" shape="circle">
                             编辑文章
                         </Button>
-                        <Button class="btn-focus" type="success" icon="plus-round" shape="circle">关注</Button>
                     </div>
                     <div class="content" v-html="article.content">
                     </div>
@@ -88,32 +87,43 @@
                     </div>
                     <div class="meta-bottom">
                         <div class="like">
-                            <div class="btn like-group">
-                                <div class="btn-like"><a>
-                                    <Icon type="android-favorite-outline"></Icon>
-                                    喜欢</a></div>
-                                <div class="modal-wrap"><a>58</a></div>
-                            </div> <!----></div>
+                            <div class="btn like-group" :class="{active:is_like}">
+                                <div class="btn-like" @click="like">
+                                    <a>
+                                        <Icon type="android-favorite-outline"></Icon>
+                                        喜欢
+                                    </a>
+                                </div>
+                                <div class="modal-wrap" @click="likeUsers"><a v-text="article.like_count"></a></div>
+                            </div>
+                        </div>
                         <share></share>
                     </div>
                     <div class="comment-list">
                         <div class="new_commet">
                             <Avatar icon="person" size="large"/>
-                            <!--<Input type="textarea" :rows="3" placeholder="请输入你的评论" ></Input>-->
-                            <textarea name="" rows="4" class="ivu-input" @click="show_comment_option = true"></textarea>
+                            <textarea rows="3" class="ivu-input" v-model="comment.content"
+                                      @click="show_comment_option = true"></textarea>
                             <transition name="fade">
                                 <div class="function-block" v-show="show_comment_option">
                                     <Icon type="android-happy"></Icon>
                                     <Button type="text" shape="circle" size="large"
                                             @click="show_comment_option = false">取消
                                     </Button>
-                                    <Button type="success" shape="circle" size="large">发送</Button>
+                                    <Button type="success"
+                                            shape="circle"
+                                            size="large"
+                                            :disabled="!comment.content"
+                                            @click="newComment"
+                                            :loading="comment_loading"
+                                    >发送
+                                    </Button>
                                 </div>
                             </transition>
                         </div>
                         <div class="normal-comment-list">
                             <div class="top-title">
-                                <span>39条评论</span>
+                                <span>{{ article.comments_count }}条评论</span>
                                 <a class="author-only">只看作者</a>
                                 <a class="close-btn" style="display: none;">关闭评论</a>
                                 <div class="pull-right">
@@ -122,23 +132,26 @@
                                     <a>按时间倒序</a>
                                 </div>
                             </div>
-                            <div class="comment" v-for="i in 15">
+                            <div class="comment" v-for="comment in article.comments">
                                 <div class="author">
-                                    <Avatar icon="person" size="large" />
+                                    <Avatar icon="person" :src="comment.user.avatar" size="large"/>
                                     <div class="info">
-                                        <a href="/u/4f5335659dc7" class="name">郑熙澈</a>
-                                        <div class="meta"><span>14楼 · 2017.12.02 11:26</span></div>
+                                        <a href="/u/4f5335659dc7" class="name" v-text="comment.user.name"></a>
+                                        <div class="meta"><span v-text="comment.created_at"></span></div>
                                     </div>
                                 </div>
                                 <div class="comment-wrap">
-                                    <p>《三行情书》
-                                        <br>反正你又不看
-                                        <br>少一行又何妨
-                                    </p>
+                                    <p v-text="comment.content"></p>
                                     <div class="tool-group">
-                                        <a><i class="iconfont ic-zan"></i> <span>9人赞</span></a>
-                                        <a><i class="iconfont ic-comment"></i> <span>回复</span></a>
-                                        <a><span>举报</span></a>
+                                        <a>
+                                            <Icon type="thumbsup"></Icon>
+                                            <span>{{ comment.vote_count }}</span></a>
+                                        <a>
+                                            <Icon type="chatbox-working"></Icon>
+                                            <span>回复</span></a>
+                                        <a>
+                                            <Icon type="flag"></Icon>
+                                            <span>举报</span></a>
                                     </div>
                                 </div>
                             </div>
@@ -147,6 +160,25 @@
                 </div>
             </i-col>
         </div>
+        <Modal v-model="like_modal" class="likes_user" title="喜欢的用户">
+            <ul>
+                <li v-for="user in like_users">
+                    <a href="/u/e8d95cca28b8" target="_blank" class="avatar">
+                        <Avatar icon="person" :src="user.avatar" size="large"/>
+                    </a>
+                    <a href="/u/e8d95cca28b8" target="_blank" class="name" v-text="user.name"></a>
+                    <Icon :type="user.gender" v-show="user.gender"></Icon>
+                    <a href="" class="time" v-text="user.created_at"></a>
+                </li>
+                <li class="end" v-show="like_users_page !== false">
+                    <Button type="text" @click="getLikeUsers" :loading="get_user_loading">加载更多</Button>
+                </li>
+                <li class="end" v-show="like_users_page === false">
+                    <p>没有更多数据了</p>
+                </li>
+            </ul>
+            <div slot="footer"></div>
+        </Modal>
     </div>
 </template>
 <script>
@@ -165,7 +197,19 @@
                     read_count: null,
                     topic: {},
                     user: {},
-                }
+                    comments: {},
+                },
+                comment_loading: false,
+                is_like: false,
+                like_modal: false,
+                get_user_loading:false,
+                comment: {
+                    article_id: null,
+                    content: null,
+                    reply_id: null,
+                },
+                like_users: [],
+                like_users_page: 0,
             }
         },
         components: {
@@ -180,10 +224,62 @@
             })
         },
         created: function () {
-            return this.$axios.get('article/' + this.$route.params.id, {}).then(resource => {
+            this.comment.article_id = this.$route.params.id
+
+            this.$axios.get('article/' + this.$route.params.id, {}).then(resource => {
                 let respond = resource.data
                 this.article = respond.data.article
             })
+
+            this.$axios.post(`article/${this.$route.params.id}/is_like`, {}).then(resource => {
+                let respond = resource.data
+                this.is_like = respond.data.is_like
+            })
+
+            this.getLikeUsers()
+
+        },
+        methods: {
+            newComment() {
+                this.comment_loading = true
+
+                this.$axios.post('comments/store', this.comment).then(resource => {
+                    let respond = resource.data
+                    this.comment_loading = false
+                    if (respond.status) {
+                        this.comment.content = null
+                        this.show_comment_option = false
+                        this.article.comments.unshift(respond.data.comment)
+                    } else {
+                        this.$Message.error(respond.message)
+                    }
+                })
+            },
+            like() {
+                this.$axios.post(`article/${this.article.id}/like`, {}).then(resource => {
+                    let respond = resource.data
+                    this.is_like = !this.is_like
+                    respond.data.type == 'attached' ? this.article.like_count++ : this.article.like_count--
+                })
+            },
+            likeUsers() {
+                this.like_modal = true
+            },
+            getLikeUsers() {
+
+                if (this.like_users_page === false) return false;
+                this.get_user_loading = true
+                this.like_users_page++
+                return this.$axios.post(`article/${this.$route.params.id}/like_users?page=${this.like_users_page}`, {}).then(resource => {
+                    let respond = resource.data
+                    if (respond.data.users.length != 0) {
+                        this.like_users = this.like_users.concat(respond.data.users)
+                    } else {
+                        this.like_users_page = false
+                    }
+                    this.get_user_loading = false
+                })
+            }
         }
     }
 </script>
@@ -210,6 +306,7 @@
                 display: inline-block;
                 cursor: pointer;
                 img {
+                    border: 1px solid #ddd;
                     width: 100%;
                     height: 100%;
                     border-radius: 50%;
@@ -521,6 +618,23 @@
                         background-color: rgba(236, 97, 73, .05);
                     }
                 }
+                .active {
+                    background-color: #ea6f5a;
+                    .btn-like {
+                        a {
+                            color: #fff;
+                        }
+                    }
+                    .modal-wrap {
+                        border-left: 1px solid #fff;
+                        a {
+                            color: #fff;
+                        }
+                    }
+                    &:hover {
+                        background-color: #ea6f5a;
+                    }
+                }
             }
             .social-share {
                 float: right;
@@ -542,6 +656,7 @@
                 .ivu-input {
                     border: 1px solid #f0f0f0;
                     resize: none;
+                    padding: 10px;
                     background-color: hsla(0, 0%, 71%, .1);
                 }
                 .function-block {
@@ -557,6 +672,13 @@
                         float: left;
                         font-size: 27px;
                         color: #969696;
+                    }
+                    .ivu-btn-success {
+                        .ivu-icon {
+                            font-size: 18px;
+                            color: #fff;
+                            line-height: 21px;
+                        }
                     }
                 }
             }
@@ -617,7 +739,7 @@
                     .comment-wrap {
                         p {
                             font-size: 16px;
-                            margin: 10px 0;
+                            margin: 15px 0;
                             line-height: 1.5;
                             font-size: 16px;
                             word-break: break-word;
@@ -631,11 +753,90 @@
                                     vertical-align: middle;
                                     font-size: 14px;
                                 }
+                                .ivu-icon {
+                                    font-size: 14px;
+                                    vertical-align: -2px;
+                                    margin-right: 3px;
+                                }
                             }
                         }
                     }
                 }
             }
         }
+    }
+
+    .likes_user {
+        .ivu-modal-header-inner {
+            font-size: 17px;
+            font-weight: 500;
+            color: #262626;
+        }
+        .ivu-modal-footer {
+            display: none;
+        }
+
+    }
+
+    .ivu-modal-body {
+        padding: 0;
+        overflow: auto;
+        ul {
+            height: 500px;
+            overflow: auto;
+            li {
+                padding: 15px;
+                border-bottom: 1px solid #f0f0f0;
+                .name {
+                    font-size: 16px;
+                    color: #333;
+                    vertical-align: middle;
+                    display: inline-block;
+                }
+                .avatar {
+                    margin-right: 5px;
+                }
+                .time {
+                    float: right;
+                    margin-top: 7px;
+                    font-size: 12px;
+                    color: #969696;
+                }
+                .ivu-btn {
+                    color: #2d8cf0;
+                }
+                .ivu-icon {
+                    font-size: 18px;
+                    vertical-align: middle;
+                    margin-left: 5px;
+                }
+                .ivu-icon-male {
+                    color: #6495ED;
+                }
+                .ivu-icon-female {
+                    color: #FF6EB4;
+                }
+                .ivu-icon-transgender {
+                    color: #43CD80;
+                }
+                .ivu-icon-locked {
+                    color: #000;
+                }
+            }
+            .end {
+                text-align: center;
+                p {
+                    display: block;
+                    text-align: center;
+                    margin-top: 7px;
+                    font-size: 12px;
+                    color: #969696;
+                }
+            }
+        }
+    }
+
+    .ivu-modal-mask {
+        background-color: rgba(55, 55, 55, .1);
     }
 </style>

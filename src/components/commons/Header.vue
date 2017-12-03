@@ -29,7 +29,7 @@
                                 <Avatar :src="avatar" shape="square" size="large"/>
                             </a>
                             <DropdownMenu slot="list">
-                                <router-link to="/">
+                                <router-link :to="'/user/'+id+'/profile'">
                                     <DropdownItem name="profile">
                                         <Icon type="person"></Icon>
                                         主页
@@ -83,6 +83,7 @@
             ResetMail
         },
         computed: mapState({
+            id: state => state.user.id,
             name: state => state.user.name,
             avatar: state => state.user.avatar,
             email: state => state.user.email,
