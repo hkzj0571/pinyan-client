@@ -62,10 +62,22 @@
                     </li>
                     <li>
                         <router-link :to="'/user/'+id+'/focus'">
-                            <Icon type="android-favorite-outline"></Icon>喜欢的文章
+                            <Icon type="android-favorite-outline"></Icon>
+                            喜欢的文章
                         </router-link>
                     </li>
                 </ul>
+                <div class="topics_options">
+                    <div class="title">
+                        我创建的专题
+                        <router-link to="/topics">
+                            <Button type="text" icon="plus-round">创建一个新专题</Button>
+                        </router-link>
+                    </div>
+                    <div class="collection">
+
+                    </div>
+                </div>
             </i-col>
         </div>
     </div>
@@ -74,6 +86,7 @@
 <script>
     import IndexHeader from '../../../components/commons/Header.vue'
     import {mapState} from 'vuex'
+
     export default {
         data() {
             return {
@@ -147,6 +160,31 @@
                             margin-right: 10px;
                         }
                     }
+                }
+            }
+            .topics_options {
+                .title {
+                    width: 100%;
+                    float: left;
+                    margin-bottom: 10px;
+                    font-size: 14px;
+                    color: #969696;
+                    line-height: 35px;
+                    .ivu-btn {
+                        float: right;
+                        font-size: 13px;
+                        color: #42c02e;
+                        span {
+                            color: #42c02e;
+                        }
+                    }
+                }
+                .collection {
+                    margin-bottom: 16px;
+                    padding-bottom: 16px;
+                    list-style: none;
+                    border-bottom: 1px solid #f0f0f0;
+                    clear: both;
                 }
             }
         }

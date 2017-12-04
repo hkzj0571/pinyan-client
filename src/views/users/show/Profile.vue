@@ -1,6 +1,6 @@
 <template>
     <Tabs class="profile" :animated="false">
-        <TabPane label="动态" icon="help-buoy">标签二的内容</TabPane>
+        <TabPane label="动态" icon="help-buoy"></TabPane>
         <TabPane label="文章" icon="android-list">
                 <ul class="profile_articles">
                     <transition-group name="fade">

@@ -5,36 +5,85 @@
             <i-col :span="16">
                 <div class="topic-header">
                     <a class="cover">
-                        <img src="//upload.jianshu.io/collections/images/21/20120316041115481.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/240/h/240">
+                        <img :src="topic.cover">
                     </a>
-                    <Button type="success" class="focus" icon="plus-round" shape="circle">关注</Button>
+                    <Button type="success" class="focus" :class="{active:is_focus}" :icon="focus_cion" shape="circle"
+                            @click="toggleFocus">{{ focus_text }}
+                    </Button>
                     <div class="title">
-                        <a class="name" href="/c/1hjajt">简书电影</a>
+                        <a class="name" href="/c/1hjajt" v-text="topic.name"></a>
                     </div>
                     <div class="info">
-                        收录了62411篇文章 · 955700人关注
+                        收录了 {{ topic.article_count }} 篇文章 · {{ topic.follower_count }} 人关注
+                    </div>
+                </div>
+                <router-view></router-view>
+            </i-col>
+            <i-col :span="7" offset="1">
+                <div class="aside">
+                    <p class="title">专题公告</p>
+                    <div class="description" v-html="topic.describe"></div>
+                    <div class="share">
+                        <span>分享到</span>
+                        <share :config="{disabled:['google','facebook','diandian','tencent','linkedin','twitter']}"></share>
+                    </div>
+                    <div class="user-action" v-if="topic.creator.id == user_id">
+                        <Button type="text" icon="android-create">编辑专题</Button>
+                        <Button type="text" icon="android-delete">删除专题</Button>
                     </div>
                 </div>
             </i-col>
-            <i-col :span="7" offset="1"></i-col>
         </div>
     </div>
 </template>
 
 <script>
+    import {mapState} from 'vuex'
+    import 'vue-social-share/dist/client.css'
     import IndexHeader from '../../components/commons/Header.vue'
 
     export default {
         data() {
             return {
-                user: {}
+                is_focus: false,
+                topic: {
+                    creator:{}
+                },
             }
         },
         components: {
             IndexHeader,
         },
+        computed: {
+            focus_cion() {
+                return this.is_focus ? 'checkmark-round' : 'plus-round'
+            },
+            focus_text() {
+                return this.is_focus ? '已关注' : '关注'
+            },
+            ...mapState({
+                user_id: state => state.user.id,
+            })
+        },
+        methods: {
+            toggleFocus() {
+                this.is_focus = !this.is_focus
+                this.$axios.post(`topics/${this.$route.params.topic}/focus`, {}).then(resource => {
+                    let respond = resource.data
+                    respond.data.type == 'attached' ? this.topic.follower_count++ : this.topic.follower_count--
+                })
+            },
+        },
         created: function () {
+            this.$axios.post(`topics/${this.$route.params.topic}/is_focus`, {}).then(resource => {
+                let respond = resource.data
+                this.is_focus = respond.data.is_focus
+            })
 
+            this.$axios.post(`topics/${this.$route.params.topic}`, {}).then(resource => {
+                let respond = resource.data
+                this.topic = respond.data.topic
+            })
         }
     }
 </script>
@@ -57,11 +106,21 @@
             }
         }
         .focus {
+            border: 1px solid #42c02e;
+            color: #42c02e;
+            background: #fff;
             float: right;
             margin: 23px 0 23px 16px;
             font-size: 15px;
             padding: 8px 0;
             width: 100px;
+            &:hover {
+                background-color: rgba(59, 194, 29, .05);
+            }
+        }
+        .active, .active:hover {
+            background: #42c02e;
+            color: #fff;
         }
         .title {
             padding: 10px 0 0 100px;
@@ -78,6 +137,79 @@
             padding-left: 100px;
             font-size: 14px;
             color: #969696;
+        }
+    }
+
+    .topic_menus {
+        li {
+            padding: 0px 25px !important;
+            font-size: 15px;
+            font-weight: 700;
+            color: #969696 !important;
+            &:hover {
+                color: #646464 !important;
+                border-bottom: 2px solid #646464 !important;
+            }
+            .ivu-icon {
+                font-size: 23px;
+                vertical-align: -3px;
+            }
+        }
+        .ivu-menu-item-active {
+            color: #646464 !important;
+            border-bottom: 2px solid #646464 !important;
+        }
+        &:after {
+            background: #f0f0f0 !important;
+        }
+    }
+
+    .aside {
+        margin-top: 25px;
+        display: block;
+        .title {
+            float: left;
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #969696;
+        }
+        .description {
+            position: relative;
+            margin-bottom: 20px;
+            padding: 0 0 16px;
+            text-align: left;
+            font-size: 14px;
+            border-bottom: 1px solid #f0f0f0;
+            clear: both;
+            word-break: break-word !important;
+        }
+        .share {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #f0f0f0;
+            line-height: 45px;
+            span {
+                font-size: 14px;
+                vertical-align: middle;
+            }
+            .social-share {
+                display: inline-block;
+                float: right;
+            }
+        }
+        .user-action {
+            .ivu-btn {
+                margin-right: 15px;
+                padding: 0;
+                color: #969696;
+                &:hover {
+                    color: #262626;
+                }
+                .ivu-icon {
+                    font-size: 16px;
+                    vertical-align: -1px;
+                }
+            }
         }
     }
 </style>

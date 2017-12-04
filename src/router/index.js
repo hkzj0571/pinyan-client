@@ -28,8 +28,18 @@ export default new Router({
             component: (resolve) => require(['../views/articles/Show.vue'], resolve)
         },
         {
-            path: '/topics/:id',
-            component: (resolve) => require(['../views/topics/Index.vue'], resolve)
+            path: '/topics/:topic',
+            component: (resolve) => require(['../views/topics/Index.vue'], resolve),
+            children: [
+                {
+                    path: '',
+                    component: (resolve) => require(['../views/topics/childrens/Index.vue'], resolve)
+                },
+            ]
+        },
+        {
+            path: '/topics',
+            component: (resolve) => require(['../views/topics/Create.vue'], resolve)
         },
         {
             path: '/settings',
