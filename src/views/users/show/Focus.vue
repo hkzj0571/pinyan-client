@@ -2,44 +2,36 @@
     <Tabs class="profile" :animated="false">
         <Icon type=""></Icon>
         <TabPane label="喜欢的文章" icon="android-list">
-            <ul class="user_focus_article">
-                <li class="have-img">
-                    <a class="wrap-img">
-                        <img src="//upload-images.jianshu.io/upload_images/1988937-35f99f7190f401ef.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/300/h/240">
-                    </a>
+            <ul class="profile_articles">
+                <transition-group name="fade">
+                    <li v-for="(article,index) in articles" :class="{'have-img':article.cover}" :key="index">
+                    <router-link class="wrap-img" :to="'/article/'+article.id" v-if="article.cover">
+                        <img :src="article.cover">
+                    </router-link>
                     <div class="content">
                         <div class="author">
-                            <a class="avatar" href="/u/9019674f5808">
-                                <img src="//upload.jianshu.io/users/upload_avatars/1988937/8d349eed9902.jpeg?imageMogr2/auto-orient/strip|imageView2/1/w/64/h/64" alt="64">
-                            </a>
+                            <router-link to="/">
+                                <Avatar icon="person" :src="article.user.avatar"/>
+                            </router-link>
                             <div class="info">
-                                <a class="nickname" href="/u/9019674f5808">Soul麦芽</a>
-                                <span class="time" data-shared-at="2017-12-03T09:32:24+08:00">14小时前</span>
+                                <a class="nickname" href="" v-text="article.user.name"></a>
+                                <span class="time" v-text="article.created_at"></span>
                             </div>
                         </div>
-                        <a class="title" href="/p/2365e02d9688">“一个人喝醉酒的时候最孤独”</a>
-                        <p class="abstract">
-                            如果一个人住，千万不要在下午时睡午觉，一觉睡到六七点等你一睁开眼，看着朦胧黑暗的天空，看着空放的房间，会有一种被全世界遗弃的感觉，孤独在那一刻体现的淋漓尽致。 01 周末的地...
-                        </p>
+                        <router-link class="title" :to="'/article/'+article.id" v-text="article.title"></router-link>
+                        <p class="abstract" v-text="article.content"></p>
                         <div class="meta">
-                            <a href="/p/2365e02d9688">
-                                <i class="iconfont ic-list-read"></i> 5270
-                            </a> <a target="_blank" href="/p/2365e02d9688#comments">
-                            <i class="iconfont ic-list-comments"></i> 196
-                        </a> <a href="/p/2365e02d9688">
-                            <i class="iconfont ic-list-like"></i> 247
-                        </a> <a href="/p/2365e02d9688">
-                            <i class="iconfont ic-list-money"></i> 7
-                        </a> <a class="cancel" data-note-id="20514104">
-                            取消喜欢
-                        </a>
+                            <a class="topic" href="/c/71a87e510a58" v-text="article.topic.name"></a>
+                            <a href=""><Icon type="eye"></Icon>{{ article.read_count }}</a>
+                            <a href=""><Icon type="chatbox-working"></Icon>{{ article.comments_count }}</a>
+                            <a href=""><Icon type="android-favorite"></Icon>{{ article.like_count }}</a>
+                            <a href="javascript:void(0);" class="destroy" @click="cancelLike(article,index)"><Icon type="trash-b"></Icon>取消喜欢</a>
                         </div>
                     </div>
                 </li>
+                </transition-group>
                 <li class="end">
-                    <Button type="text" icon="chevron-down" :loading="loading_article" v-show="!article_end"
-                            @click="getArticles">加载更多
-                    </Button>
+                    <Button type="text" icon="chevron-down" :loading="loading_article" v-show="!article_end" @click="getArticles">加载更多</Button>
                     <Button type="text" v-show="article_end">加载完毕</Button>
                 </li>
             </ul>
@@ -72,11 +64,10 @@
                     }
                     this.articles = this.articles.concat(resource.data.data.articles)
                 })
+            },
+            cancelLike(article,index){
+                this.articles.splice(index,1)
             }
         }
     }
 </script>
-
-<style lang="scss">
-
-</style>

@@ -386,6 +386,8 @@
                 img {
                     display: block;
                     margin: 25px auto;
+                    width: 100%;
+                    height: 100%;
                 }
             }
             code {

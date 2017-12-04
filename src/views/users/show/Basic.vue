@@ -4,10 +4,13 @@
         <div class="container">
             <i-col :span="16" class="left">
                 <div class="user-detail">
-                    <a href="/u/36b4d22b6e4d" class="avatar">
-                        <img :src="user.avatar"></a>
+                    <router-link class="avatar" :to="'/user/'+id+'/profile'">
+                        <img :src="user.avatar">
+                    </router-link>
                     <div class="info">
-                        <span class="name"><a href="/u/36b4d22b6e4d" v-text="user.name"></a></span>
+                        <span class="name">
+                            <router-link :to="'/user/'+id+'/profile'" v-text="user.name"></router-link>
+                        </span>
                         <Icon :type="user.gender" v-show="user.gender"></Icon>
                         <ul class="options">
                             <li>
