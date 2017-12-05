@@ -6,6 +6,9 @@ html,body {
     display: block;
     margin: 0 auto;
   }
+  .layout {
+    min-height: 900px;
+  }
   .line {
     display: block;
     background: #f0f0f0;
@@ -43,7 +46,7 @@ html,body {
       }
     }
   }
-  .ivu-input {
+  .ivu-input,input,ivu-select-selection {
     box-shadow: none !important;
   }
   .spin-icon-load{

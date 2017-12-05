@@ -74,9 +74,14 @@
                             <Button type="text" icon="plus-round">创建一个新专题</Button>
                         </router-link>
                     </div>
-                    <div class="collection">
-
-                    </div>
+                    <ul class="collection">
+                        <li v-for="topic in user.create_topics">
+                            <a :href="'/topics/'+topic.id">
+                                <Avatar icon="person" shape="square" :src="topic.cover"></Avatar>
+                                {{ topic.name }}
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </i-col>
         </div>
@@ -90,7 +95,9 @@
     export default {
         data() {
             return {
-                user: {}
+                user: {
+                    create_topics: {}
+                }
             }
         },
         components: {
@@ -185,6 +192,16 @@
                     list-style: none;
                     border-bottom: 1px solid #f0f0f0;
                     clear: both;
+                    li {
+                        margin-bottom: 15px;
+                        a {
+                            font-size: 14px;
+                            color: #262626;
+                            .ivu-avatar {
+                                margin-right: 10px;
+                            }
+                        }
+                    }
                 }
             }
         }
