@@ -152,29 +152,7 @@
         }
     }
 
-    .topic_menus {
-        li {
-            padding: 0px 25px !important;
-            font-size: 15px;
-            font-weight: 700;
-            color: #969696 !important;
-            &:hover {
-                color: #646464 !important;
-                border-bottom: 2px solid #646464 !important;
-            }
-            .ivu-icon {
-                font-size: 23px;
-                vertical-align: -3px;
-            }
-        }
-        .ivu-menu-item-active {
-            color: #646464 !important;
-            border-bottom: 2px solid #646464 !important;
-        }
-        &:after {
-            background: #f0f0f0 !important;
-        }
-    }
+
 
     .aside {
         margin-top: 25px;
