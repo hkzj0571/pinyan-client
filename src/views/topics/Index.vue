@@ -7,9 +7,7 @@
                     <a class="cover">
                         <img :src="topic.cover">
                     </a>
-                    <Button type="success" class="focus" :class="{active:is_focus}" :icon="focus_cion" shape="circle"
-                            @click="toggleFocus">{{ focus_text }}
-                    </Button>
+                    <Button type="success" class="focus" :class="{active:is_focus}" :icon="focus_cion" shape="circle" @click="toggleFocus">{{ focus_text }}</Button>
                     <div class="title">
                         <a class="name" href="/c/1hjajt" v-text="topic.name"></a>
                     </div>
@@ -28,7 +26,9 @@
                         <share :config="{disabled:['google','facebook','diandian','tencent','linkedin','twitter']}"></share>
                     </div>
                     <div class="user-action" v-if="topic.creator.id == user_id">
-                        <Button type="text" icon="android-create">编辑专题</Button>
+                        <router-link :to="'/topics/'+topic.id+'/edit'">
+                            <Button type="text" icon="android-create">编辑专题</Button>
+                        </router-link>
                         <Button type="text" icon="android-delete">删除专题</Button>
                     </div>
                 </div>

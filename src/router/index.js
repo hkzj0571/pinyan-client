@@ -38,6 +38,10 @@ export default new Router({
             ]
         },
         {
+            path: '/topics/:topic/edit',
+            component: (resolve) => require(['../views/topics/Edit.vue'], resolve)
+        },
+        {
             path: '/topics',
             component: (resolve) => require(['../views/topics/Create.vue'], resolve)
         },
