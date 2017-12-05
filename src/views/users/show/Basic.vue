@@ -76,10 +76,10 @@
                     </div>
                     <ul class="collection">
                         <li v-for="topic in user.create_topics">
-                            <a :href="'/topics/'+topic.id">
+                            <router-link :to="'/topics/'+topic.id">
                                 <Avatar icon="person" shape="square" :src="topic.cover"></Avatar>
                                 {{ topic.name }}
-                            </a>
+                            </router-link>
                         </li>
                     </ul>
                 </div>

@@ -20,7 +20,7 @@
             <i-col :span="7" offset="1">
                 <div class="aside">
                     <p class="title">专题公告</p>
-                    <div class="description" v-html="topic.describe"></div>
+                    <div class="description" v-text="topic.describe"></div>
                     <div class="share">
                         <span>分享到</span>
                         <share :config="{disabled:['google','facebook','diandian','tencent','linkedin','twitter']}"></share>
@@ -32,7 +32,7 @@
                                 <a :href="'/topics/'+topic.id">
                                     <Avatar icon="person" shape="square" :src="user.avatar"></Avatar>
                                     {{ user.name }}
-                                    <span class="tag" v-if="user.pivot. is_creator == 1">创建者</span>
+                                    <span class="tag" v-if="user.is_creator == 1">创建者</span>
                                 </a>
                             </li>
                         </ul>

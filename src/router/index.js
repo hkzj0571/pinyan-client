@@ -21,11 +21,18 @@ export default new Router({
         },
         {
             path: '/article',
+            name:'article.create',
             component: (resolve) => require(['../views/articles/Create.vue'], resolve)
         },
         {
-            path: '/article/:id',
+            path: '/article/:article',
+            name:'article.show',
             component: (resolve) => require(['../views/articles/Show.vue'], resolve)
+        },
+        {
+            path: '/article/:article/edit',
+            name:'article.edit',
+            component: (resolve) => require(['../views/articles/Edit.vue'], resolve)
         },
         {
             path: '/topics/:topic',

@@ -23,7 +23,7 @@
                                     multiple
                                     :loading="select_loading"
                                     remote
-                                    :remote-method="getRemoveUser"
+                                    :remote-method="getUsers"
                             >
                                 <Option v-for="(user, index) in users" :value="user.id" :key="index" :label="user.name">
                                     <Avatar icon="person" :src="user.avatar" shape="square"></Avatar>
@@ -74,7 +74,8 @@
                     }
                 })
             },
-            getRemoveUser(query) {
+            getUsers(query) {
+                this.users = []
                 if (query !== '') {
                     this.select_loading = true
                     this.$axios.get('topics/users?query=' + query).then(resource => {
@@ -84,8 +85,6 @@
                             ? this.users = respond.data.users
                             : this.$Message.error(respond.message)
                     })
-                } else {
-                    this.users = []
                 }
             }
         },
@@ -238,10 +237,10 @@
                     border-bottom: none;
                 }
                 .ivu-select {
-                    width: 350px !important;
+                    width: 100% !important;
                     .ivu-select-selection {
+                        background: rgba(181, 181, 181, 0.1);
                         border: none;
-                        box-shadow: none;
                         .ivu-select-input {
                             height: 40px;
                             line-height: 40px;

@@ -21,9 +21,11 @@
                             </div>
                         </div>
 
-                        <Button class="btn-edit" type="success" v-if="is_author" icon="android-create" shape="circle">
-                            编辑文章
-                        </Button>
+                        <router-link :to="'/article/'+article.id+'/edit'" v-if="is_author">
+                            <Button class="btn-edit" type="success" icon="android-create" shape="circle">
+                                编辑文章
+                            </Button>
+                        </router-link>
                     </div>
                     <div class="content" v-html="article.content">
                     </div>
@@ -202,7 +204,7 @@
                 comment_loading: false,
                 is_like: false,
                 like_modal: false,
-                get_user_loading:false,
+                get_user_loading: false,
                 comment: {
                     article_id: null,
                     content: null,
@@ -226,12 +228,12 @@
         created: function () {
             this.comment.article_id = this.$route.params.id
 
-            this.$axios.get('article/' + this.$route.params.id, {}).then(resource => {
+            this.$axios.get('article/' + this.$route.params.article, {}).then(resource => {
                 let respond = resource.data
                 this.article = respond.data.article
             })
 
-            this.$axios.post(`article/${this.$route.params.id}/is_like`, {}).then(resource => {
+            this.$axios.post(`article/${this.$route.params.article}/is_like`, {}).then(resource => {
                 let respond = resource.data
                 this.is_like = respond.data.is_like
             })
@@ -270,7 +272,7 @@
                 if (this.like_users_page === false) return false;
                 this.get_user_loading = true
                 this.like_users_page++
-                return this.$axios.post(`article/${this.$route.params.id}/like_users?page=${this.like_users_page}`, {}).then(resource => {
+                return this.$axios.post(`article/${this.$route.params.article}/like_users?page=${this.like_users_page}`, {}).then(resource => {
                     let respond = resource.data
                     if (respond.data.users.length != 0) {
                         this.like_users = this.like_users.concat(respond.data.users)

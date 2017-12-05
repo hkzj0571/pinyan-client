@@ -23,7 +23,7 @@
                                     multiple
                                     :loading="select_loading"
                                     remote
-                                    :remote-method="getRemoveUser"
+                                    :remote-method="getUsers"
                             >
                                 <Option v-for="(user, index) in users" :value="user.id" :key="index" :label="user.name">
                                     <Avatar icon="person" :src="user.avatar" shape="square"></Avatar>
@@ -74,7 +74,8 @@
                     }
                 })
             },
-            getRemoveUser(query) {
+            getUsers(query) {
+                this.users = []
                 if (query !== '') {
                     this.select_loading = true
                     this.$axios.get('topics/users?query=' + query).then(resource => {
@@ -84,8 +85,6 @@
                             ? this.users = respond.data.users
                             : this.$Message.error(respond.message)
                     })
-                } else {
-                    this.users = []
                 }
             }
         },
@@ -97,16 +96,25 @@
         created: function () {
             return this.$axios.post(`topics/${this.$route.params.topic}`, {}).then(resource => {
                 let respond = resource.data
+
                 this.topic.cover = respond.data.topic.cover
                 this.topic.name = respond.data.topic.name
                 this.topic.describe = respond.data.topic.describe
-                for (var i = 0;i<respond.data.topic.manages.length;i++) {
+
+                var data = []
+
+                for (var i = 0; i < respond.data.topic.manages.length; i++) {
                     var user = respond.data.topic.manages[i]
-                    if (user.pivot.is_creator == 0) {
+                    if (user.is_creator == 0) {
                         this.users.push(user)
-                        this.topic.manages.push(user.id)
+                        data.push(user.id)
                     }
                 }
+
+                this.$nextTick(() => {
+                    this.topic.manages = data
+                })
+
             })
         }
     }
@@ -253,9 +261,9 @@
                     border-bottom: none;
                 }
                 .ivu-select {
-                    width: 350px !important;
+                    width: 100% !important;
                     .ivu-select-selection {
-                        border: none;
+                        background: rgba(181, 181, 181, 0.1);
                         box-shadow: none;
                         .ivu-select-input {
                             height: 40px;
