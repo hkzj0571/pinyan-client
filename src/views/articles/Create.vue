@@ -59,7 +59,7 @@
                 this.topics = []
                 if (query !== '') {
                     this.loading = true
-                    this.$axios.post('article/select_topic', {query: query}).then(resource => {
+                    this.$axios.get('article/topic', {query: query}).then(resource => {
                         let respond = resource.data
                         this.loading = false
                         return respond.status

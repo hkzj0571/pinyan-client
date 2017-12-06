@@ -60,7 +60,7 @@
             getTopics(query) {
                 if (query !== '') {
                     this.topic_loading = true
-                    this.$axios.post('article/select_topic', {query: query}).then(resource => {
+                    this.$axios.get('article/topic', {query: query}).then(resource => {
                         let respond = resource.data
                         this.topic_loading = false
                         return respond.status

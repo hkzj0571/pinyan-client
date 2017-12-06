@@ -10,7 +10,7 @@
             :on-error="uploadFail"
             :on-exceeded-size="exceededSize"
     >
-        <Spin v-show="crop_avatar_vistal" fix>
+        <Spin v-show="vistal" fix>
             <Icon type="load-c" size=18 class="spin-icon-load"></Icon>
             <div>上传中...</div>
         </Spin>
@@ -23,7 +23,7 @@
     export default {
         data () {
             return {
-                crop_avatar_vistal: false,
+                vistal: false,
                 token: null,
             }
         },
@@ -33,20 +33,20 @@
         }),
         methods: {
             FormatError(){
-                this.crop_avatar_vistal = false
+                this.vistal = false
                 return this.$Message.error('文件格式错误')
             },
             uploadFail(){
-                this.crop_avatar_vistal = false
+                this.vistal = false
                 return this.$Message.error('文件上传失败，请重试')
             },
             exceededSize(){
-                this.crop_avatar_vistal = false
+                this.vistal = false
                 return this.$Message.error('图片最大为3M')
             },
             uploadSucceed(response){
                 var avatar = this.$env.oss_domain + response.key + '?imageView2/1/w/200/h/200/q/75|imageslim'
-                this.crop_avatar_vistal = false
+                this.vistal = false
                 this.$axios.put('user/avatar', {avatar: avatar}).then(resource => {
                     let respond = resource.data
                     if (respond.status) {
@@ -58,7 +58,7 @@
                 })
             },
             getUploadToken(file){
-                this.crop_avatar_vistal = true
+                this.vistal = true
 
                 return this.$axios.get('upload/token', {}).then(resource => {
                     let respond = resource.data

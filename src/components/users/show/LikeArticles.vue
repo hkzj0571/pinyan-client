@@ -36,10 +36,10 @@
             </li>
         </transition-group>
         <li class="end">
-            <Button type="text" icon="chevron-down" :loading="loading_article" v-show="!article_end"
+            <Button type="text" icon="chevron-down" :loading="loading" v-show="!end"
                     @click="getArticles">加载更多
             </Button>
-            <Button type="text" v-show="article_end">加载完毕</Button>
+            <Button type="text" v-show="end">加载完毕</Button>
         </li>
     </ul>
 </template>
@@ -48,9 +48,9 @@
     export default {
         data() {
             return {
-                loading_article: false,
-                article_end: false,
-                article_page: 0,
+                loading: false,
+                end: false,
+                page: 0,
                 articles: []
             }
         },
@@ -59,12 +59,12 @@
         },
         methods: {
             getArticles() {
-                this.loading_article = true
-                this.article_page++
-                this.$axios.post('user/focus_article?page=' + this.article_page, {}).then(resource => {
-                    this.loading_article = false
+                this.loading = true
+                this.page++
+                this.$axios.get('user/like_article?page=' + this.page, {}).then(resource => {
+                    this.loading = false
                     if (resource.data.data.articles.length === 0) {
-                        this.article_end = true
+                        this.end = true
                     }
                     this.articles = this.articles.concat(resource.data.data.articles)
                 })

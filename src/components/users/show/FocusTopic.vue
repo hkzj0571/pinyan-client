@@ -36,7 +36,7 @@
             getTopics() {
                 this.loading = true
                 this.page++
-                this.$axios.post('user/focus_topics?page=' + this.page, {}).then(resource => {
+                this.$axios.get('user/focus_topics?page=' + this.page, {}).then(resource => {
                     this.loading = false
                     if (resource.data.data.topics.length === 0) {
                         this.end = true
