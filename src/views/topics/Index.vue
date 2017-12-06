@@ -15,7 +15,25 @@
                         收录了 {{ topic.article_count }} 篇文章 · {{ topic.follower_count }} 人关注
                     </div>
                 </div>
-                <router-view></router-view>
+                <Menu mode="horizontal" @on-select="toggle" :active-name="currentView" class="navbar_menu">
+                    <MenuItem name="NewArticle">
+                        <Icon type="android-time"></Icon>
+                        最新文章
+                    </MenuItem>
+                    <MenuItem name="HotArticle">
+                        <Icon type="flame"></Icon>
+                        热门文章
+                    </MenuItem>
+                    <MenuItem name="HotArticle">
+                        <Icon type="trophy"></Icon>
+                        最佳榜单
+                    </MenuItem>
+                    <MenuItem name="FineAuthor">
+                        <Icon type="ribbon-b"></Icon>
+                        优秀作者
+                    </MenuItem>
+                </Menu>
+                <component :is="currentView"></component>
             </i-col>
             <i-col :span="7" offset="1">
                 <div class="aside">
@@ -53,10 +71,14 @@
     import {mapState} from 'vuex'
     import 'vue-social-share/dist/client.css'
     import IndexHeader from '../../components/commons/Header.vue'
+    import FineAuthor from '../../components/topics/indexs/FineAuthor.vue'
+    import HotArticle from '../../components/topics/indexs/HotArticle.vue'
+    import NewArticle from '../../components/topics/indexs/NewArticle.vue'
 
     export default {
         data() {
             return {
+                currentView: 'NewArticle',
                 is_focus: false,
                 topic: {
                     creator:{}
@@ -65,6 +87,9 @@
         },
         components: {
             IndexHeader,
+            FineAuthor,
+            HotArticle,
+            NewArticle,
         },
         computed: {
             focus_cion() {
@@ -78,6 +103,9 @@
             })
         },
         methods: {
+            toggle(name) {
+                this.currentView = name
+            },
             toggleFocus() {
                 this.is_focus = !this.is_focus
                 this.$axios.post(`topics/${this.$route.params.topic}/focus`, {}).then(resource => {

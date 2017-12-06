@@ -41,13 +41,6 @@ export default new Router({
             path: '/topics/:topic',
             name:'topics.index',
             component: (resolve) => require(['../views/topics/Index.vue'], resolve),
-            children: [
-                {
-                    path: '',
-                    name:'topics.show',
-                    component: (resolve) => require(['../views/topics/childrens/Index.vue'], resolve)
-                },
-            ]
         },
         {
             path: '/topics/:topic/edit',
