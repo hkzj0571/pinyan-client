@@ -3,11 +3,11 @@
         <Menu mode="horizontal" @on-select="toggle" :active-name="currentView" class="navbar_menu">
             <MenuItem name="Dynamic">
                 <Icon type="help-buoy"></Icon>
-                最新动态
+                动态
             </MenuItem>
             <MenuItem name="ReleaseArticle">
                 <Icon type="android-list"></Icon>
-                发布文章
+                文章
             </MenuItem>
             <MenuItem name="FocusTopic">
                 <Icon type="chatbox-working"></Icon>
