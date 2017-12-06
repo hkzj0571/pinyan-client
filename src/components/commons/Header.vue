@@ -29,13 +29,13 @@
                                 <Avatar :src="avatar" shape="square" size="large"/>
                             </a>
                             <DropdownMenu slot="list">
-                                <router-link :to="'/user/'+id+'/profile'">
+                                <router-link :to="{name:'user.show.profile',params:{user:id}}">
                                     <DropdownItem name="profile">
                                         <Icon type="person"></Icon>
                                         主页
                                     </DropdownItem>
                                 </router-link>
-                                <router-link to="/settings/basic">
+                                <router-link :to="{name:'user.settings'}">
                                     <DropdownItem name="setting">
                                         <Icon type="android-settings"></Icon>
                                         设置

@@ -3,7 +3,7 @@
         <IndexHeader></IndexHeader>
         <div class="container">
             <i-col :span="16">
-                <Carousel autoplay loop v-model="value2" class="index-carousel">
+                <Carousel autoplay loop v-model="carousel_star" class="index-carousel">
                     <CarouselItem v-for="i in 10">
                         <div class="item">
                             <img src="//upload.jianshu.io/admin_banners/web_images/3924/931b127da83d69101bb158583779dcc1a1991065.png?imageMogr2/auto-orient/strip|imageView2/1/w/1250/h/540">
@@ -124,7 +124,7 @@
     export default {
         data() {
             return {
-                value2: 0
+                carousel_star: 0
             }
         },
         components: {

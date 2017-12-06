@@ -12,11 +12,11 @@
                         </a>
                         <div class="topic-select" slot="list">
                             <p>请选择专题</p>
-                            <Select v-model="article_form.topic_id"
+                            <Select v-model="article.topic_id"
                                     filterable
                                     placeholder="请输入专题关键词"
                                     :remote-method="getTopics"
-                                    :loading="topic_loading"
+                                    :loading="loading"
                                     remote>
                                 <Option :value="topic.id" :label="topic.name" v-for="topic in topics">
                                     <img :src="topic.cover">
@@ -29,8 +29,8 @@
                 </div>
                 <div class="line"></div>
                 <div class="article-fored">
-                    <Input type="textarea" v-model="article_form.title" :rows="1" class="double_title" placeholder="请输入文章标题"/>
-                    <ArticleQuill v-model="article_form.content"></ArticleQuill>
+                    <Input type="textarea" v-model="article.title" :rows="1" class="double_title" placeholder="请输入文章标题"/>
+                    <ArticleQuill v-model="article.content"></ArticleQuill>
                 </div>
             </i-col>
         </div>
@@ -43,8 +43,8 @@
         data() {
             return {
                 topics: [],
-                topic_loading: false,
-                article_form: {
+                loading: false,
+                article: {
                     content: null,
                     title: null,
                     topic_id: null,
@@ -56,21 +56,20 @@
         },
         methods: {
             getTopics(query) {
+                this.topics = []
                 if (query !== '') {
-                    this.topic_loading = true
+                    this.loading = true
                     this.$axios.post('article/select_topic', {query: query}).then(resource => {
                         let respond = resource.data
-                        this.topic_loading = false
+                        this.loading = false
                         return respond.status
                             ? this.topics = respond.data.topics
                             : this.$Message.error(respond.message)
                     })
-                } else {
-                    this.topics = []
                 }
             },
             store() {
-                this.$axios.post('article/store', this.article_form).then(resource => {
+                this.$axios.post('article/store', this.article).then(resource => {
                     let respond = resource.data
                     if (respond.status){
                         this.$router.push('/')
@@ -83,7 +82,7 @@
         },
         computed: {
             create_validate: function () {
-                return this.article_form.title && this.article_form.topic_id && this.article_form.content
+                return this.article.title && this.article.topic_id && this.article.content
             }
         },
     }

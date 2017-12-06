@@ -8,15 +8,18 @@ export default new Router({
     routes: [
         {
             path: '/',
+            name:'index',
             component: (resolve) => require(['../views/Index.vue'], resolve),
             children: []
         },
         {
             path: '/login',
+            name:'login',
             component: (resolve) => require(['../views/auth/Login.vue'], resolve)
         },
         {
             path: '/active/:token',
+            name:'active',
             component: (resolve) => require(['../views/auth/Active.vue'], resolve)
         },
         {
@@ -36,59 +39,44 @@ export default new Router({
         },
         {
             path: '/topics/:topic',
+            name:'topics.index',
             component: (resolve) => require(['../views/topics/Index.vue'], resolve),
             children: [
                 {
                     path: '',
+                    name:'topics.show',
                     component: (resolve) => require(['../views/topics/childrens/Index.vue'], resolve)
                 },
             ]
         },
         {
             path: '/topics/:topic/edit',
+            name:'topics.edit',
             component: (resolve) => require(['../views/topics/Edit.vue'], resolve)
         },
         {
             path: '/topics',
+            name:'topics.create',
             component: (resolve) => require(['../views/topics/Create.vue'], resolve)
         },
         {
             path: '/settings',
-            component: (resolve) => require(['../views/users/settings/Settings.vue'], resolve),
-            children: [
-                {
-                    path: 'basic',
-                    meta: {
-                        menu_active: 'basic'
-                    },
-                    component: (resolve) => require(['../views/users/settings/Basic.vue'], resolve)
-                },
-                {
-                    path: 'profile',
-                    meta: {
-                        menu_active: 'profile'
-                    },
-                    component: (resolve) => require(['../views/users/settings/Profile.vue'], resolve)
-                },
-                {
-                    path: 'badge',
-                    meta: {
-                        menu_active: 'badge'
-                    },
-                    component: (resolve) => require(['../views/users/settings/Badge.vue'], resolve)
-                },
-            ]
+            name:'user.settings',
+            component: (resolve) => require(['../views/users/settings/Settings.vue'], resolve)
         },
         {
             path: '/user/:user',
+            name:'user.show',
             component: (resolve) => require(['../views/users/show/Basic.vue'], resolve),
             children:[
                 {
                     path: 'profile',
+                    name:'user.show.profile',
                     component: (resolve) => require(['../views/users/show/Profile.vue'], resolve)
                 },
                 {
                     path: 'focus',
+                    name:'user.show.focus',
                     component: (resolve) => require(['../views/users/show/Focus.vue'], resolve)
                 },
             ]
