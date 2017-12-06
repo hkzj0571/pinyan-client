@@ -134,7 +134,6 @@ export default {
                         if (rootState.user.authenticated) {
                             dispatch('refresh')
                         }
-
                         resolve(respond.message)
                     } else {
                         reject(respond.message)
@@ -143,8 +142,6 @@ export default {
             })
         },
 
-
-
         /**
          * 刷新用户资料
          * @param commit
@@ -152,7 +149,7 @@ export default {
          */
         refresh({commit}) {
             return new Promise(function (resolve, reject) {
-                axios.get('user/refresh', {}).then(resource => {
+                axios.post('user/refresh', {}).then(resource => {
                     let respond = resource.data
                     if (respond.status) {
                         commit(types.REFRESH, respond.data.user)
