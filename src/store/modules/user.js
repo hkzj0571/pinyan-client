@@ -152,7 +152,7 @@ export default {
          */
         refresh({commit}) {
             return new Promise(function (resolve, reject) {
-                axios.post('user/refresh', {}).then(resource => {
+                axios.get('user/refresh', {}).then(resource => {
                     let respond = resource.data
                     if (respond.status) {
                         commit(types.REFRESH, respond.data.user)
