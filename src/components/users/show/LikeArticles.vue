@@ -1,5 +1,5 @@
 <template>
-    <ul class="profile_articles">
+    <ul class="media_list">
         <transition-group name="fade">
             <li v-for="(article,index) in articles" :class="{'have-img':article.cover}" :key="index">
                 <router-link class="wrap-img" :to="'/article/'+article.id" v-if="article.cover">

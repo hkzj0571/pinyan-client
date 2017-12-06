@@ -29,7 +29,7 @@
                 </div>
                 <div class="line"></div>
                 <div class="article-fored">
-                    <Input type="textarea" v-model="article_form.title" :rows="1" class="article-input"
+                    <Input type="textarea" v-model="article_form.title" :rows="1" class="double_title"
                            placeholder="请输入文章标题"/>
                     <ArticleQuill v-model="article_form.content"></ArticleQuill>
                 </div>
@@ -101,96 +101,3 @@
         }
     }
 </script>
-
-<style lang="scss">
-    .container {
-        .header {
-            text-align: right;
-            display: block;
-            padding: 30px 0px 5px;
-            .header-logo {
-                width: 55px;
-                height: 26px;
-                border-radius: 3px;
-                float: left;
-                top: 0px;
-                left: 20px;
-                background: url(../../assets/images/min-logo.png) no-repeat;
-                background-size: 100% 100%;
-                a {
-                    display: block;
-                    width: 100%;
-                    height: 100%;
-                }
-            }
-            .ivu-btn {
-                background: none;
-                color: #ea6f5a;
-                border: none;
-                font-size: 14px;
-                .ivu-icon {
-                    font-size: 18px;
-                    vertical-align: -2px;
-                    float: right;
-                    margin-left: 5px;
-                }
-            }
-            .topic-select {
-                width: 250px;
-                padding: 15px 25px;
-                text-align: center;
-                p {
-                    color: #495060;
-                    font-size: 15px;
-                    font-weight: 400;
-                    margin-bottom: 25px;
-                }
-                .ivu-select-dropdown {
-                    .ivu-select-dropdown-list {
-                        .ivu-select-item {
-                            text-align: left;
-                            padding: 6px 12px;
-                            img {
-                                width: 36px;
-                                height: 36px;
-                                margin-right: 5px;
-                                line-height: 36px;
-                                display: inline-block;
-                                vertical-align: -10px;
-                                border-radius: 3px;
-                            }
-                            span {
-                                color: #495060;
-                                font-size: 15px;
-                                line-height: 36px;
-                                display: inline-block;
-                            }
-                            &:hover {
-                                background: #f7f8f9;
-                            }
-                        }
-                        .ivu-select-item-selected {
-                            background: #f7f8f9 !important;
-                        }
-                    }
-                }
-                .ivu-btn-ghost {
-                    color: #ea6f5a;
-                    background-color: transparenta;
-                    border: 1px solid #ea6f5a;
-                    font-size: 13px;
-                    margin-top: 25px;
-                }
-                .ivu-btn-ghost[disabled] {
-                    color: #bbbec4 !important;
-                    background-color: #f7f7f7 !important;
-                    border-color: #dddee1 !important;
-                }
-            }
-        }
-    }
-
-    .article-fored {
-        margin-top: 25px;
-    }
-</style>

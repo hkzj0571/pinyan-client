@@ -1,5 +1,5 @@
 <template>
-    <Form :model="basic_form" ref="basic_form" :rules="rules" :label-width="120" class="settings-basic-form">
+    <Form :model="basic_form" ref="basic_form" :rules="rules" :label-width="120" class="profile_form">
         <FormItem label="头像" class="avatar-item" prop="avatar">
             <CropAvatar></CropAvatar>
         </FormItem>
@@ -64,61 +64,3 @@
         }
     }
 </script>
-
-<style lang="scss">
-    .settings-basic-form {
-        margin-top: 25px;
-        .avatar-item {
-            .ivu-form-item-label {
-                line-height: 80px;
-            }
-        }
-        .ivu-form-item {
-            border-bottom: 1px solid #f0f0f0;
-            padding-bottom: 20px;
-            .ivu-form-item-label {
-                text-align: left;
-                font-size: 15px;
-                color: #969696;
-            }
-            .ivu-form-item-content {
-                .ivu-btn-success {
-                    padding: 6px 35px;
-                    font-size: 15px;
-                }
-                .ivu-avatar {
-                    width: 100px;
-                    height: 100px;
-                    cursor: pointer;
-                }
-                .ivu-spin {
-                    width: 100px;
-                    height: 100px;
-                    cursor: pointer;
-                    display: inline-block;
-                }
-                .ivu-input {
-                    background: hsla(0, 0%, 71%, .1);
-                    max-width: 250px;
-                }
-                p {
-                    font-size: 15px;
-                    .label {
-                        color: #969696;
-                        font-size: 13px;
-                        margin-left: 25px;
-                        cursor: pointer;
-                        .ivu-icon {
-                            font-size: 15px;
-                            vertical-align: -1px;
-                            margin-right: 5px;
-                        }
-                    }
-                }
-            }
-            &:last-child {
-                border-bottom: none;
-            }
-        }
-    }
-</style>

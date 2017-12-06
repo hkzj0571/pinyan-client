@@ -1,106 +1,40 @@
 <template>
-    <Tabs class="profile" :animated="false">
-        <TabPane label="动态" icon="help-buoy"></TabPane>
-        <TabPane label="文章" icon="android-list">
-                <ul class="profile_articles">
-                    <transition-group name="fade">
-                        <li v-for="(article,index) in articles" :class="{'have-img':article.cover}" :key="index">
-                            <router-link class="wrap-img" :to="'/article/'+article.id" v-if="article.cover">
-                                <img :src="article.cover">
-                            </router-link>
-                            <div class="content">
-                                <div class="author">
-                                    <router-link :to="'/user'+article.user.id+'/profile'">
-                                        <Avatar icon="person" :src="article.user.avatar"/>
-                                    </router-link>
-                                    <div class="info">
-                                        <router-link class="nickname" :to="'/user'+article.user.id+'/profile'" v-text="article.user.name"></router-link>
-                                        <span class="time" v-text="article.created_at"></span>
-                                    </div>
-                                </div>
-                                <router-link class="title" :to="'/article/'+article.id" v-text="article.title"></router-link>
-                                <router-link :to="'/article/'+article.id">
-                                    <p class="abstract" v-text="article.content"></p>
-                                </router-link>
-                                <div class="meta">
-                                    <a class="topic" href="/c/71a87e510a58" v-text="article.topic.name"></a>
-                                    <a href=""><Icon type="eye"></Icon>{{ article.read_count }}</a>
-                                    <a href=""><Icon type="chatbox-working"></Icon>{{ article.comments_count }}</a>
-                                    <a href=""><Icon type="android-favorite"></Icon>{{ article.like_count }}</a>
-                                </div>
-                            </div>
-                        </li>
-                    </transition-group>
-                    <li class="end">
-                        <Button type="text" icon="chevron-down" :loading="loading_article" v-show="!article_end" @click="getArticles">加载更多</Button>
-                        <Button type="text" v-show="article_end">加载完毕</Button>
-                    </li>
-                </ul>
-        </TabPane>
-        <TabPane label="评论" icon="chatbox-working">标签一的内容</TabPane>
-    </Tabs>
+    <div>
+        <Menu mode="horizontal" @on-select="toggle" :active-name="currentView" class="navbar_menu">
+            <MenuItem name="Dynamic">
+                <Icon type="help-buoy"></Icon>
+                最新动态
+            </MenuItem>
+            <MenuItem name="ReleaseArticle">
+                <Icon type="android-list"></Icon>
+                发布文章
+            </MenuItem>
+            <MenuItem name="FocusTopic">
+                <Icon type="chatbox-working"></Icon>
+                评论
+            </MenuItem>
+        </Menu>
+        <component :is="currentView"></component>
+    </div>
 </template>
 
 <script>
+    import ReleaseArticle from '../../../components/users/show/ReleaseArticle'
+    import Dynamic from '../../../components/users/show/Dynamic'
     export default {
         data() {
             return {
-                loading_article:false,
-                article_end:false,
-                article_page: 0,
-                articles: []
+                currentView:'Dynamic',
             }
         },
-        created: function () {
-            this.getArticles()
+        components: {
+            ReleaseArticle,
+            Dynamic
         },
         methods: {
-            getArticles() {
-                this.loading_article = true
-                this.article_page++
-                this.$axios.post('user/articles?page=' + this.article_page, {}).then(resource => {
-                    this.loading_article = false
-                    if (resource.data.data.articles.length === 0) {
-                        this.article_end = true
-                    }
-                    this.articles = this.articles.concat(resource.data.data.articles)
-                })
+            toggle(name) {
+                this.currentView = name
             }
         }
     }
 </script>
-
-<style lang="scss">
-    .profile {
-        .ivu-tabs-bar {
-            border-bottom: 1px solid #f0f0f0;
-            .ivu-tabs-nav-container {
-                .ivu-tabs-nav-wrap {
-                    .ivu-tabs-nav-scroll {
-                        .ivu-tabs-nav {
-                            adding-bottom: 5px;
-                            .ivu-tabs-ink-bar {
-                                background-color: #646464;
-                            }
-                            .ivu-tabs-tab-active {
-                                color: #646464 !important;
-                            }
-                            .ivu-tabs-tab {
-                                padding: 13px 20px;
-                                font-size: 15px;
-                                font-weight: 700;
-                                color: #969696;
-                                line-height: 25px;
-                                .ivu-icon {
-                                    font-size: 21px;
-                                    vertical-align: -3px;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-    }
-</style>

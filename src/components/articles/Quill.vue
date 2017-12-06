@@ -101,9 +101,3 @@
         }
     }
 </script>
-
-<style lang="scss">
-    #ArticleQuillImage {
-        display: none;
-    }
-</style>

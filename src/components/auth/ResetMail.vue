@@ -30,18 +30,3 @@
         },
     }
 </script>
-
-<style lang="scss">
-    .no-active {
-        margin-top: 25px !important;
-        .ivu-alert-desc {
-            font-size: 14px;
-            line-height: 20px;
-            .ivu-btn {
-                font-size: 14px;
-                margin-left: 10px;
-                color: #2d8cf0;
-            }
-        }
-    }
-</style>

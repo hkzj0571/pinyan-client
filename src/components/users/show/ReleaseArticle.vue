@@ -50,10 +50,9 @@
         },
         methods: {
             getArticles() {
-                var topic = this.$route.params.topic
                 this.loading_article = true
                 this.article_page++
-                this.$axios.post(`topics/${topic}/hot_articles?page=` + this.article_page, {}).then(resource => {
+                this.$axios.post('user/articles?page=' + this.article_page, {}).then(resource => {
                     this.loading_article = false
                     if (resource.data.data.articles.length === 0) {
                         this.article_end = true

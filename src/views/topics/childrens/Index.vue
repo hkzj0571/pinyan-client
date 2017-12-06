@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Menu mode="horizontal" @on-select="toggle" :active-name="currentView" class="topic_menus">
+        <Menu mode="horizontal" @on-select="toggle" :active-name="currentView" class="navbar_menu">
             <MenuItem name="NewArticle">
                 <Icon type="android-time"></Icon>
                 最新文章

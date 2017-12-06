@@ -13,17 +13,3 @@
 <script>
     export default {}
 </script>
-
-<style lang="scss">
-    .layout-copy {
-        clear: both;
-        font-size: 14px;
-        display: block;
-        text-align: center;
-        padding: 20px 0 40px;
-        color: #9ea7b4;
-        p {
-            margin: 15px auto;
-        }
-    }
-</style>

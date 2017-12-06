@@ -31,25 +31,3 @@
         }
     }
 </script>
-
-<style lang="scss">
-    .logo {
-        position: absolute;
-        top: 56px;
-        margin-left: 50px;
-        img {
-            width: 100px;
-        }
-    }
-
-    .center {
-        text-align: center;
-    }
-
-    .layout-auth {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        background: #eef5f9;
-    }
-</style>
