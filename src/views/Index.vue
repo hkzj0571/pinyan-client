@@ -106,15 +106,15 @@
                     </ul>
                 </div>
                 <div class="line"></div>
-                <div class="qrcode">
-                    <router-link to="https://juejin.im/app" target="_blank">
-                        <img src="../assets/images/qrcode.png" class="qr-img">
-                    </router-link>
-                    <div class="info">
-                        <span class="headline">下载品言手机APP<Icon type="chevron-right"></Icon></span>
-                        <span class="desc">十年一品温如言</span>
-                    </div>
-                </div>
+                <!--<div class="qrcode">-->
+                    <!--<router-link to="https://juejin.im/app" target="_blank">-->
+                        <!--<img src="../assets/images/qrcode.png" class="qr-img">-->
+                    <!--</router-link>-->
+                    <!--<div class="info">-->
+                        <!--<span class="headline">下载品言手机APP<Icon type="chevron-right"></Icon></span>-->
+                        <!--<span class="desc">十年一品温如言</span>-->
+                    <!--</div>-->
+                <!--</div>-->
             </i-col>
         </div>
     </div>

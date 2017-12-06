@@ -38,7 +38,7 @@
             <i-col :span="7" offset="1">
                 <div class="aside">
                     <p class="title">专题公告</p>
-                    <div class="description" v-text="topic.describe"></div>
+                    <div class="description" v-html="topic.describe"></div>
                     <div class="share">
                         <span>分享到</span>
                         <share :config="{disabled:['google','facebook','diandian','tencent','linkedin','twitter']}"></share>

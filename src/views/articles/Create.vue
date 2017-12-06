@@ -29,7 +29,8 @@
                 </div>
                 <div class="line"></div>
                 <div class="article-fored">
-                    <Input type="textarea" v-model="article.title" :rows="1" class="double_title" placeholder="请输入文章标题"/>
+                    <Input type="textarea" v-model="article.title" :rows="1" class="double_title"
+                           placeholder="请输入文章标题"/>
                     <ArticleQuill v-model="article.content"></ArticleQuill>
                 </div>
             </i-col>
@@ -71,8 +72,8 @@
             store() {
                 this.$axios.post('article/store', this.article).then(resource => {
                     let respond = resource.data
-                    if (respond.status){
-                        this.$router.push('/')
+                    if (respond.status) {
+                        this.$router.push({name: 'article.show', params: {article: respond.data.article.id}})
                         this.$Message.success('文章发布成功')
                     } else {
                         this.$Message.error(respond.message)

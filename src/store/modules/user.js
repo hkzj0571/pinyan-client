@@ -155,7 +155,7 @@ export default {
                         commit(types.REFRESH, respond.data.user)
                         resolve()
                     } else {
-
+                        reject()
                     }
                 })
             })

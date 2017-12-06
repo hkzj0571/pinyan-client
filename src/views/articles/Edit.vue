@@ -2,7 +2,7 @@
     <div class="layout">
         <div class="container">
             <i-col :span="18" offset="3">
-                <div class="header">
+                <div class="article-header">
                     <div class="header-logo">
                         <router-link to="/"></router-link>
                     </div>
@@ -12,11 +12,11 @@
                         </a>
                         <div class="topic-select" slot="list">
                             <p>请选择专题</p>
-                            <Select v-model="article_form.topic_id"
+                            <Select v-model="article.topic_id"
                                     filterable
                                     placeholder="请输入专题关键词"
                                     :remote-method="getTopics"
-                                    :loading="topic_loading"
+                                    :loading="loading"
                                     remote>
                                 <Option :value="topic.id" :label="topic.name" v-for="topic in topics">
                                     <img :src="topic.cover">
@@ -29,9 +29,9 @@
                 </div>
                 <div class="line"></div>
                 <div class="article-fored">
-                    <Input type="textarea" v-model="article_form.title" :rows="1" class="double_title"
+                    <Input type="textarea" v-model="article.title" :rows="1" class="double_title"
                            placeholder="请输入文章标题"/>
-                    <ArticleQuill v-model="article_form.content"></ArticleQuill>
+                    <ArticleQuill v-model="article.content"></ArticleQuill>
                 </div>
             </i-col>
         </div>
@@ -45,8 +45,8 @@
             return {
                 id:this.$route.params.article,
                 topics: [],
-                topic_loading: false,
-                article_form: {
+                loading: false,
+                article: {
                     content: null,
                     title: null,
                     topic_id: null,
@@ -59,10 +59,10 @@
         methods: {
             getTopics(query) {
                 if (query !== '') {
-                    this.topic_loading = true
+                    this.loading = true
                     this.$axios.get('article/topic', {query: query}).then(resource => {
                         let respond = resource.data
-                        this.topic_loading = false
+                        this.loading = false
                         return respond.status
                             ? this.topics = respond.data.topics
                             : this.$Message.error(respond.message)
@@ -72,7 +72,7 @@
                 }
             },
             update() {
-                this.$axios.put('article/' + this.id, this.article_form).then(resource => {
+                this.$axios.put('article/' + this.id, this.article).then(resource => {
                     let respond = resource.data
                     if (respond.status) {
                         this.$router.push({name: 'article.show', params: {article: this.id}})
@@ -85,17 +85,17 @@
         },
         computed: {
             update_validate: function () {
-                return this.article_form.title && this.article_form.topic_id && this.article_form.content
+                return this.article.title && this.article.topic_id && this.article.content
             },
         },
         created: function () {
             return this.$axios.get('article/' + this.id, {}).then(resource => {
                 let article = resource.data.data.article
-                this.article_form.content = article.content
-                this.article_form.title = article.title
+                this.article.content = article.content
+                this.article.title = article.title
                 this.topics.push(article.topic)
                 this.$nextTick(() => {
-                    this.article_form.topic_id = article.topic.id
+                    this.article.topic_id = article.topic.id
                 })
             })
         }
