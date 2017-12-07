@@ -6,6 +6,7 @@ import iView from 'iview'
 import Util from './libs/util'
 import 'iview/dist/styles/iview.css'
 import './assets/sass/app.scss'
+import 'vue-social-share/dist/client.css'
 import Share from 'vue-social-share'
 
 Vue.use(Share)
