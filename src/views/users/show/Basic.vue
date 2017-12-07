@@ -9,8 +9,7 @@
                     </router-link>
                     <div class="info">
                         <span class="name">
-                            <router-link :to="{name:'user.show.profile',params:{user:id}}"
-                                         v-text="user.name"></router-link>
+                            <router-link :to="{name:'user.show.profile',params:{user:id}}" v-text="user.name"></router-link>
                         </span>
                         <Icon :type="user.gender" v-show="user.gender"></Icon>
                         <p class="daska">发布了 {{ user.article_count }} 篇文章，关注了 {{ user.follower_count }} 人 ，被 {{ user.follower_count }} 人关注</p>

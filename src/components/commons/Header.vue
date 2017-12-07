@@ -24,10 +24,10 @@
                         </router-link>
                     </MenuItem>
                     <MenuItem name="4" class="header-user" v-if="authenticated">
-                        <Dropdown trigger="click">
-                            <a href="javascript:void(0);">
+                        <Dropdown>
+                            <router-link :to="{name:'user.show.profile',params:{user:id}}">
                                 <Avatar :src="avatar" shape="square" size="large"/>
-                            </a>
+                            </router-link>
                             <DropdownMenu slot="list">
                                 <router-link :to="{name:'user.show.profile',params:{user:id}}">
                                     <DropdownItem name="profile">
@@ -47,7 +47,7 @@
                                         喜欢的文章
                                     </DropdownItem>
                                 </router-link>
-                                <router-link to="/">
+                                <router-link :to="{name:'user.show.follow',params:{user:id}}">
                                     <DropdownItem name="logout">
                                         <Icon type="eye"></Icon>
                                         关注的用户

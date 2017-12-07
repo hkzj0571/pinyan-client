@@ -94,7 +94,7 @@
                     </div>
                     <div class="meta-bottom">
                         <div class="like">
-                            <div class="btn like-group" :class="{active:is_like}">
+                            <div class="btn like-group" :class="{active:article.is_like}">
                                 <div class="btn-like" @click="like">
                                     <a>
                                         <Icon type="android-favorite-outline"></Icon>
@@ -175,7 +175,7 @@
                     </a>
                     <a href="/u/e8d95cca28b8" target="_blank" class="name" v-text="user.name"></a>
                     <Icon :type="user.gender" v-show="user.gender"></Icon>
-                    <a href="" class="time" v-text="user.created_at"></a>
+                    <a href="" class="time" v-text="user.pivot_created_at"></a>
                 </li>
                 <li class="end" v-show="like_users_page !== false">
                     <Button type="text" @click="getLikeUsers" :loading="get_user_loading">加载更多</Button>
@@ -238,11 +238,6 @@
                 this.article = respond.data.article
             })
 
-            this.$axios.post(`article/${this.$route.params.article}/is_like`, {}).then(resource => {
-                let respond = resource.data
-                this.is_like = respond.data.is_like
-            })
-
             this.getLikeUsers()
 
         },
@@ -265,8 +260,8 @@
             like() {
                 this.$axios.post(`article/${this.article.id}/like`, {}).then(resource => {
                     let respond = resource.data
-                    this.is_like = !this.is_like
-                    respond.data.type == 'attached' ? this.article.like_count++ : this.article.like_count--
+                    this.article.is_like = !this.article.is_like
+                    respond.data.type ? this.article.like_count++ : this.article.like_count--
                 })
             },
             likeUsers() {
