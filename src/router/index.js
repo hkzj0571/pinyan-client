@@ -72,6 +72,11 @@ export default new Router({
                     name:'user.show.focus',
                     component: (resolve) => require(['../views/users/show/Focus.vue'], resolve)
                 },
+                {
+                    path: 'follow',
+                    name:'user.show.follow',
+                    component: (resolve) => require(['../views/users/show/Follow.vue'], resolve)
+                },
             ]
         },
     ]

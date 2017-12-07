@@ -32,19 +32,37 @@
                                 <router-link :to="{name:'user.show.profile',params:{user:id}}">
                                     <DropdownItem name="profile">
                                         <Icon type="person"></Icon>
-                                        主页
+                                        我的主页
                                     </DropdownItem>
                                 </router-link>
                                 <router-link :to="{name:'user.settings'}">
                                     <DropdownItem name="setting">
                                         <Icon type="android-settings"></Icon>
-                                        设置
+                                        个人设置
+                                    </DropdownItem>
+                                </router-link>
+                                <router-link :to="{name:'user.show.focus',params:{user:id}}">
+                                    <DropdownItem name="logout">
+                                        <Icon type="android-favorite"></Icon>
+                                        喜欢的文章
+                                    </DropdownItem>
+                                </router-link>
+                                <router-link to="/">
+                                    <DropdownItem name="logout">
+                                        <Icon type="eye"></Icon>
+                                        关注的用户
+                                    </DropdownItem>
+                                </router-link>
+                                <router-link to="/">
+                                    <DropdownItem name="logout">
+                                        <Icon type="android-textsms"></Icon>
+                                        帮助与反馈
                                     </DropdownItem>
                                 </router-link>
                                 <a href="javascript:void(0);" @click="logout">
                                     <DropdownItem name="logout">
                                         <Icon type="power"></Icon>
-                                        退出
+                                        退出登陆
                                     </DropdownItem>
                                 </a>
                             </DropdownMenu>

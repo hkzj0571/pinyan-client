@@ -65,24 +65,29 @@
                         <div class="supporter">
                             <ul class="support-list">
                                 <li>
-                                    <a target="_blank" href="/u/eee6e7dea98c" class="avatar"><img
-                                            src="//upload.jianshu.io/users/upload_avatars/3354589/c5a5c2aa-eeb3-4e50-8ac5-a0798375e016.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/120/h/120"></a>
+                                    <a target="_blank" href="/u/eee6e7dea98c" class="avatar">
+                                        <img src="//upload.jianshu.io/users/upload_avatars/3354589/c5a5c2aa-eeb3-4e50-8ac5-a0798375e016.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/120/h/120">
+                                    </a>
                                 </li>
                                 <li>
-                                    <a target="_blank" href="javascript:void(0)" class="avatar"><img
-                                            src="http://wx.qlogo.cn/mmopen/EcOKiaZLsUY9FuML88x9hy6yAoRn5shyc28p2ibzb7x6XXdNOKYZBhZcbwk3nx4wHm1qDuZ4c6lfulRUmRFBWZ77R3jJXvCg6q/0"></a>
+                                    <a target="_blank" href="javascript:void(0)" class="avatar">
+                                        <img src="http://wx.qlogo.cn/mmopen/EcOKiaZLsUY9FuML88x9hy6yAoRn5shyc28p2ibzb7x6XXdNOKYZBhZcbwk3nx4wHm1qDuZ4c6lfulRUmRFBWZ77R3jJXvCg6q/0">
+                                    </a>
                                 </li>
                                 <li>
-                                    <a target="_blank" href="javascript:void(0)" class="avatar"><img
-                                            src="http://cdn2.jianshu.io/assets/default_avatar/wechat-771371d5741b0c32cd805caeb48ad6c0.png"></a>
+                                    <a target="_blank" href="javascript:void(0)" class="avatar">
+                                        <img src="http://cdn2.jianshu.io/assets/default_avatar/wechat-771371d5741b0c32cd805caeb48ad6c0.png">
+                                    </a>
                                 </li>
                                 <li>
-                                    <a target="_blank" href="javascript:void(0)" class="avatar"><img
-                                            src="http://cdn2.jianshu.io/assets/default_avatar/wechat-771371d5741b0c32cd805caeb48ad6c0.png"></a>
+                                    <a target="_blank" href="javascript:void(0)" class="avatar">
+                                        <img src="http://cdn2.jianshu.io/assets/default_avatar/wechat-771371d5741b0c32cd805caeb48ad6c0.png">
+                                    </a>
                                 </li>
                                 <li>
-                                    <a target="_blank" href="javascript:void(0)" class="avatar"><img
-                                            src="http://cdn2.jianshu.io/assets/default_avatar/wechat-771371d5741b0c32cd805caeb48ad6c0.png"></a>
+                                    <a target="_blank" href="javascript:void(0)" class="avatar">
+                                        <img src="http://cdn2.jianshu.io/assets/default_avatar/wechat-771371d5741b0c32cd805caeb48ad6c0.png">
+                                    </a>
                                 </li>
                             </ul>
                         </div>

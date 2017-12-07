@@ -9,35 +9,12 @@
                     </router-link>
                     <div class="info">
                         <span class="name">
-                            <router-link :to="{name:'user.show.profile',params:{user:id}}" v-text="user.name"></router-link>
+                            <router-link :to="{name:'user.show.profile',params:{user:id}}"
+                                         v-text="user.name"></router-link>
                         </span>
                         <Icon :type="user.gender" v-show="user.gender"></Icon>
-                        <ul class="options">
-                            <li>
-                                <div class="meta-block">
-                                    <a href="/users/06201a8515a3/following">
-                                        <p>10</p>
-                                        关注
-                                    </a>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="meta-block">
-                                    <a href="/users/06201a8515a3/following">
-                                        <p>10</p>
-                                        粉丝
-                                    </a>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="meta-block">
-                                    <router-link :to="{name:'user.show.profile',params:{user:id}}">
-                                        <p>10</p>
-                                        文章
-                                    </router-link>
-                                </div>
-                            </li>
-                        </ul>
+                        <p class="daska">发布了 {{ user.article_count }} 篇文章，关注了 {{ user.follower_count }} 人 ，被 {{ user.follower_count }} 人关注</p>
+                        <p class="daska" v-text="user.describe"></p>
                     </div>
                 </div>
                 <router-view/>
@@ -51,10 +28,10 @@
                 </div>
                 <ul class="synamic">
                     <li>
-                        <a href="/users/06201a8515a3/subscriptions">
+                        <router-link :to="{name:'user.show.follow',params:{user:id}}">
                             <Icon type="android-person"></Icon>
                             关注的用户
-                        </a>
+                        </router-link>
                     </li>
                     <li>
                         <router-link :to="{name:'user.show.focus',params:{user:id}}">

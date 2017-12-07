@@ -512,6 +512,10 @@ html,body {
           display: none !important;
         }
       }
+      .daska {
+        color: #969696;
+        margin-top: 3px;
+      }
     }
   }
   .line {
@@ -1429,6 +1433,11 @@ html,body {
           color: #969696;
         }
       }
+      .small-meta {
+        .meta {
+          padding-top: 3px;
+        }
+      }
       .ivu-btn {
         color: #8c8c8c;
         float: right;
@@ -1559,7 +1568,8 @@ html,body {
         .ivu-select-dropdown {
           .ivu-dropdown-menu {
             .ivu-dropdown-item {
-              text-align: center;
+              text-align: left;
+              padding: 12px 24px !important;
               font-size: 14px !important;
               .ivu-icon {
                 font-size: 20px;
