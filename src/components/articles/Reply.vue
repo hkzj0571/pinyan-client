@@ -10,9 +10,9 @@
         <div class="comment-wrap">
             <p v-text="comment.content"></p>
             <div class="tool-group">
-                <a href="javascript:void(0);">
+                <a href="javascript:void(0);" @click="vote(comment)" :class="{voted:comment.is_vote}">
                     <Icon type="thumbsup"></Icon>
-                    <span>{{ comment.vote_count }}</span>
+                    <span>{{ comment.vote_count == 0 ? '赞' : comment.vote_count+' 人赞' }}</span>
                 </a>
                 <a href="javascript:void(0);" @click="check(comment.id)">
                     <Icon type="chatbox-working"></Icon>
@@ -34,9 +34,9 @@
                 </div>
                 <div class="tool-group">
                     <span class="time" v-text="childer.created_at"></span>
-                    <a href="javascript:void(0);">
+                    <a href="javascript:void(0);" @click="vote(childer)" :class="{voted:childer.is_vote}">
                         <Icon type="thumbsup"></Icon>
-                        <span>{{ comment.vote_count }}</span>
+                        <span>{{ childer.vote_count == 0 ? '赞' : childer.vote_count+' 人赞' }}</span>
                     </a>
                     <a href="javascript:void(0);" @click="check(comment.id,childer)">
                         <Icon type="chatbox-working"></Icon>
@@ -54,8 +54,7 @@
                     <div class="function-block">
                         <Icon type="android-happy" @click="tgoogle()"></Icon>
                         <Button type="text" shape="circle" size="large" @click="vlista = false">取消</Button>
-                        <Button type="success" shape="circle" size="large" :disabled="!reply.content" :loading="loading"
-                                @click="store">发送
+                        <Button type="success" shape="circle" size="large" :disabled="!reply.content" :loading="loading" @click="store">发送
                         </Button>
                     </div>
                 </div>
@@ -82,7 +81,8 @@
             }
         },
         props: ['comment'],
-        computed: {},
+        computed: {
+        },
         methods: {
             check(reply_id,childer = null) {
                 this.vlista = true
@@ -90,6 +90,12 @@
                 if (childer !== null) {
                     this.reply.content = `@${childer.user.name} `
                 }
+            },
+            vote(comment){
+                comment.is_vote = !comment.is_vote
+                this.$axios.post(`comments/${comment.id}/vote`).then(resource => {
+                    resource.data.data.type ? comment.vote_count++ : comment.vote_count--
+                })
             },
             store() {
                 this.loading = true

@@ -1159,15 +1159,21 @@ html,body {
                 display: inline-block;
                 span {
                   vertical-align: middle;
-                  font-size: 12px;
+                  font-size: 13px;
                 }
                 .ivu-icon {
-                  font-size: 13px;
+                  font-size: 16px;
                   vertical-align: -2px;
                   margin-right: 3px;
                 }
                 &:hover {
                   color: #262626;
+                }
+              }
+              .voted {
+                color: #262626;
+                .ivu-icon {
+                  color: #ea6f5a;
                 }
               }
             }
@@ -1216,7 +1222,7 @@ html,body {
               }
               .tool-group {
                 padding-top: 5px;
-                font-size: 12px;
+                font-size: 13px;
                 color: #969696;
                 .time {
                   margin-right: 10px;
@@ -1230,12 +1236,18 @@ html,body {
                     font-size: 12px;
                   }
                   .ivu-icon {
-                    font-size: 13px;
+                    font-size: 16px;
                     vertical-align: -2px;
                     margin-right: 3px;
                   }
                   &:hover {
                     color: #262626;
+                  }
+                }
+                .voted {
+                  color: #262626;
+                  .ivu-icon {
+                    color: #ea6f5a;
                   }
                 }
               }
