@@ -17,7 +17,7 @@
         <div class="normal-comment-list">
             <div class="top-title">
                 <span>{{ article.comments_count }} 条评论</span>
-                <a class="author-only">只看作者</a>
+                <a class="author-only" :class="{active:only}" @click="onlyAuthor">只看作者</a>
                 <a class="close-btn" style="display: none;">关闭评论</a>
                 <div class="pull-right">
                     <a href="javascript:void(0);" :class="{active:sort == 'vote'}" @click="awsort('vote')">按赞同排序</a>
@@ -86,19 +86,25 @@
                 this.page = 0
                 this.getComment()
             },
+            onlyAuthor(){
+                this.only = !this.only
+                this.comments = []
+                this.page = 0
+                this.getComment()
+            },
             getComment() {
                 this.more_loading = true
                 this.page++
-                this.$axios.get(`article/${this.$route.params.article}/comments`, {
-                    params: {
-                        page: this.page,
-                        only: this.only,
-                        sort: this.sort,
-                    }
+                this.$axios.post(`article/${this.$route.params.article}/comments`,{
+                    page: this.page,
+                    only: this.only,
+                    sort: this.sort,
                 }).then(resource => {
                     this.more_loading = false
                     let respond = resource.data
-                    this.comments = this.comments.concat(respond.data.comments)
+                    this.$nextTick(() => {
+                        this.comments = this.comments.concat(respond.data.comments)
+                    })
                     if (respond.data.comments.length == 0) {
                         this.loading_end = true
                     }
