@@ -3,8 +3,8 @@
         <div class="like">
             <div class="btn like-group" :class="{active:article.is_like}">
                 <div class="btn-like" @click="like">
-                    <a>
-                        <Icon type="android-favorite-outline"></Icon>
+                    <a href="javascript:void(0);">
+                        <Icon :type="icon"></Icon>
                         喜欢
                     </a>
                 </div>
@@ -42,7 +42,11 @@
                 page: 0,
             }
         },
-        computed: {},
+        computed: {
+            icon() {
+                return this.article.is_like ? 'android-favorite' : 'android-favorite-outline'
+            }
+        },
         props: ['article'],
         created: function () {
             this.getUser()
@@ -51,7 +55,7 @@
             like() {
                 this.$axios.post(`article/${this.article.id}/like`, {}).then(resource => {
                     let respond = resource.data
-                    this.article.is_like = !this.article.is_like
+                    this.article.is_like = respond.data.type
                     respond.data.type ? this.article.like_count++ : this.article.like_count--
                 })
             },

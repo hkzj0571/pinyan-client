@@ -2,7 +2,7 @@
     <div class="layout">
         <IndexHeader></IndexHeader>
         <div class="container">
-            <i-col :span="18" offset="3">
+            <i-col :span="16" offset="4">
                 <div class="article-detail">
                     <h1 class="title" v-text="article.title"></h1>
                     <div class="author">

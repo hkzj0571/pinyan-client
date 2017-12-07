@@ -2,19 +2,13 @@
     <div class="comment-list">
         <div class="new_commet">
             <Avatar icon="person" size="large"/>
-            <textarea rows="3" class="ivu-input" v-model="comment.content"
-                      @click="vilast = true"></textarea>
+            <textarea rows="3" class="ivu-input" v-model="comment.content" @click="vilast = true"></textarea>
             <transition name="fade">
                 <div class="function-block" v-show="vilast">
                     <Icon type="android-happy"></Icon>
-                    <Button type="text" shape="circle" size="large"
-                            @click="vilast = false">取消
+                    <Button type="text" shape="circle" size="large" @click="vilast = false">取消
                     </Button>
-                    <Button type="success"
-                            shape="circle"
-                            size="large"
-                            :disabled="!comment.content"
-                            @click="newComment"
+                    <Button type="success" shape="circle" size="large" :disabled="!comment.content" @click="store"
                             :loading="loading">发送
                     </Button>
                 </div>
@@ -22,44 +16,30 @@
         </div>
         <div class="normal-comment-list">
             <div class="top-title">
-                <span>{{ article.comments_count }}条评论</span>
+                <span>{{ article.comments_count }} 条评论</span>
                 <a class="author-only">只看作者</a>
                 <a class="close-btn" style="display: none;">关闭评论</a>
                 <div class="pull-right">
-                    <a class="active">按喜欢排序</a>
-                    <a>按时间正序</a>
-                    <a>按时间倒序</a>
+                    <a href="javascript:void(0);" :class="{active:sort == 'vote'}" @click="awsort('vote')">按赞同排序</a>
+                    <a href="javascript:void(0);" :class="{active:sort == 'asc'}" @click="awsort('asc')">按时间正序</a>
+                    <a href="javascript:void(0);" :class="{active:sort == 'desc'}" @click="awsort('desc')">按时间倒序</a>
                 </div>
             </div>
-            <div class="comment" v-for="comment in comments">
-                <div class="author">
-                    <Avatar icon="person" :src="comment.user.avatar" size="large"/>
-                    <div class="info">
-                        <a href="/u/4f5335659dc7" class="name" v-text="comment.user.name"></a>
-                        <div class="meta"><span v-text="comment.created_at"></span></div>
-                    </div>
-                </div>
-                <div class="comment-wrap">
-                    <p v-text="comment.content"></p>
-                    <div class="tool-group">
-                        <a>
-                            <Icon type="thumbsup"></Icon>
-                            <span>{{ comment.vote_count }}</span></a>
-                        <a>
-                            <Icon type="chatbox-working"></Icon>
-                            <span>回复</span></a>
-                        <a>
-                            <Icon type="flag"></Icon>
-                            <span>举报</span></a>
-                    </div>
-                </div>
-            </div>
+            <Reply :comment="comment" v-for="comment in comments"></Reply>
+        </div>
+        <div class="close">
+            <Button type="text" icon="chevron-down" :loading="more_loading" v-show="!loading_end" @click="getComment">
+                加载更多
+            </Button>
+            <Button type="text" v-show="loading_end">加载完毕</Button>
         </div>
     </div>
 </template>
 <script>
+    import Reply from './Reply'
+
     export default {
-        data () {
+        data() {
             return {
                 vilast: false,
                 comment: {
@@ -68,21 +48,25 @@
                     reply_id: null,
                 },
                 loading: false,
-                comments:[],
+                page: 0,
+                more_loading: false,
+                loading_end: false,
+                only: false,
+                sort: 'vote',
+                comments: [],
             }
+        },
+        components: {
+            Reply,
         },
         computed: {},
         props: ['article'],
-        created:function () {
-            this.$axios.get(`article/${this.$route.params.article}/comments`).then(resource => {
-                let respond = resource.data
-                this.comments = respond.data.comments
-            })
+        created: function () {
+            this.getComment()
         },
         methods: {
-            newComment() {
+            store() {
                 this.loading = true
-
                 this.$axios.post('comments/store', this.comment).then(resource => {
                     let respond = resource.data
                     this.loading = false
@@ -96,6 +80,30 @@
                     }
                 })
             },
+            awsort(type){
+                this.sort = type
+                this.comments = []
+                this.page = 0
+                this.getComment()
+            },
+            getComment() {
+                this.more_loading = true
+                this.page++
+                this.$axios.get(`article/${this.$route.params.article}/comments`, {
+                    params: {
+                        page: this.page,
+                        only: this.only,
+                        sort: this.sort,
+                    }
+                }).then(resource => {
+                    this.more_loading = false
+                    let respond = resource.data
+                    this.comments = this.comments.concat(respond.data.comments)
+                    if (respond.data.comments.length == 0) {
+                        this.loading_end = true
+                    }
+                })
+            }
         },
     }
 </script>
