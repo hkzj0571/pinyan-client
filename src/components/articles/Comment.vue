@@ -3,20 +3,19 @@
         <div class="new_commet">
             <Avatar icon="person" size="large"/>
             <textarea rows="3" class="ivu-input" v-model="comment.content"
-                      @click="show_comment_option = true"></textarea>
+                      @click="vilast = true"></textarea>
             <transition name="fade">
-                <div class="function-block" v-show="show_comment_option">
+                <div class="function-block" v-show="vilast">
                     <Icon type="android-happy"></Icon>
                     <Button type="text" shape="circle" size="large"
-                            @click="show_comment_option = false">取消
+                            @click="vilast = false">取消
                     </Button>
                     <Button type="success"
                             shape="circle"
                             size="large"
                             :disabled="!comment.content"
                             @click="newComment"
-                            :loading="comment_loading"
-                    >发送
+                            :loading="loading">发送
                     </Button>
                 </div>
             </transition>
@@ -32,7 +31,7 @@
                     <a>按时间倒序</a>
                 </div>
             </div>
-            <div class="comment" v-for="comment in article.comments">
+            <div class="comment" v-for="comment in comments">
                 <div class="author">
                     <Avatar icon="person" :src="comment.user.avatar" size="large"/>
                     <div class="info">
@@ -62,27 +61,36 @@
     export default {
         data () {
             return {
-                show_comment_option: false,
+                vilast: false,
                 comment: {
-                    article_id: null,
+                    article_id: this.$route.params.article,
                     content: null,
                     reply_id: null,
                 },
-                comment_loading: false,
+                loading: false,
+                comments:[],
             }
         },
         computed: {},
+        props: ['article'],
+        created:function () {
+            this.$axios.get(`article/${this.$route.params.article}/comments`).then(resource => {
+                let respond = resource.data
+                this.comments = respond.data.comments
+            })
+        },
         methods: {
             newComment() {
-                this.comment_loading = true
+                this.loading = true
 
                 this.$axios.post('comments/store', this.comment).then(resource => {
                     let respond = resource.data
-                    this.comment_loading = false
+                    this.loading = false
                     if (respond.status) {
                         this.comment.content = null
-                        this.show_comment_option = false
-                        this.article.comments.unshift(respond.data.comment)
+                        this.vilast = false
+                        this.article.comments_count++
+                        this.comments.unshift(respond.data.comment)
                     } else {
                         this.$Message.error(respond.message)
                     }

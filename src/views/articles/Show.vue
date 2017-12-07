@@ -42,8 +42,10 @@
                     </div>
                     <Author :user="article.user"></Author>
                     <div class="meta-bottom">
+                        <Like :article="article"></Like>
                         <share></share>
                     </div>
+                    <Comment :article="article"></Comment>
                 </div>
             </i-col>
         </div>
@@ -52,6 +54,8 @@
 <script>
     import IndexHeader from '../../components/commons/Header.vue'
     import Author from '../../components/articles/Author'
+    import Like from '../../components/articles/Like'
+    import Comment from '../../components/articles/Comment'
     import {mapState} from 'vuex'
 
     export default {
@@ -69,7 +73,9 @@
         },
         components: {
             IndexHeader,
-            Author
+            Author,
+            Like,
+            Comment
         },
         computed: {
             is_author: function () {
