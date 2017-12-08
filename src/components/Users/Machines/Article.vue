@@ -1,12 +1,15 @@
 <template>
-    <div class="content">
+    <div class="content" :class="{'cover':article.cover}">
+        <router-link class="wrap-img" :to="{name:'article.show',params:{article:article.id}}" v-if="article.cover">
+            <img :src="article.cover">
+        </router-link>
         <div class="author">
             <router-link :to="{name:'user.show.profile',params:{user:id}}">
                 <Avatar :src="avatar" size="large"></Avatar>
             </router-link>
             <div class="info">
                 <router-link class="nickname" v-text="name" :to="{name:'user.show.profile',params:{user:id}}"></router-link>
-                <span>发表了文章 · {{ article.created_at }}</span>
+                <span>发表了文章 <span class="speacd">·</span> {{ article.created_at }}</span>
             </div>
         </div>
         <router-link class="title" v-text="article.title" :to="{name:'article.show',params:{article:article.id}}"></router-link>

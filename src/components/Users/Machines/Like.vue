@@ -6,7 +6,7 @@
             </router-link>
             <div class="info">
                 <router-link class="nickname" v-text="name" :to="{name:'user.show.profile',params:{user:id}}"></router-link>
-                <span>喜欢了文章 · {{ article.like_at }}</span>
+                <span>喜欢了文章 <span class="speacd">·</span> {{ article.like_at }}</span>
             </div>
         </div>
         <blockquote>

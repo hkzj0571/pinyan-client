@@ -2,10 +2,13 @@
     <ul class="machines_list">
         <transition-group name="fade">
             <li v-for="(machine,index) in machines" :key="index">
+                <Registerd v-if="machine.action == 'registerd'" :machine="machine"></Registerd>
                 <NewArticle v-if="machine.action == 'article'" :machine="machine"></NewArticle>
                 <Comment v-if="machine.action == 'comment'" :machine="machine"></Comment>
+                <Follow v-if="machine.action == 'follow'" :machine="machine"></Follow>
                 <Reply v-if="machine.action == 'reply'" :machine="machine"></Reply>
                 <Like v-if="machine.action == 'like'" :machine="machine"></Like>
+                <Vote v-if="machine.action == 'vote'" :machine="machine"></Vote>
             </li>
         </transition-group>
         <li class="end">
@@ -16,10 +19,13 @@
 </template>
 
 <script>
+    import Registerd from '../Machines/Registerd'
     import NewArticle from '../Machines/Article'
     import Comment from '../Machines/Comment'
+    import Follow from '../Machines/Follow'
     import Reply from '../Machines/Reply'
     import Like from '../Machines/Like'
+    import Vote from '../Machines/Vote'
     export default {
         data() {
             return {
@@ -33,10 +39,13 @@
             this.getMachines()
         },
         components: {
+            Registerd,
             NewArticle,
             Comment,
             Reply,
-            Like
+            Like,
+            Vote,
+            Follow
         },
         methods: {
             getMachines(){
