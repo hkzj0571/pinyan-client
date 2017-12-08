@@ -12,7 +12,7 @@
 </template>
 <script>
     import {mapState} from 'vuex';
-    import AuthCard from '../../components/auth/AuthCard.vue'
+    import AuthCard from '../../components/Auth/AuthCard.vue'
 
     export default {
         data() {

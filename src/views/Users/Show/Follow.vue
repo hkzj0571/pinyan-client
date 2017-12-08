@@ -13,8 +13,8 @@
 </template>
 
 <script>
-    import Followed from '../../../components/users/show/Followed'
-    import Follower from '../../../components/users/show/Follower'
+    import Followed from '../../../components/Users/Show/Followed'
+    import Follower from '../../../components/Users/Show/Follower'
     export default {
         data() {
             return {

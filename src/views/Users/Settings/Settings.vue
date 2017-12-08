@@ -32,10 +32,10 @@
 </template>
 
 <script>
-    import IndexHeader from '../../../components/commons/Header.vue'
-    import Basic from '../../../components/users/settings/Basic'
-    import Profile from '../../../components/users/settings/Profile'
-    import Badge from '../../../components/users/settings/Badge'
+    import IndexHeader from '../../../components/Commons/Header.vue'
+    import Basic from '../../../components/Users/Settings/Basic'
+    import Profile from '../../../components/Users/Settings/Profile'
+    import Badge from '../../../components/Users/Settings/Badge'
 
     export default {
         data(){

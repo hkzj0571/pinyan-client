@@ -67,7 +67,7 @@
 </template>
 
 <script>
-    import IndexHeader from '../../../components/commons/Header.vue'
+    import IndexHeader from '../../../components/Commons/Header.vue'
     import {mapState} from 'vuex'
 
     export default {

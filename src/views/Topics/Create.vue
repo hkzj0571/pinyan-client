@@ -8,11 +8,11 @@
                         <FormItem label="专题封面" class="wechat-item">
                             <CropCover v-model="topic.cover"></CropCover>
                         </FormItem>
-                        <FormItem label="专题名称" prop="describe">
+                        <FormItem label="专题名称">
                             <Input v-model="topic.name"/>
                             <p class="help">请填写专题的名称，唯一且不可重复</p>
                         </FormItem>
-                        <FormItem label="专题描述" prop="describe">
+                        <FormItem label="专题描述">
                             <Input type="textarea" :rows="5" v-model="topic.describe"/>
                             <p class="help">请填写专题的描述</p>
                         </FormItem>
@@ -33,7 +33,7 @@
                             </Select>
                         </FormItem>
                         <FormItem>
-                            <Button type="success" shape="circle" @click="update" :disabled="!is_create">更新专题</Button>
+                            <Button type="success" shape="circle" @click="store" :disabled="!is_create">创建专题</Button>
                         </FormItem>
                     </Form>
                 </div>
@@ -42,8 +42,8 @@
     </div>
 </template>
 <script>
-    import IndexHeader from '../../components/commons/Header'
-    import CropCover from '../../components/topics/CropCover'
+    import IndexHeader from '../../components/Commons/Header'
+    import CropCover from '../../components/Topics/CropCover'
 
     export default {
         data() {
@@ -63,12 +63,12 @@
             IndexHeader
         },
         methods: {
-            update() {
-                this.$axios.put(`topics/${this.$route.params.topic}`, this.topic).then(resource => {
+            store() {
+                this.$axios.post('topics/store', this.topic).then(resource => {
                     let respond = resource.data
                     if (respond.status) {
-                        this.$router.push('/topics/' + this.$route.params.topic)
-                        this.$Message.success(respond.message)
+                        this.$router.push('/topics/' + respond.data.topic.id)
+                        this.$Message.success('创建专题成功')
                     } else {
                         this.$Message.error(respond.message)
                     }
@@ -93,29 +93,5 @@
                 return this.topic.cover && this.topic.name && this.topic.describe;
             }
         },
-        created: function () {
-            return this.$axios.post(`topics/${this.$route.params.topic}`, {}).then(resource => {
-                let respond = resource.data
-
-                this.topic.cover = respond.data.topic.cover
-                this.topic.name = respond.data.topic.name
-                this.topic.describe = respond.data.topic.describe
-
-                var data = []
-
-                for (var i = 0; i < respond.data.topic.manages.length; i++) {
-                    var user = respond.data.topic.manages[i]
-                    if (user.is_creator == 0) {
-                        this.users.push(user)
-                        data.push(user.id)
-                    }
-                }
-
-                this.$nextTick(() => {
-                    this.topic.manages = data
-                })
-
-            })
-        }
     }
 </script>

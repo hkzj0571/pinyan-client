@@ -70,10 +70,10 @@
 <script>
     import {mapState} from 'vuex'
     import 'vue-social-share/dist/client.css'
-    import IndexHeader from '../../components/commons/Header.vue'
-    import FineAuthor from '../../components/topics/indexs/FineAuthor.vue'
-    import HotArticle from '../../components/topics/indexs/HotArticle.vue'
-    import NewArticle from '../../components/topics/indexs/NewArticle.vue'
+    import IndexHeader from '../../components/Commons/Header.vue'
+    import FineAuthor from '../../components/Topics/Indexs/FineAuthor.vue'
+    import HotArticle from '../../components/Topics/Indexs/HotArticle.vue'
+    import NewArticle from '../../components/Topics/Indexs/NewArticle.vue'
 
     export default {
         data() {

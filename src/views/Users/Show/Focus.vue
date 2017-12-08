@@ -15,8 +15,8 @@
 </template>
 
 <script>
-    import LikeArticles from '../../../components/users/show/LikeArticles'
-    import FocusTopic from '../../../components/users/show/FocusTopic'
+    import LikeArticles from '../../../components/Users/Show/LikeArticles'
+    import FocusTopic from '../../../components/Users/Show/FocusTopic'
     export default {
         data() {
             return {

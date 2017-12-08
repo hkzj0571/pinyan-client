@@ -16,7 +16,7 @@
 </template>
 
 <script>
-    import CropAvatar from '../../../components/users/CropAvatar.vue'
+    import CropAvatar from '../../../components/Users/CropAvatar.vue'
     import {mapState} from 'vuex'
     export default {
         data () {

@@ -120,7 +120,7 @@
     </div>
 </template>
 <script>
-    import IndexHeader from '../components/commons/Header.vue'
+    import IndexHeader from '../components/Commons/Header.vue'
     export default {
         data() {
             return {

@@ -1,7 +1,7 @@
 <template>
     <div>
         <Menu mode="horizontal" @on-select="toggle" :active-name="currentView" class="navbar_menu">
-            <MenuItem name="Dynamic">
+            <MenuItem name="Machine">
                 <Icon type="help-buoy"></Icon>
                 动态
             </MenuItem>
@@ -19,17 +19,17 @@
 </template>
 
 <script>
-    import ReleaseArticle from '../../../components/users/show/ReleaseArticle'
-    import Dynamic from '../../../components/users/show/Dynamic'
+    import ReleaseArticle from '../../../components/Users/Show/ReleaseArticle'
+    import Machine from '../../../components/Users/Show/Machine'
     export default {
         data() {
             return {
-                currentView:'Dynamic',
+                currentView:'Machine',
             }
         },
         components: {
             ReleaseArticle,
-            Dynamic
+            Machine
         },
         methods: {
             toggle(name) {

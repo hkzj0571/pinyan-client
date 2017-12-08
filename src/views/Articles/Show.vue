@@ -52,10 +52,10 @@
     </div>
 </template>
 <script>
-    import IndexHeader from '../../components/commons/Header.vue'
-    import Author from '../../components/articles/Author'
-    import Like from '../../components/articles/Like'
-    import Comment from '../../components/articles/Comment'
+    import IndexHeader from '../../components/Commons/Header.vue'
+    import Author from '../../components/Articles/Author'
+    import Like from '../../components/Articles/Like'
+    import Comment from '../../components/Articles/Comment'
     import {mapState} from 'vuex'
 
     export default {

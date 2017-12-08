@@ -91,7 +91,7 @@
     </div>
 </template>
 <script>
-    import ResetMail from '../auth/ResetMail.vue'
+    import ResetMail from '../Auth/ResetMail.vue'
     import {mapState} from 'vuex'
     export default {
         data() {

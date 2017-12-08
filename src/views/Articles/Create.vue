@@ -8,7 +8,7 @@
                     </div>
                     <Dropdown trigger="click">
                         <a href="javascript:void(0)">
-                            <Button shape="circle" icon="arrow-down-b">更新文章</Button>
+                            <Button shape="circle" icon="arrow-down-b">发布文章</Button>
                         </a>
                         <div class="topic-select" slot="list">
                             <p>请选择专题</p>
@@ -23,7 +23,7 @@
                                     <span>{{ topic.name }}</span>
                                 </Option>
                             </Select>
-                            <Button type="ghost" @click="update" :disabled="!update_validate">确定更新</Button>
+                            <Button type="ghost" @click="store" :disabled="!create_validate">确定发布</Button>
                         </div>
                     </Dropdown>
                 </div>
@@ -38,12 +38,11 @@
     </div>
 </template>
 <script>
-    import ArticleQuill from '../../components/articles/Quill.vue'
+    import ArticleQuill from '../../components/Articles/Quill.vue'
 
     export default {
         data() {
             return {
-                id:this.$route.params.article,
                 topics: [],
                 loading: false,
                 article: {
@@ -58,6 +57,7 @@
         },
         methods: {
             getTopics(query) {
+                this.topics = []
                 if (query !== '') {
                     this.loading = true
                     this.$axios.get('article/topic', {query: query}).then(resource => {
@@ -67,16 +67,14 @@
                             ? this.topics = respond.data.topics
                             : this.$Message.error(respond.message)
                     })
-                } else {
-                    this.topics = []
                 }
             },
-            update() {
-                this.$axios.put('article/' + this.id, this.article).then(resource => {
+            store() {
+                this.$axios.post('article/store', this.article).then(resource => {
                     let respond = resource.data
                     if (respond.status) {
-                        this.$router.push({name: 'article.show', params: {article: this.id}})
-                        this.$Message.success(respond.message)
+                        this.$router.push({name: 'article.show', params: {article: respond.data.article.id}})
+                        this.$Message.success('文章发布成功')
                     } else {
                         this.$Message.error(respond.message)
                     }
@@ -84,20 +82,9 @@
             },
         },
         computed: {
-            update_validate: function () {
+            create_validate: function () {
                 return this.article.title && this.article.topic_id && this.article.content
-            },
+            }
         },
-        created: function () {
-            return this.$axios.get('article/' + this.id, {}).then(resource => {
-                let article = resource.data.data.article
-                this.article.content = article.content
-                this.article.title = article.title
-                this.topics.push(article.topic)
-                this.$nextTick(() => {
-                    this.article.topic_id = article.topic.id
-                })
-            })
-        }
     }
 </script>
