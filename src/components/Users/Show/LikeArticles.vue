@@ -15,7 +15,7 @@
                             <span class="time" v-text="article.created_at"></span>
                         </div>
                     </div>
-                    <router-link class="title" :to="'/article/'+article.id" v-text="article.title"></router-link>
+                    <router-link class="title" :to="{name:'article.show',params:{article:article.id}}" v-text="article.title"></router-link>
                     <p class="abstract" v-text="article.content"></p>
                     <div class="meta">
                         <a class="topic" href="/c/71a87e510a58" v-text="article.topic.name"></a>

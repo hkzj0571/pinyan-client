@@ -1,8 +1,11 @@
 <template>
     <ul class="machines_list">
         <transition-group name="fade">
-            <li v-for="(follower,index) in machines" :key="index">
-
+            <li v-for="(machine,index) in machines" :key="index">
+                <NewArticle v-if="machine.action == 'article'" :machine="machine"></NewArticle>
+                <Comment v-if="machine.action == 'comment'" :machine="machine"></Comment>
+                <Reply v-if="machine.action == 'reply'" :machine="machine"></Reply>
+                <Like v-if="machine.action == 'like'" :machine="machine"></Like>
             </li>
         </transition-group>
         <li class="end">
@@ -13,6 +16,10 @@
 </template>
 
 <script>
+    import NewArticle from '../Machines/Article'
+    import Comment from '../Machines/Comment'
+    import Reply from '../Machines/Reply'
+    import Like from '../Machines/Like'
     export default {
         data() {
             return {
@@ -24,6 +31,12 @@
         },
         created: function () {
             this.getMachines()
+        },
+        components: {
+            NewArticle,
+            Comment,
+            Reply,
+            Like
         },
         methods: {
             getMachines(){
