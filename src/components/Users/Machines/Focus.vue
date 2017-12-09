@@ -12,14 +12,14 @@
         </div>
         <div class="focus-detail">
             <div class="info">
-                <router-link to="/" class="tag">
+                <router-link :to="{name:'topics.index',params:{topic:topic.id}}" class="tag">
                     <img :src="topic.cover">
                 </router-link>
-                <router-link class="index-btn" to="/">
+                <router-link class="index-btn" :to="{name:'topics.index',params:{topic:topic.id}}">
                     专题主页
                     <Icon type="chevron-right"></Icon>
                 </router-link>
-                <router-link class="title" to="/c/1hjajt" v-text="topic.name"></router-link>
+                <router-link class="title" :to="{name:'topics.index',params:{topic:topic.id}}" v-text="topic.name"></router-link>
                 <p>收录了 {{ topic.article_count }} 篇文章 · {{ topic.follower_count }} 人关注</p>
             </div>
             <div class="signature" v-text="topic.describe"></div>
