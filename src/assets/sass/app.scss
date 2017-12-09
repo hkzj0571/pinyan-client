@@ -1,4 +1,4 @@
-html,body {
+html, body {
   color: #262626;
   -webkit-font-smoothing: auto;
   .layout {
@@ -526,7 +526,7 @@ html,body {
     width: 100%;
   }
   .ivu-message-notice {
-    transition: height 1s ease-in-out,padding 1s ease-in-out;
+    transition: height 1s ease-in-out, padding 1s ease-in-out;
     .ivu-message-notice-content {
       padding: 0;
       font-size: 14px;
@@ -554,18 +554,24 @@ html,body {
       }
     }
   }
-  .ivu-input,input,ivu-select-selection {
+  .ivu-input, input, ivu-select-selection {
     box-shadow: none !important;
   }
-  .spin-icon-load{
+  .spin-icon-load {
     animation: ani-spin 1s linear infinite;
   }
   @keyframes ani-spin {
-    from { transform: rotate(0deg);}
-    50%  { transform: rotate(180deg);}
-    to   { transform: rotate(360deg);}
+    from {
+      transform: rotate(0deg);
+    }
+    50% {
+      transform: rotate(180deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
   }
-  .spin-col{
+  .spin-col {
     height: 100px;
     position: relative;
     border: 1px solid #eee;
@@ -642,7 +648,7 @@ html,body {
           overflow-y: auto;
           font-family: Monaco, Menlo, Ubuntu Mono, Consolas, source-code-pro, monospace;
         }
-        h1,h2,h3,h4,h5,h7 {
+        h1, h2, h3, h4, h5, h7 {
           margin: 25px auto;
         }
         code {
@@ -1383,13 +1389,13 @@ html,body {
           line-height: 1.5;
         }
         .abstract {
-          margin:10px auto;
+          margin: 10px auto;
           font-size: 13px;
           line-height: 24px;
           overflow: hidden;
           text-overflow: ellipsis;
           display: -webkit-box;
-          -webkit-line-clamp: 2;
+          -webkit-line-clamp: 3;
           -webkit-box-orient: vertical;
           color: #262626;
         }
@@ -1413,7 +1419,7 @@ html,body {
           }
           .topic {
             color: #ec6149;
-            background-color: rgba(236,97,73,.05);
+            background-color: rgba(236, 97, 73, .05);
             border-color: #ec6149;
             display: inline-block;
             padding: 3px 6px;
@@ -2299,13 +2305,13 @@ html,body {
         }
       }
       .abstract {
-        margin:10px auto;
+        margin: 10px auto;
         font-size: 13px;
         line-height: 24px;
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
-        -webkit-line-clamp: 2;
+        -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
         color: #262626;
       }
@@ -2359,7 +2365,7 @@ html,body {
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
-        -webkit-line-clamp: 2;
+        -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
       }
       blockquote {
@@ -2377,11 +2383,11 @@ html,body {
           line-height: 1.5;
         }
         .abstract {
-          margin:10px auto;
+          margin: 10px auto;
           overflow: hidden;
           text-overflow: ellipsis;
           display: -webkit-box;
-          -webkit-line-clamp: 2;
+          -webkit-line-clamp: 3;
           -webkit-box-orient: vertical;
           color: #262626;
           font-size: 13px;
@@ -2414,7 +2420,7 @@ html,body {
         min-height: 140px;
         .wrap-img {
           position: absolute;
-          top: 50%;
+          top: 55%;
           margin-top: -68px;
           right: 0;
           width: 150px;
@@ -2425,6 +2431,62 @@ html,body {
             border-radius: 4px;
             border: 1px solid #f0f0f0;
           }
+        }
+      }
+      .focus-detail {
+        padding: 15px 20px;
+        background-color: hsla(0, 0%, 71%, .1);
+        border: 1px solid #e1e1e1;
+        border-radius: 4px;
+        font-size: 12px;
+        .info {
+          .tag {
+            float: left;
+            margin-right: 10px;
+            width: 48px;
+            height: 48px;
+            img {
+              width: 100%;
+              height: 100%;
+              border: 1px solid #ddd;
+              border-radius: 10%;
+              vertical-align: middle;
+            }
+          }
+          .title {
+            text-decoration: none;
+            margin: 0;
+            font-size: 17px;
+            font-weight: 400;
+          }
+          p {
+            margin-top: 5px;
+            color: #969696;
+          }
+          .index-btn {
+            float: right;
+            margin-top: 4px;
+            padding: 8px 0;
+            width: 100px;
+            font-size: 14px;
+            border: 1px solid #42c02e;
+            text-align: center;
+            border-radius: 40px;
+            color: #42c02e!important;
+            background: none;
+            &:hover {
+              background-color: rgba(59,194,29,.05);
+            }
+          }
+        }
+        .signature {
+          margin-top: 20px;
+          padding-top: 20px;
+          border-top: 1px solid #e1e1e1;
+          color: #969696;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
         }
       }
     }

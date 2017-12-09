@@ -8,6 +8,7 @@
                 <Comment v-if="machine.action == 'comment'" :machine="machine"></Comment>
                 <Follow v-if="machine.action == 'follow'" :machine="machine"></Follow>
                 <Reply v-if="machine.action == 'reply'" :machine="machine"></Reply>
+                <Focus v-if="machine.action == 'focus'" :machine="machine"></Focus>
                 <Like v-if="machine.action == 'like'" :machine="machine"></Like>
                 <Vote v-if="machine.action == 'vote'" :machine="machine"></Vote>
             </li>
@@ -25,6 +26,7 @@
     import Actived from '../Machines/Actived'
     import Comment from '../Machines/Comment'
     import Follow from '../Machines/Follow'
+    import Focus from '../Machines/Focus'
     import Reply from '../Machines/Reply'
     import Like from '../Machines/Like'
     import Vote from '../Machines/Vote'
@@ -48,7 +50,8 @@
             Like,
             Vote,
             Follow,
-            Actived
+            Actived,
+            Focus
         },
         methods: {
             getMachines(){
