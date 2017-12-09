@@ -6,7 +6,7 @@
             </router-link>
             <div class="info">
                 <router-link class="nickname" v-text="name" :to="{name:'user.show.profile',params:{user:id}}"></router-link>
-                <span>加入了品言 <span class="speacd">·</span> {{ user.created_at }}</span>
+                <span>激活了账号 <span class="speacd">·</span> {{ user.actived_at }}</span>
             </div>
         </div>
     </div>

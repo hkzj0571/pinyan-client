@@ -7,7 +7,9 @@
                     <a class="cover">
                         <img :src="topic.cover">
                     </a>
-                    <Button type="success" class="focus" :class="{active:is_focus}" :icon="focus_cion" shape="circle" @click="toggleFocus">{{ focus_text }}</Button>
+                    <Button type="success" class="focus" :class="{active:topic.is_focus}" :icon="focus_cion"
+                            shape="circle" @click="toggleFocus">{{ focus_text }}
+                    </Button>
                     <div class="title">
                         <a class="name" href="/c/1hjajt" v-text="topic.name"></a>
                     </div>
@@ -79,9 +81,8 @@
         data() {
             return {
                 currentView: 'NewArticle',
-                is_focus: false,
                 topic: {
-                    creator:{}
+                    creator: {}
                 },
             }
         },
@@ -93,10 +94,10 @@
         },
         computed: {
             focus_cion() {
-                return this.is_focus ? 'checkmark-round' : 'plus-round'
+                return this.topic.is_focus ? 'checkmark-round' : 'plus-round'
             },
             focus_text() {
-                return this.is_focus ? '已关注' : '关注'
+                return this.topic.is_focus ? '已关注' : '关注'
             },
             ...mapState({
                 user_id: state => state.user.id,
@@ -107,18 +108,18 @@
                 this.currentView = name
             },
             toggleFocus() {
-                this.is_focus = !this.is_focus
+                this.topic.is_focus = !this.topic.is_focus
                 this.$axios.post(`topics/${this.$route.params.topic}/focus`, {}).then(resource => {
                     let respond = resource.data
-                    respond.data.type == 'attached' ? this.topic.follower_count++ : this.topic.follower_count--
+                    respond.data.type ? this.topic.follower_count++ : this.topic.follower_count--
                 })
             },
         },
         created: function () {
-            this.$axios.post(`topics/${this.$route.params.topic}/is_focus`, {}).then(resource => {
-                let respond = resource.data
-                this.is_focus = respond.data.is_focus
-            })
+            // this.$axios.post(`topics/${this.$route.params.topic}/is_focus`, {}).then(resource => {
+            //     let respond = resource.data
+            //     this.is_focus = respond.data.is_focus
+            // })
 
             this.$axios.post(`topics/${this.$route.params.topic}`, {}).then(resource => {
                 let respond = resource.data
