@@ -7,7 +7,9 @@
                 </router-link>
                 <div class="info small-meta">
                     <a class="title" href="/c/1hjajt" v-text="followed.name"></a>
-                    <div class="meta">发布了 {{ followed.article_count }} 篇文章，关注了 {{ followed.followed_count }} 人 ，被 {{ followed.follower_count }} 人关注</div>
+                    <div class="meta">发布了 {{ followed.article_count }} 篇文章，关注了 {{ followed.followed_count }} 人 ，被 {{
+                        followed.follower_count }} 人关注
+                    </div>
                     <div class="meta" v-text="followed.describe"></div>
                 </div>
                 <Button icon="checkmark-round" shape="circle" size="large" @click="cancel(followed,index)">已关注</Button>
@@ -46,7 +48,14 @@
                 })
             },
             cancel(followed, index) {
-                this.followeds.splice(index, 1)
+                this.$axios.post('user/follow', {user_id: followed.id}).then(respond => {
+                    if (respond.data.status) {
+                        this.followeds.splice(index, 1)
+                    } else {
+
+                    }
+                })
+
             }
         }
     }
