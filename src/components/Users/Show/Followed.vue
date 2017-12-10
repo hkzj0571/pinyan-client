@@ -36,6 +36,7 @@
             this.getTopics()
         },
         methods: {
+            // 拉取 topics
             getTopics() {
                 this.loading = true
                 this.page++
