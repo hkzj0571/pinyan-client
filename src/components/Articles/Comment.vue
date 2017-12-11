@@ -93,6 +93,7 @@
                 this.getComment()
             },
             getComment() {
+                this.loading_end = false
                 this.more_loading = true
                 this.page++
                 this.$axios.post(`article/${this.$route.params.article}/comments`,{

@@ -13,9 +13,7 @@
                 <div class="line"></div>
                 <div class="index-list" v-for="x in 10">
                     <a class="wrap-img" href="/p/17e0d08ed8ec" target="_blank">
-                        <img class="  img-blur-done"
-                             src="//upload-images.jianshu.io/upload_images/2669904-2ba71dd6ec51914d.png?imageMogr2/auto-orient/strip|imageView2/1/w/300/h/240"
-                             alt="120">
+                        <img class="img-blur-done" src="//upload-images.jianshu.io/upload_images/2669904-2ba71dd6ec51914d.png?imageMogr2/auto-orient/strip|imageView2/1/w/300/h/240">
                     </a>
                     <div class="content">
                         <div class="author">

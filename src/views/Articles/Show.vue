@@ -43,7 +43,7 @@
                     <Author :user="article.user"></Author>
                     <div class="meta-bottom">
                         <Like :article="article"></Like>
-                        <share></share>
+                        <share :config="{disabled:['diandian']}"></share>
                     </div>
                     <Comment :article="article"></Comment>
                 </div>

@@ -10,8 +10,7 @@
                     <Button type="success" class="focus" :class="{active:topic.is_focus}" :icon="focus_cion"
                             shape="circle" @click="toggleFocus">{{ focus_text }}
                     </Button>
-                    <div class="title">
-                        <a class="name" href="/c/1hjajt" v-text="topic.name"></a>
+                    <div class="title">&nbsp;<a class="name" href="/c/1hjajt" v-text="topic.name"></a>
                     </div>
                     <div class="info">
                         收录了 {{ topic.article_count }} 篇文章 · {{ topic.follower_count }} 人关注
