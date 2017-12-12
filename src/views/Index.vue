@@ -18,8 +18,7 @@
                     <div class="content">
                         <div class="author">
                             <a class="avatar" target="_blank" href="/u/24200641ff1a">
-                                <img src="//upload.jianshu.io/users/upload_avatars/2669904/5e349b10c3f7?imageMogr2/auto-orient/strip|imageView2/1/w/64/h/64"
-                                     alt="64">
+                                <img src="//upload.jianshu.io/users/upload_avatars/2669904/5e349b10c3f7?imageMogr2/auto-orient/strip|imageView2/1/w/64/h/64">
                             </a>
                             <div class="info">
                                 <a class="nickname" target="_blank" href="/u/24200641ff1a">罗衣一时聚</a>

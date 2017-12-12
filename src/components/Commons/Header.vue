@@ -68,17 +68,7 @@
                             </DropdownMenu>
                         </Dropdown>
                     </MenuItem>
-                    <MenuItem name="3" class="header-notification" v-if="authenticated">
-                        <Dropdown trigger="click">
-                            <a href="javascript:void(0)">
-                                <Badge count="" overflow-count="10">
-                                <Icon type="android-notifications"></Icon>
-                                </Badge>
-                            </a>
-                            <DropdownMenu slot="list">
-                            </DropdownMenu>
-                        </Dropdown>
-                    </MenuItem>
+                    <Notifications v-if="authenticated"></Notifications>
                     <MenuItem name="4" class="header-article" v-if="authenticated">
                         <router-link to="/article">
                             <Button shape="circle" icon="android-list" >写文章</Button>
@@ -91,6 +81,7 @@
     </div>
 </template>
 <script>
+    import Notifications from './Notifications'
     import ResetMail from '../Auth/ResetMail.vue'
     import {mapState} from 'vuex'
     export default {
@@ -98,7 +89,8 @@
             return {}
         },
         components: {
-            ResetMail
+            ResetMail,
+            Notifications
         },
         computed: mapState({
             id: state => state.user.id,
