@@ -68,17 +68,9 @@
                             </DropdownMenu>
                         </Dropdown>
                     </MenuItem>
-                    <MenuItem name="3" class="header-notification" v-if="authenticated">
-                        <Dropdown trigger="click">
-                            <a href="javascript:void(0)">
-                                <Badge count="" overflow-count="10">
-                                <Icon type="android-notifications"></Icon>
-                                </Badge>
-                            </a>
-                            <DropdownMenu slot="list">
-                            </DropdownMenu>
-                        </Dropdown>
-                    </MenuItem>
+                    <keep-alive>
+                        <Notifications v-if="authenticated"></Notifications>
+                    </keep-alive>
                     <MenuItem name="4" class="header-article" v-if="authenticated">
                         <router-link to="/article">
                             <Button shape="circle" icon="android-list" >写文章</Button>
@@ -91,6 +83,7 @@
     </div>
 </template>
 <script>
+    import Notifications from './Notifications'
     import ResetMail from '../Auth/ResetMail.vue'
     import {mapState} from 'vuex'
     export default {
@@ -98,16 +91,19 @@
             return {}
         },
         components: {
-            ResetMail
+            ResetMail,
+            Notifications
         },
-        computed: mapState({
-            id: state => state.user.id,
-            name: state => state.user.name,
-            avatar: state => state.user.avatar,
-            email: state => state.user.email,
-            is_active: state => state.user.is_active,
-            authenticated: state => state.user.authenticated,
-        }),
+        computed: {
+            ...mapState({
+                id: state => state.user.id,
+                name: state => state.user.name,
+                avatar: state => state.user.avatar,
+                email: state => state.user.email,
+                is_active: state => state.user.is_active,
+                authenticated: state => state.user.authenticated,
+            }),
+        },
         methods: {
             logout: function () {
                 if (this.authenticated) {
@@ -119,10 +115,9 @@
                         }) : this.$Message.error(respond.message)
                     })
                 }
-            }
+            },
         },
         mounted: function () {
-
         }
     }
 </script>
