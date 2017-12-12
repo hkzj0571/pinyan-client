@@ -48,6 +48,7 @@ new Vue({
                 token:JSON.parse(localStorage.token)
             }
             this.$store.dispatch('authenticated',data)
+            this.$store.dispatch('getNotifications')
         }
 
         this.$axios.interceptors.response.use(respond => {

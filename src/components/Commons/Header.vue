@@ -68,7 +68,9 @@
                             </DropdownMenu>
                         </Dropdown>
                     </MenuItem>
-                    <Notifications v-if="authenticated"></Notifications>
+                    <keep-alive>
+                        <Notifications v-if="authenticated"></Notifications>
+                    </keep-alive>
                     <MenuItem name="4" class="header-article" v-if="authenticated">
                         <router-link to="/article">
                             <Button shape="circle" icon="android-list" >写文章</Button>
