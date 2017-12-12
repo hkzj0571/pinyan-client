@@ -13,6 +13,7 @@
 </template>
 <script>
     import {mapState} from 'vuex'
+
     export default {
         data() {
             return {}
@@ -26,10 +27,10 @@
             authenticated: state => state.user.authenticated,
         }),
         methods: {
-            notifications(){
-                this.$echo.private('user.'+this.id)
+            notifications() {
+                this.$echo.channel('users')
                     .listen('ArticleBeLike', (e) => {
-
+                        console.log(e)
                     });
             }
         },
