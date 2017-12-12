@@ -2,11 +2,13 @@
     <MenuItem name="3" class="header-notification">
         <Dropdown trigger="click">
             <a href="javascript:void(0)">
-                <Badge count="" overflow-count="10">
+                <Badge :count="count" overflow-count="10">
                     <Icon type="android-notifications"></Icon>
                 </Badge>
             </a>
             <DropdownMenu slot="list">
+                <DropdownItem>王文阳、靳一辰、唐凯丰 回答了 如何评价卢本伟带其粉丝恶毒辱骂质疑开挂者的视频av16995376？</DropdownItem>
+                <DropdownItem></DropdownItem>
             </DropdownMenu>
         </Dropdown>
     </MenuItem>
@@ -16,26 +18,29 @@
 
     export default {
         data() {
-            return {}
+            return {
+                notifications:[],
+            }
         },
-        computed: mapState({
-            id: state => state.user.id,
-            name: state => state.user.name,
-            avatar: state => state.user.avatar,
-            email: state => state.user.email,
-            is_active: state => state.user.is_active,
-            authenticated: state => state.user.authenticated,
-        }),
+        computed: {
+            count() {
+                return this.notifications.length
+            },
+            ...mapState({
+                id: state => state.user.id,
+            })
+        },
         methods: {
-            notifications() {
-                this.$echo.channel('users')
-                    .listen('ArticleBeLike', (e) => {
-                        console.log(e)
-                    });
+            connection() {
+                this.$echo.private('App.Models.User.' + this.id)
+                    .notification((notification) => {
+                        this.notifications.push(notification)
+                        console.log(notification)
+                    })
             }
         },
         created: function () {
-            this.notifications()
+            this.connection()
         }
     }
 </script>

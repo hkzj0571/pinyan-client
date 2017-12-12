@@ -10,12 +10,19 @@ export default {
 
         Vue.prototype.$axios = axios
 
+        var token = JSON.parse(localStorage.token)
+
         Vue.prototype.$echo = new Echo({
             broadcaster: 'pusher',
             key: env.pusher_key,
             cluster: env.pusher_cluster,
             encrypted: true,
-            authEndpoint: env.pusher_auth
+            authEndpoint: env.base_domain + env.pusher_auth,
+            auth: {
+                headers: {
+                    Authorization: token.token_type +' '+ token.access_token,
+                },
+            },
         })
 
         Vue.prototype.$env = env

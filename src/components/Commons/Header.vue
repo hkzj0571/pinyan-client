@@ -92,14 +92,16 @@
             ResetMail,
             Notifications
         },
-        computed: mapState({
-            id: state => state.user.id,
-            name: state => state.user.name,
-            avatar: state => state.user.avatar,
-            email: state => state.user.email,
-            is_active: state => state.user.is_active,
-            authenticated: state => state.user.authenticated,
-        }),
+        computed: {
+            ...mapState({
+                id: state => state.user.id,
+                name: state => state.user.name,
+                avatar: state => state.user.avatar,
+                email: state => state.user.email,
+                is_active: state => state.user.is_active,
+                authenticated: state => state.user.authenticated,
+            }),
+        },
         methods: {
             logout: function () {
                 if (this.authenticated) {
@@ -111,10 +113,9 @@
                         }) : this.$Message.error(respond.message)
                     })
                 }
-            }
+            },
         },
         mounted: function () {
-
         }
     }
 </script>

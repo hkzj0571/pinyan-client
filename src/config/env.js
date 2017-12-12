@@ -5,7 +5,7 @@ export default {
 
     oss_domain: 'http://p03uyojkp.bkt.clouddn.com/',
 
-    pusher_key:'575a27e57e182a663d7b',
-    pusher_cluster:'ap1',
-    pusher_auth:'http://pinyan.work/broadcasting/auth',
+    pusher_key: '575a27e57e182a663d7b',
+    pusher_cluster: 'ap1',
+    pusher_auth: 'broadcasting/auth',
 }

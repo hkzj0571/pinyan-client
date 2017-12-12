@@ -518,6 +518,7 @@ html, body {
       }
     }
   }
+
   .line {
     display: block;
     background: #f0f0f0;
@@ -1702,6 +1703,21 @@ html, body {
               &:hover {
                 background: #f4f8fb;
               }
+            }
+          }
+        }
+      }
+    }
+    .header-notification {
+      .ivu-dropdown {
+        .ivu-select-dropdown {
+          left: -145px !important;
+          .ivu-dropdown-menu {
+            width: 360px;
+            max-height: 400px;
+            overflow: auto;
+            .ivu-dropdown-item {
+              white-space:inherit !important;
             }
           }
         }
